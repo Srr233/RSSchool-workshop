@@ -1,0 +1,83 @@
+@import 'assets/nullStyleSheets.css';
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+.wrapper {
+  overflow: hidden;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+}
+
+.header {
+  width: 100%;
+  height: 100%;
+  padding-top: 15px;
+  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: url(assets/bg-image.jpg) center no-repeat;
+  background-size: cover;
+}
+.header .header__nav {
+  width: 560px;
+  height: 95px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header .header__nav .nav__item a {
+  font-size: 13px;
+  line-height: 140%;
+  color: darkgrey;
+}
+.header .header__nav .nav__item a:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+.header .header__nav .nav__logo img {
+  height: 44px;
+}
+.header .start {
+  margin-top: 120px;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+}
+.header .start .start__title {
+  font-size: 60px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 4.5px;
+  line-height: 75px;
+}
+.header .start .start__text {
+  width: 504px;
+  margin-top: 20px;
+  font-size: 18px;
+  line-height: 140%;
+  font-weight: 400;
+}
+.header .start .start__button {
+  margin-top: 30px;
+}
+.header .contacts {
+  margin-top: 170px;
+  width: 170px;
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+}
