@@ -1,4 +1,29 @@
 "Use strict"
+class Calculator {
+    constructor(previousOperand, currentOperand) {
+        this.previousOperand = previousOperand;
+        this.currentOperand = currentOperand;
+    }
+
+    clear () {
+        
+    }
+    deleteNumber () {
+
+    }
+    addNumber(number) {
+
+    }
+    addOperation (operation) {
+
+    }
+    compute (operand) {
+
+    }
+    updateOperand () {
+
+    }
+}
 
 const numberButton = document.querySelectorAll("[data-number]");
 const operationButton = document.querySelectorAll("[data-operation]");
