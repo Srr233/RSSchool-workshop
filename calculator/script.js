@@ -48,28 +48,33 @@ class Calculator {
             switch (operation) {
                 case "+":
                     result = `${previous + current}`;
-                    this.previousOperand = "";
                     break;
                 case "-":
                     result = `${previous - current}`;
-                    this.previousOperand = "";
                     break;
                 case "*":
                     result = `${previous * current}`;
-                    this.previousOperand = "";
                     break;
                 case "÷":
                     result = `${previous / current}`;
-                    this.previousOperand = "";
                     break;
                 case "^":
                     result = `${previous ** current}`;
-                    this.previousOperand = "";
                     break;
             }
 
-            if (result.includes(".")) {
-                this.currentOperand = Number(result).toFixed(2);
+            if (result.includes(".") && !result.includes("e")) {
+                let howManyNumbersAfter = 0;
+                if (this.currentOperand.includes(".") && this.previousOperand.includes(".")) {
+                    howManyNumbersAfter = Math.max(this.currentOperand.slice(this.currentOperand.indexOf(".") + 1).length, this.previousOperand.slice(this.previousOperand.indexOf(".") + 1, this.previousOperand.indexOf(" ")).length);
+                } else if (this.previousOperand.includes(".") && !result.includes("e")) {
+                    console.log(this.previousOperand.slice(this.previousOperand.indexOf(".") + 1, this.previousOperand.indexOf(" ")))
+                    howManyNumbersAfter = this.previousOperand.slice(this.previousOperand.indexOf(".") + 1, this.previousOperand.indexOf(" ")).length;
+                } else if (this.currentOperand.includes(".") && !result.includes("e")) {
+                    howManyNumbersAfter = this.currentOperand.slice(this.currentOperand.indexOf(".") + 1).length;
+                }
+                this.currentOperand = Number(result).toFixed(howManyNumbersAfter);
+                this.previousOperand = "";
             } else this.currentOperand = result;
         } else if (sqrt || this.currentOperand.includes("√") && this.currentOperand.length > 1) {
             if (sqrt) {
