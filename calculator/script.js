@@ -19,61 +19,70 @@ class Calculator {
             this.currentOperand += number;
         } else if (!this.currentOperand.includes('.') && this.currentOperand !== "" && !this.currentOperand.includes("√")) {
             this.currentOperand += '.';
+        } else if (!this.currentOperand.includes('.') && this.currentOperand.length > 1 && this.currentOperand.includes("√")) {
+            this.currentOperand += '.';
         }
     }
     addOperation (operation) {
-        if (this.currentOperand !== "" && !this.currentOperand.includes("√")) {
+        if (this.currentOperand && this.previousOperand) {
+            this.compute();
+        }
+        if (this.currentOperand !== "" && !this.currentOperand.includes("√") && operation !== "√") {
             this.previousOperand = `${this.currentOperand} ${operation}`;
             this.currentOperand = '';
         } else if (operation === "-" && !this.currentOperand.includes("√")){
-            this.currentOperand = "- ";
+            this.currentOperand = "-";
         } else if (this.currentOperand === "" && operation === "√") {
             this.currentOperand = "√";
-        } else if (this.currentOperand.includes("√") && this.currentOperand.length !== 1) {
+        } else if (this.currentOperand.includes("√") && operation !== "√" && this.currentOperand.length !== 1) {
             const num = +this.currentOperand.slice(1);
-            this.compute(num);
-        }
+            this.compute(num, operation);
+        } 
     }
-    compute (sqrt) {
+    compute (sqrt, operator) {
         if (this.currentOperand && this.previousOperand) {
             const operation = this.previousOperand[this.previousOperand.length-1];
-            if (this.currentOperand.includes("-")) {}
             const current = +this.currentOperand;
-            const previous = +this.previousOperand.slice(0, this.previousOperand.length - 2)
+            const previous = +this.previousOperand.slice(0, this.previousOperand.length - 2);
+            let result = '';
             switch (operation) {
                 case "+":
-                    this.currentOperand = `${previous + current}`;
+                    result = `${previous + current}`;
                     this.previousOperand = "";
                     break;
                 case "-":
-                    this.currentOperand = `${previous - current}`;
+                    result = `${previous - current}`;
                     this.previousOperand = "";
                     break;
                 case "*":
-                    this.currentOperand = `${previous * current}`;
+                    result = `${previous * current}`;
                     this.previousOperand = "";
                     break;
                 case "÷":
-                    this.currentOperand = `${previous / current}`;
+                    result = `${previous / current}`;
                     this.previousOperand = "";
                     break;
                 case "^":
-                    this.currentOperand = `${previous ** current}`;
+                    result = `${previous ** current}`;
                     this.previousOperand = "";
                     break;
-            } 
+            }
+
+            if (result.includes(".")) {
+                this.currentOperand = Number(result).toFixed(2);
+            } else this.currentOperand = result;
         } else if (sqrt || this.currentOperand.includes("√") && this.currentOperand.length > 1) {
             if (sqrt) {
-                this.previousOperand = `${Math.sqrt(sqrt)}`;
+                this.previousOperand = `${Math.sqrt(sqrt).toFixed(2)} ${operator}`;
                 this.currentOperand = "";
             } else {
-                this.currentOperand = `${Math.sqrt(this.currentOperand.slice(1))}`;
+                this.currentOperand = `${Math.sqrt(this.currentOperand.slice(1)).toFixed(2)}`;
             }
         }
     }
     updateDisplay () {
-        this.currentOperandText.innerText = this.currentOperand;
-        this.previousOperandText.innerText = this.previousOperand;
+            this.currentOperandText.innerText = this.currentOperand;
+            this.previousOperandText.innerText = this.previousOperand;
     }
 }
 
