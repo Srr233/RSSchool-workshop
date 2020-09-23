@@ -17,13 +17,17 @@ class Calculator {
     addNumber(number) {
         if (number !== '.') {
             this.currentOperand += number;
-        } else if (!this.currentOperand.includes('.')) {
+        } else if (!this.currentOperand.includes('.') && this.currentOperand !== "") {
             this.currentOperand += '.';
         }
     }
     addOperation (operation) {
-        this.previousOperand = `${this.currentOperand} ${operation}`;
-        this.currentOperand = '';
+        if (this.currentOperand !== "") {
+            this.previousOperand = `${this.currentOperand} ${operation}`;
+            this.currentOperand = '';
+        } else if (operation === "-"){
+            this.currentOperand = "- ";
+        }
     }
     compute () {
 
