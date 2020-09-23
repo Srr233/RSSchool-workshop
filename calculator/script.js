@@ -1,8 +1,8 @@
 "Use strict"
 class Calculator {
     constructor(previousOperand, currentOperand) {
-        this.previousOperand = previousOperand;
-        this.currentOperand = currentOperand;
+        this.previousOperandText = previousOperand;
+        this.currentOperandText = currentOperand;
         this.clear();
     }
 
@@ -12,19 +12,25 @@ class Calculator {
         this.operand = undefined;
     }
     deleteNumber () {
-
+        this.currentOperand = this.currentOperand.slice(0, this.currentOperand.length - 1);
     }
     addNumber(number) {
-
+        if (number !== '.') {
+            this.currentOperand += number;
+        } else if (!this.currentOperand.includes('.')) {
+            this.currentOperand += '.';
+        }
     }
     addOperation (operation) {
-
+        this.previousOperand = `${this.currentOperand} ${operation}`;
+        this.currentOperand = '';
     }
-    compute (operand) {
+    compute () {
 
     }
     updateDisplay () {
-
+        this.currentOperandText.innerText = this.currentOperand;
+        this.previousOperandText.innerText = this.previousOperand;
     }
 }
 
@@ -39,12 +45,24 @@ const equalsButton = document.querySelector("[data-equals]");
 const calculator = new Calculator (previousOperand, currentOperand);
 
 numberButton.forEach(button => {
-    button.addEventListener("click", calculator.addNumber);
+    button.addEventListener("click", () => {
+        calculator.addNumber(button.innerText);
+        calculator.updateDisplay();
+    });
 });
 operationButton.forEach(button => {
-    button.addEventListener("click", calculator.addOperation);
+    button.addEventListener("click", () => {
+        calculator.addOperation(button.innerText);
+        calculator.updateDisplay();
+    });
 })
-deleteButton.addEventListener("click", calculator.deleteNumber);
-allClearButton.addEventListener("click", calculator.clear);
+deleteButton.addEventListener("click", () => {
+    calculator.deleteNumber();
+    calculator.updateDisplay();
+});
+allClearButton.addEventListener("click", () => {
+        calculator.clear();
+        calculator.updateDisplay();
+});
 equalsButton.addEventListener("click", calculator.compute);
 
