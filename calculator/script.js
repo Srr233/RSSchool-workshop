@@ -42,7 +42,7 @@ class Calculator {
     compute (sqrt, operator) {
         if (this.currentOperand && this.previousOperand) {
             const operation = this.previousOperand[this.previousOperand.length-1];
-            const current = +this.currentOperand;
+            const current = (this.currentOperand[0] === "√") ? Math.sqrt(+this.currentOperand.slice(1)) : +this.currentOperand;
             const previous = +this.previousOperand.slice(0, this.previousOperand.length - 2);
             let result = '';
             switch (operation) {
