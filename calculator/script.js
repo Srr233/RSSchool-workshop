@@ -66,12 +66,15 @@ class Calculator {
             if (result.includes(".") && !result.includes("e")) {
                 let howManyNumbersAfter = 0;
                 if (this.currentOperand.includes(".") && this.previousOperand.includes(".")) {
-                    howManyNumbersAfter = Math.max(this.currentOperand.slice(this.currentOperand.indexOf(".") + 1).length, this.previousOperand.slice(this.previousOperand.indexOf(".") + 1, this.previousOperand.indexOf(" ")).length);
+                    howManyNumbersAfter = Math.max(this.currentOperand.split('.')[1].length, this.previousOperand.split(".")[1].split(' ')[0].length);
                 } else if (this.previousOperand.includes(".") && !result.includes("e")) {
                     console.log(this.previousOperand.slice(this.previousOperand.indexOf(".") + 1, this.previousOperand.indexOf(" ")))
-                    howManyNumbersAfter = this.previousOperand.slice(this.previousOperand.indexOf(".") + 1, this.previousOperand.indexOf(" ")).length;
+                    console.log(this.previousOperand.split(".")[1].split(' ')[0].length)
+                    howManyNumbersAfter = this.previousOperand.split(".")[1].split(' ')[0].length;
                 } else if (this.currentOperand.includes(".") && !result.includes("e")) {
-                    howManyNumbersAfter = this.currentOperand.slice(this.currentOperand.indexOf(".") + 1).length;
+                    howManyNumbersAfter = this.currentOperand.split(".")[1].length;
+                } else {
+                    howManyNumbersAfter = 3;
                 }
                 this.currentOperand = Number(result).toFixed(howManyNumbersAfter);
                 this.previousOperand = "";
