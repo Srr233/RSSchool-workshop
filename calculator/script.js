@@ -144,3 +144,7 @@ equalsButton.addEventListener("click", () => {
     calculator.updateDisplay();
 });
 
+const buttonEnd = document.querySelector('.calculate-help-en__end-button');
+buttonEnd.addEventListener('click', e => {
+    e.target.parentElement.style.display = 'none';
+})

@@ -56,3 +56,55 @@ body {
   color: white;
   font-size: 2.5rem;
 }
+
+.calculate-help-en {
+  width: 30%;
+  padding: 20px;
+  
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  background-color: #fff;
+
+  border: #000 solid 2px;
+  border-radius: 5px;
+  line-height: 150%;
+}
+.calculate-help-en__how-use {
+  font-family: Arial, Helvetica, sans-serif
+}
+
+.calculate-help-en__instruction {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.calculate-help-en__okay {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+}
+.calculate-help-en__end-button {
+  right: 5px;
+  top: 5px;
+
+  position: absolute;
+  background-color: #fff;
+  padding: 5px 10px;
+  font-size: 15px;
+
+  transition: 0.5s;
+}
+.calculate-help-en__end-button:hover {
+  background-color: rgba(0, 0, 0, .06);
+  font-size: 20px;
+
+  transition: 0.5s;
+}
+.calculate-help-en__end-button:active {
+  background-color: rgba(0, 0, 0, .1);
+}
+
+@media(max-width: 700px) {
+  .calculate-help-en {
+    width: 100%;
+  }
+}
