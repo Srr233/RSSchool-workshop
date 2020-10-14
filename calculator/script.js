@@ -87,8 +87,10 @@ class Calculator {
                 this.currentOperand = `${Math.sqrt(this.currentOperand.slice(1)).toFixed(2)}`;
             }
         }
-        this.previousOperand = '';
-        this.currentOperand = this.currentOperand;
+        if (!sqrt) {
+            this.previousOperand = '';
+            this.currentOperand = this.currentOperand;
+        }
     }
     updateDisplay () {
             this.currentOperandText.innerText = this.currentOperand;
