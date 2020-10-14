@@ -24,10 +24,10 @@ class Calculator {
         }
     }
     addOperation (operation) {
-        if (this.currentOperand && this.previousOperand) {
+        if (this.currentOperand && this.previousOperand && this.currentOperand !== operation) {
             this.compute();
         }
-        if (this.currentOperand !== "" && !this.currentOperand.includes("√") && operation !== "√") {
+        if (this.currentOperand !== "" && !this.currentOperand.includes("√") && operation !== "√" && !isOperation(this.currentOperand)) {
             this.previousOperand = `${this.currentOperand} ${operation}`;
             this.currentOperand = '';
         } else if (operation === "-" && !this.currentOperand.includes("√")){
@@ -87,11 +87,24 @@ class Calculator {
                 this.currentOperand = `${Math.sqrt(this.currentOperand.slice(1)).toFixed(2)}`;
             }
         }
+        this.previousOperand = '';
+        this.currentOperand = this.currentOperand;
     }
     updateDisplay () {
             this.currentOperandText.innerText = this.currentOperand;
             this.previousOperandText.innerText = this.previousOperand;
     }
+}
+
+function isOperation(operand) {
+    if (operand === '*' ||
+        operand === '-' ||
+        operand === '+' ||
+        operand === '/' ||
+        operand === '√' ||
+        operand === '^') {
+        return true;
+    } else return false;
 }
 
 const previousOperand = document.querySelector("[data-previous-operand]");
