@@ -1,0 +1,82 @@
+@import "normalize.css";
+
+.content {
+}
+
+.background-image {
+    width: 100vw;
+    height: 100vh;
+
+    position: absolute;
+    background: url(assets/images/day/01.jpg);
+
+		&__wrapper {}
+}
+.list-img {
+
+		&__figure {}
+
+		&__wrapper-img {}
+
+		&__img {}
+}
+.flicker {
+
+		&__color {}
+}
+.top {
+}
+.img-change {
+
+		&__change {}
+
+		&__right {}
+
+		&__left {}
+}
+.weather {
+}
+.metric {
+
+		&__icon {}
+
+		&__temp {}
+
+		&__cels {}
+
+		&__city {}
+}
+.time {
+
+		&__text {}
+}
+.week {
+
+		&__smile {}
+
+		&__today {}
+}
+.greetings {
+
+		&__welcome {}
+
+		&__name {}
+
+		&__button {}
+}
+.target {
+
+		&__today {}
+}
+.todo {
+
+		&__done {}
+
+		&__todo {}
+
+		&__close {}
+}
+.quote {
+
+		&__text {}
+}

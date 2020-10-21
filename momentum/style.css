@@ -1,0 +1,7 @@
+@import "normalize.css";
+.background-image {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background: url(assets/images/day/01.jpg);
+}
