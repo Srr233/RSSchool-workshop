@@ -1,6 +1,33 @@
 @import "normalize.css";
 
+
+@keyframes loading2 {
+0% {transform: rotate(0deg);}
+50% {transform: rotate(150deg);}
+70% {transform: rotate(200deg);}
+100% {transform: rotate(360deg);}
+}
+@-webkit-keyframes loading2 {
+0% {-webkit-transform: rotate(deg);}
+50% {-webkit-transform: rotate(150deg);}
+70% {-webkit-transform: rotate(200deg);}
+100% {-webkit-transform: rotate(360deg);}
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+%topButton {
+    padding: 0px 14px;
+
+    font-size: 17px;
+    border-radius: 50px;
+
+    background-color: rgba($color: #fff, $alpha: 0.5);
+
+    
+}
 .content {
+    padding: 0 20px;
 }
 
 .background-image {
@@ -8,12 +35,16 @@
     height: 100vh;
 
     position: absolute;
-    background: url(assets/images/day/01.jpg);
+    z-index: -10;
 
-		&__wrapper {}
+		&__img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
 }
 .list-img {
-
+    position: absolute;
 		&__figure {}
 
 		&__wrapper-img {}
@@ -21,18 +52,82 @@
 		&__img {}
 }
 .flicker {
-
+    position: absolute;
 		&__color {}
 }
 .top {
+    padding: 10px 0 0 0;
+    .content {
+        display: flex;
+        justify-content: space-between;
+    }
+
 }
 .img-change {
+    display: flex;
+    align-items: center;
 
-		&__change {}
+        &__img-wrapper {
 
-		&__right {}
+        }
+        &__img {
+            width: 50px;
+            height: 50px;
 
-		&__left {}
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 2px solid rgba($color: #000000, $alpha: 0.7);
+            border-radius: 100%;
+
+            background: rgba($color: #fff, $alpha: 0.5);
+            transition: .5s;
+        }
+        &__img.animated {
+            -webkit-animation: loading2 linear .7s infinite;
+            animation: loading2 linear .7s infinite;
+            
+            transition: .5s;
+        }
+        &__img:hover {
+            cursor: pointer;
+        }
+        &__img-in {
+            object-fit: cover;
+            height: 70%;
+            width: 70%;
+        }
+		&__buttons {
+            display: flex;
+            flex-direction: column;
+
+        }
+		&__right {
+            margin-bottom: 5px;
+            @extend %topButton;
+        }
+
+		&__left {
+            @extend %topButton;
+        }
+
+        &__right:hover {
+            transition: .5s;
+            background-color: rgba($color: #fff, $alpha: 0.9);
+        }
+        &__left:hover {
+            transition: .5s;
+            background-color: rgba($color: #fff, $alpha: 0.9);
+        }
+        &__right:active {
+            transition: 0s;
+            transform: scale(1.05);
+        }
+        &__left:active {
+            transition: 0s;
+            transform: scale(1.05);
+        }
 }
 .weather {
 }

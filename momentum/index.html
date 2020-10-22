@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="background-image">
-        <img src="" alt="" class="background-image__wrapper">
+        <img src="assets/images/day/01.jpg" alt="background img" class="background-image__img">
     </div>
     <div class="list-img">
         <figure class="list-img__figure">
@@ -24,9 +24,15 @@
     <div class="top">
         <div class="content">
             <div class="img-change">
-                <span class="img-change__change"></span>
-                <button class="img-change__right"></button>
-                <button class="img-change__left"></button>
+                <div class="img-change__img-wrapper">
+                    <div class="img-change__img">
+                        <img src="assets/icons/night.png" alt="change time of day" class="img-change__img-in"></img>
+                    </div>
+                </div>
+                <div class="img-change__buttons">
+                    <button class="img-change__right"><span>></span></button>
+                    <button class="img-change__left"><span><</span></button>
+                </div>
             </div>
             <div class="weather">
                 <div class="metric">
@@ -69,6 +75,6 @@
             <span class="quote__text"></span>
         </div>
     </div>
-    
+    <script src="script.js"></script>
 </body>
 </html>
