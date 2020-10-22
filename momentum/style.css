@@ -13,15 +13,26 @@
     transform: rotate(360deg);
   }
 }
+:root {
+  font-size: 10px;
+}
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .img-change__left, .img-change__right {
-  padding: 0px 14px;
-  font-size: 17px;
+  padding: 0px 1.6rem;
+  font-size: 1.9rem;
   border-radius: 50px;
   background-color: rgba(255, 255, 255, 0.5);
+}
+
+.wrapp-all {
+  height: 98vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .content {
@@ -59,8 +70,8 @@ body {
   align-items: center;
 }
 .img-change__img {
-  width: 50px;
-  height: 50px;
+  width: 5.2rem;
+  height: 5.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,6 +98,10 @@ body {
 }
 .img-change__right {
   margin-bottom: 5px;
+  visibility: hidden;
+}
+.img-change__left {
+  visibility: hidden;
 }
 .img-change__right:hover {
   transition: 0.5s;
@@ -103,4 +118,226 @@ body {
 .img-change__left:active {
   transition: 0s;
   transform: scale(1.05);
+}
+
+.img-change:hover .img-change__right {
+  visibility: visible;
+}
+.img-change:hover .img-change__left {
+  visibility: visible;
+}
+
+.main-block {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 0 10px 0;
+}
+.time__text {
+  font-size: 14rem;
+  color: #fff;
+}
+
+#hour.change {
+  color: transparent;
+  transition: 0.5s;
+}
+
+#minutes.change {
+  color: transparent;
+  transition: 0.5s;
+}
+
+.week {
+  padding: 10px 0 0 0;
+}
+.week__today {
+  font-size: 5rem;
+  color: #fff;
+}
+
+.dot-stretching {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  left: 100px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.25, 1.25);
+  animation: dotStretching 2s infinite ease-in;
+  cursor: pointer;
+}
+
+.dot-stretching::before, .dot-stretching::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+.dot-stretching::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8);
+  animation: dotStretchingBefore 2s infinite ease-in;
+}
+
+.dot-stretching::after {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8);
+  animation: dotStretchingAfter 2s infinite ease-in;
+}
+
+@keyframes dotStretching {
+  0% {
+    transform: scale(1.25, 1.25);
+  }
+  50%, 60% {
+    transform: scale(0.8, 0.8);
+  }
+  100% {
+    transform: scale(1.25, 1.25);
+  }
+}
+@keyframes dotStretchingBefore {
+  0% {
+    transform: translate(0) scale(0.7, 0.7);
+  }
+  50%, 60% {
+    transform: translate(-20px) scale(1, 1);
+  }
+  100% {
+    transform: translate(0) scale(0.7, 0.7);
+  }
+}
+@keyframes dotStretchingAfter {
+  0% {
+    transform: translate(0) scale(0.7, 0.7);
+  }
+  50%, 60% {
+    transform: translate(20px) scale(1, 1);
+  }
+  100% {
+    transform: translate(0) scale(0.7, 0.7);
+  }
+}
+.greetings {
+  display: flex;
+  align-items: center;
+  padding: 0 0 10px 0;
+}
+.greetings__welcome {
+  font-size: 4rem;
+  color: #fff;
+}
+.greetings__name {
+  position: relative;
+  font-size: 4rem;
+  color: #fff;
+}
+.greetings__button {
+  font-size: 3rem;
+  background-color: transparent;
+  border-radius: 50px;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.greetings:hover .dot-stretching::after {
+  left: 10px;
+}
+.greetings:hover .dot-stretching::before {
+  right: 10px;
+}
+
+.windowColor {
+  width: 10rem;
+  position: absolute;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.windowColor__blue {
+  width: 100%;
+  margin: 5px;
+  background-color: #009999;
+  cursor: pointer;
+  height: 30px;
+}
+.windowColor__yellow {
+  width: 100%;
+  margin: 5px;
+  background-color: #1240AB;
+  cursor: pointer;
+  height: 30px;
+}
+.windowColor__red {
+  width: 100%;
+  margin: 5px;
+  background-color: #FFAA00;
+  cursor: pointer;
+  height: 30px;
+}
+.windowColor__gray {
+  width: 100%;
+  margin: 5px;
+  background-color: #FF7400;
+  cursor: pointer;
+  height: 30px;
+}
+
+.target {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.target__today {
+  font-size: 3rem;
+  color: #fff;
+}
+
+.todo {
+  display: flex;
+  justify-content: center;
+}
+.todo__done {
+  align-self: center;
+}
+.todo__todo {
+  margin: 0 20px;
+  font-size: 3rem;
+  align-self: center;
+  color: #fff;
+}
+.todo__close {
+  align-self: center;
+  font-size: 4rem;
+  color: #000;
+}
+
+.quote {
+  display: flex;
+  justify-content: center;
+}
+.quote__text {
+  font-size: 3rem;
+  color: rgba(255, 255, 255, 0.8);
 }

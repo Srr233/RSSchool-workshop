@@ -13,18 +13,26 @@
 70% {-webkit-transform: rotate(200deg);}
 100% {-webkit-transform: rotate(360deg);}
 }
+:root {
+    font-size: 10px;
+}
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 %topButton {
-    padding: 0px 14px;
+    padding: 0px 1.6rem;
 
-    font-size: 17px;
+    font-size: 1.9rem;
     border-radius: 50px;
 
     background-color: rgba($color: #fff, $alpha: 0.5);
+}
+.wrapp-all {
+    height: 98vh;
 
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .content {
     padding: 0 20px;
@@ -66,13 +74,12 @@ body {
 .img-change {
     display: flex;
     align-items: center;
-
         &__img-wrapper {
 
         }
         &__img {
-            width: 50px;
-            height: 50px;
+            width: 5.2rem;
+            height: 5.2rem;
 
             display: flex;
             align-items: center;
@@ -106,10 +113,12 @@ body {
 		&__right {
             margin-bottom: 5px;
             @extend %topButton;
+            visibility: hidden;
         }
 
 		&__left {
             @extend %topButton;
+            visibility: hidden;
         }
 
         &__right:hover {
@@ -129,7 +138,27 @@ body {
             transform: scale(1.05);
         }
 }
+.img-change:hover {
+        .img-change__right {
+            visibility: visible;
+        }
+
+		.img-change__left {
+            visibility: visible;
+        }
+    }
 .weather {
+}
+.main-block {
+    width: 80%;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    margin: 0 auto;
+    padding: 20px 0;
 }
 .metric {
 
@@ -142,36 +171,220 @@ body {
 		&__city {}
 }
 .time {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 
-		&__text {}
+    margin: 0 0 10px 0;
+		&__text {
+            font-size: 14rem;
+            color: #fff;
+        }
+}
+#hour.change {
+    color: transparent;
+    transition: .5s;
+}
+#minutes.change {
+    color: transparent;
+    transition: .5s;
 }
 .week {
+    padding: 10px 0 0 0;
 
-		&__smile {}
-
-		&__today {}
+		&__today {
+            font-size: 5rem;
+            color: #fff;
+        }
 }
+.dot-stretching {
+  position: relative;
+  width: 10px;
+  height: 10px;
+
+  left: 100px;
+  border-radius: 5px;
+  background-color: rgba($color: #fff, $alpha: .8);
+  color: rgba($color: #fff, $alpha: .8);
+  transform: scale(1.25, 1.25);
+  animation: dotStretching 2s infinite ease-in;
+  cursor: pointer;
+}
+
+.dot-stretching::before, .dot-stretching::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+.dot-stretching::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: rgba($color: #fff, $alpha: .8);
+  color: rgba($color: #fff, $alpha: .8);
+  animation: dotStretchingBefore 2s infinite ease-in;
+}
+
+.dot-stretching::after {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: rgba($color: #fff, $alpha: .8);
+  color: rgba($color: #fff, $alpha: .8);
+  animation: dotStretchingAfter 2s infinite ease-in;
+}
+
+@keyframes dotStretching {
+  0% {
+    transform: scale(1.25, 1.25);
+  }
+  50%,
+  60% {
+    transform: scale(0.8, 0.8);
+  }
+  100% {
+    transform: scale(1.25, 1.25);
+  }
+}
+
+@keyframes dotStretchingBefore {
+  0% {
+    transform: translate(0) scale(0.7, 0.7);
+  }
+  50%,
+  60% {
+    transform: translate(-20px) scale(1, 1);
+  }
+  100% {
+    transform: translate(0) scale(0.7, 0.7);
+  }
+}
+
+@keyframes dotStretchingAfter {
+  0% {
+    transform: translate(0) scale(0.7, 0.7);
+  }
+  50%,
+  60% {
+    transform: translate(20px) scale(1, 1);
+  }
+  100% {
+    transform: translate(0) scale(0.7, 0.7);
+  }
+}
+
+
+
 .greetings {
+    display: flex;
+    align-items: center;
 
-		&__welcome {}
+    padding: 0 0 10px 0;
+		&__welcome {
+            font-size: 4rem;
+            color: #fff;
+        }
 
-		&__name {}
+		&__name {
+            position: relative;
+            font-size: 4rem;
+            color: #fff;
+    
+        }
+		&__button {
+            font-size: 3rem;
+            background-color: transparent;
 
-		&__button {}
+            border-radius: 50px;
+            border: 2px solid rgba($color: #000000, $alpha: .4);
+
+            color: rgba($color: #fff, $alpha: .7);
+        }
+}
+.greetings:hover {
+    .dot-stretching::after {
+        left: 10px;
+    }
+    .dot-stretching::before {
+        right: 10px;
+    }
+}
+.windowColor {
+    width: 10rem;
+    position: absolute;
+    border-radius: 5px;
+    background: rgba($color: #fff, $alpha: .8);
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    &__blue {
+        width: 100%;
+        margin: 5px;
+        background-color: #009999;
+        cursor: pointer;
+        height: 30px;
+    }
+    &__yellow {
+        width: 100%;
+        margin: 5px;
+        background-color: #1240AB;
+        cursor: pointer;
+        height: 30px;
+    }
+    &__red {
+        width: 100%;
+        margin: 5px;
+        background-color: #FFAA00;
+        cursor: pointer;
+        height: 30px;
+    }
+    &__gray {
+        width: 100%;
+        margin: 5px;
+        background-color: #FF7400;
+        cursor: pointer;
+        height: 30px;
+    }
 }
 .target {
-
-		&__today {}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+		&__today {
+            font-size: 3rem;
+            color: #fff;
+        }
 }
 .todo {
+    display: flex;
+    justify-content: center;
 
-		&__done {}
+		&__done {
+            align-self: center;
+        }
 
-		&__todo {}
+		&__todo {
+            margin: 0 20px;
 
-		&__close {}
+            font-size: 3rem;
+            align-self: center;
+
+            color: #fff;
+        }
+		&__close {
+            align-self: center;
+            font-size: 4rem;
+            color: #000;
+        }
 }
 .quote {
-
-		&__text {}
+    display: flex;
+    justify-content: center;
+		&__text {
+            font-size: 3rem;
+            color: rgba($color: #fff, $alpha: .8);
+        }
 }

@@ -7,74 +7,73 @@
     <title>Momentum</title>
 </head>
 <body>
-    <div class="background-image">
-        <img src="assets/images/day/01.jpg" alt="background img" class="background-image__img">
-    </div>
-    <div class="list-img">
-        <figure class="list-img__figure">
-            <div class="list-img__wrapper-img">
-                <img src="" alt="" class="list-img__img">
-            </div>
-            <figcaption></figcaption>
-        </figure>
-    </div>
-    <div class="flicker">
-        <div class="flicker__color"></div>
-    </div>
-    <div class="top">
-        <div class="content">
-            <div class="img-change">
-                <div class="img-change__img-wrapper">
-                    <div class="img-change__img">
-                        <img src="assets/icons/night.png" alt="change time of day" class="img-change__img-in"></img>
+    <div class="wrapp-all">
+        <div class="background-image">
+            <img src="assets/images/evening/05.jpg" alt="background img" class="background-image__img">
+        </div>
+        <div class="list-img">
+            <figure class="list-img__figure">
+                <div class="list-img__wrapper-img">
+                    <img src="" alt="" class="list-img__img">
+                </div>
+                <figcaption></figcaption>
+            </figure>
+        </div>
+        <div class="flicker">
+            <div class="flicker__color"></div>
+        </div>
+        <div class="top">
+            <div class="content">
+                <div class="img-change">
+                    <div class="img-change__img-wrapper">
+                        <div class="img-change__img">
+                            <img src="assets/icons/night.png" alt="change time of day" class="img-change__img-in"></img>
+                        </div>
+                    </div>
+                    <div class="img-change__buttons">
+                        <button class="img-change__right"><span>></span></button>
+                        <button class="img-change__left"><span><</span></button>
                     </div>
                 </div>
-                <div class="img-change__buttons">
-                    <button class="img-change__right"><span>></span></button>
-                    <button class="img-change__left"><span><</span></button>
-                </div>
-            </div>
-            <div class="weather">
-                <div class="metric">
-                    <span class="metric__icon"></span>
-                    <span class="metric__temp"></span>
-                    <span class="metric__cels"></span>
-                    <span class="metric__city"></span>
+                <div class="weather">
+                    <div class="metric">
+                        <span class="metric__icon"></span>
+                        <span class="metric__temp"></span>
+                        <span class="metric__cels"></span>
+                        <span class="metric__city"></span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="time">
         <div class="content">
-            <div class="week">
-                <span class="week__smile"></span>
-                <span class="week__today"></span>
+            <div class="main-block">
+                <div class="time">
+                    <div class="week">
+                        <span class="week__today"></span>
+                    </div>
+                    <time class="time__text"><span id="hour"></span>:<span id="minutes"></span></time>
+                </div>
+                <div class="greetings">
+                        <span class="greetings__welcome">Salute, </span>
+                        <span class="greetings__name" contenteditable="true">(Enter your name please)</span>
+                        <div class="dot-stretching"></div>
+                </div>
             </div>
-            <time class="time__text"></time>
-        </div>
-    </div>
-    <div class="greetings">
-        <div class="content">
-            <span class="greetings__welcome">Salute, </span>
-            <span class="greetings__name">(Enter your name please)</span>
-            <button class="greetings__button">...</button>
-        </div>
-    </div>
-    <div class="target">
-        <div class="content">
-            <span class="target__today">Today</span>
-            <div class="todo">
-                <input type="checkbox" class="todo__done" value="false">
-                <div class="todo__todo"></div>
-                <div class="todo__close"></div>
+            <div class="target">
+                <span class="target__today">What is your focus today?</span>
+                <div class="todo">
+                    <input type="checkbox" class="todo__done" value="false">
+                    <div class="todo__todo" contenteditable="true">Enter your focus</div>
+                    <div class="todo__close">x</div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="quote">
         <div class="content">
-            <span class="quote__text"></span>
+            <div class="quote">
+                    <span class="quote__text">"Every time we need to be closer..."</span>
+            </div>
         </div>
-    </div>
     <script src="script.js"></script>
+    </div>
 </body>
 </html>
