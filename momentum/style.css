@@ -134,6 +134,7 @@ body {
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
+  margin-bottom: 10px;
   padding: 20px 0;
 }
 
@@ -315,22 +316,41 @@ body {
 }
 
 .todo {
+  position: relative;
   display: flex;
   justify-content: center;
+  height: 49px;
 }
 .todo__done {
-  align-self: center;
+  width: 50rem;
+  margin-top: 3px;
+  background: transparent;
+  border-bottom: 3px solid #fff;
+  font-size: 3rem;
+  color: #fff;
+  text-align: center;
 }
 .todo__todo {
-  margin: 0 20px;
+  margin: 0 10px;
+  display: none;
   font-size: 3rem;
   align-self: center;
   color: #fff;
 }
 .todo__close {
+  position: absolute;
+  display: none;
   align-self: center;
-  font-size: 4rem;
-  color: #000;
+  font-size: 2rem;
+  right: -20px;
+  color: rgba(255, 255, 255, 0.6);
+  transition: 0.5s;
+}
+
+.todo:hover .todo__close {
+  transition: 0.5s;
+  color: white;
+  cursor: pointer;
 }
 
 .quote {

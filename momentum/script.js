@@ -1,5 +1,26 @@
 "Use strict";
 
+const focus = document.querySelector('.todo__todo');
+const closeTodo = document.querySelector('.todo__close');
+const inputFocus = document.querySelector('.todo__done');
+const name = document.querySelector('.greetings__name');
+
+let myLocalStorage = JSON.parse(localStorage.getItem('momentum'));
+if (myLocalStorage) {
+    if (myLocalStorage.name) {
+        name.textContent = myLocalStorage.name.length ? myLocalStorage.name : '(Enter your name.)';
+    }
+    if (myLocalStorage.focus) {
+        if (myLocalStorage.focus.today === new Date().getDate()) {
+            if (myLocalStorage.focus.text) {
+                focus.textContent = myLocalStorage.focus.text;
+                inputFocus.style.display = 'none';
+                focus.style.display = 'block';
+                closeTodo.style.display = 'block';
+            }
+        }
+    }
+} else myLocalStorage = {};
 
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -52,9 +73,8 @@ for (let i = 0; i < changeImgButtons.length; i++) {
 
 //-----------------------------------------------------NAME----------------------------------------------------------------------
 
-const name = document.querySelector('.greetings__name');
 name.addEventListener('keypress', setName);
-
+name.addEventListener('click', setName);
 function setName(e) {
     if (e.keyCode === 13) {
         if (!myLocalStorage) {
@@ -64,27 +84,47 @@ function setName(e) {
         } else myLocalStorage.name = name.textContent;
         localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
         name.blur();
+    } else if (e.keyCode === undefined) {
+        //!!!!!
     }
 }
 
 //-----------------------------------------------------FOCUS----------------------------------------------------------------------
 
-const focus = document.querySelector('.todo__todo');
 focus.addEventListener('keypress', setFocus);
+inputFocus.addEventListener('keypress', setFocus);
 
 function setFocus(e) {
     if (e.keyCode === 13) {
         if (!myLocalStorage.focus) {
             myLocalStorage.focus = {
-                    text: focus.textContent,
+                    text: focus.textContent !== '(Enter your focus)' || inputFocus.value,
                     today: new Date().getDate()
                 }
+                focus.textContent = myLocalStorage.focus.text;
+            } else {
+                myLocalStorage.focus.text = e.target === focus ? focus.textContent : inputFocus.value;
+                focus.textContent = myLocalStorage.focus.text;
             }
-        } else myLocalStorage.focus.text = focus.textContent;
+        focus.blur();
+        localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
 
-    focus.blur();
-    localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
+        if (e.target === inputFocus) {
+            inputFocus.style.display = 'none';
+            focus.style.display = 'block';
+            closeTodo.style.display = 'block';
+        }
+    }
 }
+
+//----------------------------------------------------CLOSE-TODO-----------------------------------------------------------------------
+
+closeTodo.addEventListener('click', (e) => {
+    closeTodo.style.display = 'none';
+    focus.style.display = 'none';
+    inputFocus.style.display = 'block';
+    inputFocus.value = '';
+});
 
 //----------------------------------------------------DOTS-----------------------------------------------------------------------
 
@@ -119,19 +159,7 @@ document.body.addEventListener('click', () => {
     let delWindow = document.querySelector('.windowColor');
     if (delWindow) delWindow.remove();
 })
-let myLocalStorage = JSON.parse(localStorage.getItem('momentum'));
 
-if (myLocalStorage) {
-    if (myLocalStorage.name.length) {
-        name.textContent = myLocalStorage.name;
-    } else name.textContent = 'Enter your name.';
-
-    if (myLocalStorage.focus) {
-        if (myLocalStorage.focus.today === new Date().getDate()) { 
-            focus.textContent = myLocalStorage.focus.today;
-        } else focus.textContent = 'Enter your focus.';
-    }
-}
 
 
 showTime(true);
