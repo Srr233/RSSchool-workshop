@@ -289,10 +289,19 @@ body {
         }
 
 		&__name {
+            display: none;
             position: relative;
             font-size: 4rem;
             color: #fff;
     
+        }
+        &__enter-name {
+            background: transparent;
+            border-bottom: 3px solid #fff;
+
+            font-size: 3rem;
+            color: #fff;
+            text-align: center;
         }
 		&__button {
             font-size: 3rem;
@@ -383,17 +392,6 @@ body {
             font-size: 3rem;
             align-self: center;
             color: #fff;
-        }
-		&__close {
-            position: absolute;
-
-            display: none;
-            align-self: center;
-            font-size: 2rem;
-
-            right: -20px;
-            color: rgba($color: #fff, $alpha: .6);
-            transition: .5s;
         }
 }
 .todo:hover {

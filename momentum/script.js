@@ -1,14 +1,18 @@
 "Use strict";
+import opencage from 'opencage-api-client';
 
 const focus = document.querySelector('.todo__todo');
-const closeTodo = document.querySelector('.todo__close');
-const inputFocus = document.querySelector('.todo__done');
 const name = document.querySelector('.greetings__name');
+const inputFocus = document.querySelector('.todo__done');
+const inputGreetings = document.querySelector('.greetings__enter-name');
+
 
 let myLocalStorage = JSON.parse(localStorage.getItem('momentum'));
 if (myLocalStorage) {
     if (myLocalStorage.name) {
-        name.textContent = myLocalStorage.name.length ? myLocalStorage.name : '(Enter your name.)';
+        name.textContent = myLocalStorage.name;
+        name.style.display = 'block';
+        inputGreetings.style.display = 'none';
     }
     if (myLocalStorage.focus) {
         if (myLocalStorage.focus.today === new Date().getDate()) {
@@ -16,9 +20,13 @@ if (myLocalStorage) {
                 focus.textContent = myLocalStorage.focus.text;
                 inputFocus.style.display = 'none';
                 focus.style.display = 'block';
-                closeTodo.style.display = 'block';
+            } else {
+                myLocalStorage.focus.today = new Date().getDate();
             }
         }
+    }
+    if (myLocalStorage.name) {
+        
     }
 } else myLocalStorage = {};
 
@@ -74,28 +82,40 @@ for (let i = 0; i < changeImgButtons.length; i++) {
 //-----------------------------------------------------NAME----------------------------------------------------------------------
 
 name.addEventListener('keypress', setName);
-name.addEventListener('click', setName);
+name.addEventListener('click', clickName);
+inputGreetings.addEventListener('keypress', setName);
 function setName(e) {
     if (e.keyCode === 13) {
-        if (!myLocalStorage) {
-            myLocalStorage = {
-                name: name.textContent
-            }
-        } else myLocalStorage.name = name.textContent;
+        myLocalStorage.name = inputGreetings.value;
+        name.textContent = inputGreetings.value;
+
+        name.style.display = 'block';
+        inputGreetings.style.display = 'none';
+
         localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
-        name.blur();
-    } else if (e.keyCode === undefined) {
-        //!!!!!
+    } else {
+
     }
+}
+
+function clickName(e) {
+    name.style.display = 'none';
+    inputGreetings.style.display = 'block';
+    inputGreetings.value = '';
+    inputGreetings.setAttribute('autofocus', '');
+
+    e.stopPropagation();
 }
 
 //-----------------------------------------------------FOCUS----------------------------------------------------------------------
 
 focus.addEventListener('keypress', setFocus);
+focus.addEventListener('click', clickFocus);
 inputFocus.addEventListener('keypress', setFocus);
 
 function setFocus(e) {
     if (e.keyCode === 13) {
+        
         if (!myLocalStorage.focus) {
             myLocalStorage.focus = {
                     text: focus.textContent !== '(Enter your focus)' || inputFocus.value,
@@ -104,27 +124,26 @@ function setFocus(e) {
                 focus.textContent = myLocalStorage.focus.text;
             } else {
                 myLocalStorage.focus.text = e.target === focus ? focus.textContent : inputFocus.value;
+            if (myLocalStorage.focus.today !== new Date().getDate()) myLocalStorage.focus.today = new Date().getDate();
                 focus.textContent = myLocalStorage.focus.text;
             }
         focus.blur();
         localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
-
         if (e.target === inputFocus) {
             inputFocus.style.display = 'none';
             focus.style.display = 'block';
-            closeTodo.style.display = 'block';
         }
     }
 }
 
-//----------------------------------------------------CLOSE-TODO-----------------------------------------------------------------------
-
-closeTodo.addEventListener('click', (e) => {
-    closeTodo.style.display = 'none';
+function clickFocus(e) {
     focus.style.display = 'none';
     inputFocus.style.display = 'block';
+    inputFocus.setAttribute('autofocus', '');
     inputFocus.value = '';
-});
+
+    e.stopPropagation();
+}
 
 //----------------------------------------------------DOTS-----------------------------------------------------------------------
 
@@ -155,12 +174,50 @@ function color(color) {
     colorBlock.classList.add(`windowColor__${color}`);
     return colorBlock;
 }
-document.body.addEventListener('click', () => {
+document.body.addEventListener('click', e => {
     let delWindow = document.querySelector('.windowColor');
     if (delWindow) delWindow.remove();
+    if (inputFocus.style.display === 'block' && inputGreetings.style.display === 'block') {
+        inputFocus.style.display = 'none';
+        focus.style.display = 'block';
+        inputGreetings.style.display = 'none';
+        name.style.display = 'block';
+    }
+    if (focus.style.display === 'none' && e.target !== inputFocus) {
+        inputFocus.style.display = 'none';
+        focus.style.display = 'block';
+    } else if (e.target !== inputGreetings) {
+        inputGreetings.style.display = 'none';
+        name.style.display = 'block';
+    }
 })
 
 
 
 showTime(true);
 showWeek(true);
+
+async function getWeather() {
+    let coords = await new Promise ((resolve, reject) => {
+                                navigator.geolocation.getCurrentPosition(e => {
+                                    resolve(e);
+                                });
+                            });
+    const lat = coords.coords.latitude;
+    const long = coords.coords.longitude;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=Краснодар&lang=ru&appid=3272373a93d358d7bfb7d5c4eb52994b&units=metric`;
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.weather[0].id, data.weather[0].description, data.main.temp);
+}
+getCity()
+getWeather()
+
+function getCity(coords) {
+    let openForCage = opencage;
+    let b;
+   
+    //Opencage.geocode({ q: '37.4396, -122.1864', language: "fr" }).then(data => {
+  //      console.log(JSON.stringify(data));
+   // })
+}
