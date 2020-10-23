@@ -1,5 +1,4 @@
 "Use strict";
-import opencage from 'opencage-api-client';
 
 const focus = document.querySelector('.todo__todo');
 const name = document.querySelector('.greetings__name');
@@ -196,6 +195,18 @@ document.body.addEventListener('click', e => {
 
 showTime(true);
 showWeek(true);
+getWeather();
+
+//------------------------------------------------------------------GET-WEATHER---------------------------------------------------------
+
+const opencage = {
+    key: '4e08c7c60406449f9d030060501dc4d9',
+    url: 'https://api.opencagedata.com',
+
+    getRequestUrl(query, lang) {
+        return `${this.url}/geocode/v1/json?q=${query}&key=${this.key}&language=${lang}&pretty=1&no_annotations=1`;
+    },
+};
 
 async function getWeather() {
     let coords = await new Promise ((resolve, reject) => {
@@ -205,19 +216,21 @@ async function getWeather() {
                             });
     const lat = coords.coords.latitude;
     const long = coords.coords.longitude;
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=Краснодар&lang=ru&appid=3272373a93d358d7bfb7d5c4eb52994b&units=metric`;
+
+    let city = await getCity(`${lat},${long}`);
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ city }&lang=ru&appid=3272373a93d358d7bfb7d5c4eb52994b&units=metric`
     const res = await fetch(url);
     const data = await res.json();
     console.log(data.weather[0].id, data.weather[0].description, data.main.temp);
 }
-getCity()
-getWeather()
 
-function getCity(coords) {
-    let openForCage = opencage;
-    let b;
-   
-    //Opencage.geocode({ q: '37.4396, -122.1864', language: "fr" }).then(data => {
-  //      console.log(JSON.stringify(data));
-   // })
+async function getCity(coords) {
+    const url = opencage.getRequestUrl(coords, 'ru');
+    const response = await fetch(url)
+    const data = await response.json();
+    return data.results[0].components.city;
+}
+
+function getWeatherCurrent (idIcon, description, temperature) {
+    
 }
