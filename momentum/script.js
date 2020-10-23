@@ -1,9 +1,17 @@
 "Use strict";
-
 const focus = document.querySelector('.todo__todo');
 const name = document.querySelector('.greetings__name');
 const inputFocus = document.querySelector('.todo__done');
 const inputGreetings = document.querySelector('.greetings__enter-name');
+
+const opencage = {
+    key: '4e08c7c60406449f9d030060501dc4d9',
+    url: 'https://api.opencagedata.com',
+
+    getRequestUrl(query, lang) {
+        return `${this.url}/geocode/v1/json?q=${query}&key=${this.key}&language=${lang}&pretty=1&no_annotations=1`;
+    },
+};
 
 
 let myLocalStorage = JSON.parse(localStorage.getItem('momentum'));
@@ -24,12 +32,12 @@ if (myLocalStorage) {
             }
         }
     }
-    if (myLocalStorage.name) {
-        
+    if (myLocalStorage.geolocation) {
+        showWeather();
     }
 } else myLocalStorage = {};
 
-//---------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------SHOW-TIME--------------------------------------------------------------
 
 function showTime (start) {
     const TIME = [document.querySelector('#hour'), document.querySelector('#minutes')];
@@ -126,7 +134,7 @@ function setFocus(e) {
             if (myLocalStorage.focus.today !== new Date().getDate()) myLocalStorage.focus.today = new Date().getDate();
                 focus.textContent = myLocalStorage.focus.text;
             }
-        focus.blur();
+        
         localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
         if (e.target === inputFocus) {
             inputFocus.style.display = 'none';
@@ -138,7 +146,6 @@ function setFocus(e) {
 function clickFocus(e) {
     focus.style.display = 'none';
     inputFocus.style.display = 'block';
-    inputFocus.setAttribute('autofocus', '');
     inputFocus.value = '';
 
     e.stopPropagation();
@@ -146,8 +153,7 @@ function clickFocus(e) {
 
 //----------------------------------------------------DOTS-----------------------------------------------------------------------
 
-const dots = document.querySelector('.dot-stretching');
-
+const dots = document.querySelector('.dot');
 dots.addEventListener('click', showMoreColor);
 
 function showMoreColor(e) {
@@ -171,8 +177,98 @@ function showMoreColor(e) {
 function color(color) {
     const colorBlock = document.createElement('div');
     colorBlock.classList.add(`windowColor__${color}`);
+    colorBlock.addEventListener('click', () => {changeColor(color)});
     return colorBlock;
 }
+function changeColor(color) {
+    name.classList.toggle(`${color}`);
+    setTimeout(() => changeColor(color), 1000);
+}
+
+//------------------------------------------------------------------GET-WEATHER---------------------------------------------------------
+
+async function showWeather(userCity) {
+    let coords;
+    let city;
+    let currentCords = '';
+    if (!userCity) {
+        if (!myLocalStorage.geolocation) {
+            coords = await new Promise ((resolve, reject) => {
+                                    navigator.geolocation.getCurrentPosition(e => {
+                                        if(e) {
+                                            resolve(e);
+                                        } else alert('Разрешите узнать вашу геолокацию, ну пожалуйста :3');
+                                        console.log(e);
+                                    });
+                                });
+            currentCords = `${coords.coords.latitude},${coords.coords.longitude}`;
+            myLocalStorage.geolocation = currentCords;
+        } else currentCords = myLocalStorage.geolocation;
+        city = userCity || await getCity(currentCords);
+    } else city = userCity;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ city }&lang=ru&appid=3272373a93d358d7bfb7d5c4eb52994b&units=metric`
+    const res = await fetch(url);
+    const data = await res.json();
+    await showWeatherCurrent(data.weather[0].id, data.weather[0].description, data.main.temp, city);
+    localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
+}
+
+async function getCity(coords) {
+    const url = opencage.getRequestUrl(coords, 'ru');
+    const response = await fetch(url)
+    const data = await response.json();
+    return data.results[0].components.city;
+}
+
+async function showWeatherCurrent (idIcon, description, temp, city) {
+    const weatherIcon = document.querySelector('.weather-icon');
+    const temperature = document.querySelector('.temperature');
+    const weatherDescription = document.querySelector('.weather-description');
+    const cityUser = document.querySelector('.metric__city');
+
+    cityUser.textContent = city;
+    weatherIcon.classList.add(`owf-${idIcon}`);
+    temperature.textContent = temp + "°";
+    weatherDescription.textContent = description;   
+}
+//------------------------------------------------------------------METRIC---------------------------------------------------------
+const metric = document.querySelector('.metric');
+const metricCity = document.querySelector('.metric__city');
+const inputCity = document.querySelector('.weather__newCity');
+
+inputCity.addEventListener('keypress', setCity);
+metric.addEventListener('click', searchWeather);
+
+function searchWeather(e) {
+    const boundRect = metric.getBoundingClientRect();
+    inputCity.style.top = `${boundRect.height + 5}px`;
+    inputCity.style.left = '0';
+    inputCity.style.display = 'block';
+
+    e.stopPropagation();
+}
+
+function setCity(e) {
+    if (e.keyCode === 13) {
+        if (!myLocalStorage.city) {
+            myLocalStorage.city = inputCity.value;
+            metricCity.textContent = inputCity.value;
+        } else {
+            myLocalStorage.city = inputCity.value ? inputCity.value : myLocalStorage.city;
+        }
+        if (inputCity.value) {
+            inputCity.style.display = 'none';
+            showWeather(inputCity.value);
+            metricCity.textContent = inputCity.value;
+            inputCity.value = '';
+            
+        }
+        localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
+    }
+}
+
+//-----------------------------------------------------------------BODY-EVENT--------------------------------------------------------------
+
 document.body.addEventListener('click', e => {
     let delWindow = document.querySelector('.windowColor');
     if (delWindow) delWindow.remove();
@@ -189,48 +285,11 @@ document.body.addEventListener('click', e => {
         inputGreetings.style.display = 'none';
         name.style.display = 'block';
     }
-})
+    if (inputCity.style.display !== 'none' && e.target !== inputCity) inputCity.style.display = 'none';
+});
 
+//---------------------------------------------------------------------------------------------------------------------------------------------
 
-
-showTime(true);
+//showTime(true);
 showWeek(true);
-getWeather();
-
-//------------------------------------------------------------------GET-WEATHER---------------------------------------------------------
-
-const opencage = {
-    key: '4e08c7c60406449f9d030060501dc4d9',
-    url: 'https://api.opencagedata.com',
-
-    getRequestUrl(query, lang) {
-        return `${this.url}/geocode/v1/json?q=${query}&key=${this.key}&language=${lang}&pretty=1&no_annotations=1`;
-    },
-};
-
-async function getWeather() {
-    let coords = await new Promise ((resolve, reject) => {
-                                navigator.geolocation.getCurrentPosition(e => {
-                                    resolve(e);
-                                });
-                            });
-    const lat = coords.coords.latitude;
-    const long = coords.coords.longitude;
-
-    let city = await getCity(`${lat},${long}`);
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ city }&lang=ru&appid=3272373a93d358d7bfb7d5c4eb52994b&units=metric`
-    const res = await fetch(url);
-    const data = await res.json();
-    console.log(data.weather[0].id, data.weather[0].description, data.main.temp);
-}
-
-async function getCity(coords) {
-    const url = opencage.getRequestUrl(coords, 'ru');
-    const response = await fetch(url)
-    const data = await response.json();
-    return data.results[0].components.city;
-}
-
-function getWeatherCurrent (idIcon, description, temperature) {
-    
-}
+showWeather();

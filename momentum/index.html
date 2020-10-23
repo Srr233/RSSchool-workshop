@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css_fonts/owfont-regular.css">
     <link rel="stylesheet" href="style.css">
     <title>Momentum</title>
 </head>
@@ -37,11 +38,14 @@
                 </div>
                 <div class="weather">
                     <div class="metric">
-                        <span class="metric__icon"></span>
-                        <span class="metric__temp"></span>
-                        <span class="metric__cels"></span>
-                        <span class="metric__city"></span>
+                        <i class="weather-icon owf"></i>
+                        <div class="weather__wrapper">
+                            <div class="temperature"></div>
+                            <div class="weather-description"></div>
+                            <span class="metric__city"></span>
+                        </div>
                     </div>
+                    <input type="text" class="weather__newCity">
                 </div>
             </div>
         </div>
@@ -57,7 +61,9 @@
                         <span class="greetings__welcome">Salute, </span>
                         <input type="text" class="greetings__enter-name" value="">
                         <span class="greetings__name" contenteditable="true"></span>
-                        <div class="dot-stretching"></div>
+                        <div class="dot">
+                            <div class="dot-stretching"></div>
+                        </div>
                 </div>
             </div>
             <div class="target">

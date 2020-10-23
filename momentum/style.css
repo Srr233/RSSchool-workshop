@@ -28,6 +28,11 @@ body {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
+.dot-stretching::after, .dot-stretching::before, .dot-stretching {
+  width: 5px;
+  height: 5px;
+}
+
 .wrapp-all {
   height: 98vh;
   display: flex;
@@ -138,6 +143,47 @@ body {
   padding: 20px 0;
 }
 
+.weather {
+  position: relative;
+  color: #fff;
+}
+.weather__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.weather__newCity {
+  width: 100%;
+  position: absolute;
+  display: none;
+  background: transparent;
+  border-bottom: 3px solid #fff;
+  font-size: 2rem;
+  color: #fff;
+  text-align: center;
+}
+
+.metric {
+  display: flex;
+}
+.metric:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.owf {
+  font-size: 7rem;
+}
+
+.temperature {
+  font-size: 4rem;
+}
+
+.weather-description {
+  text-align: center;
+  font-size: 2rem;
+}
+
 .time {
   display: flex;
   align-items: center;
@@ -167,17 +213,28 @@ body {
   color: #fff;
 }
 
+.dot {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border-radius: 50px;
+  right: -100px;
+}
+
+.dot:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
 .dot-stretching {
   position: relative;
-  width: 10px;
-  height: 10px;
-  left: 100px;
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.8);
   color: rgba(255, 255, 255, 0.8);
-  transform: scale(1.25, 1.25);
-  animation: dotStretching 2s infinite ease-in;
-  cursor: pointer;
 }
 
 .dot-stretching::before, .dot-stretching::after {
@@ -188,57 +245,21 @@ body {
 }
 
 .dot-stretching::before {
-  width: 10px;
-  height: 10px;
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.8);
   color: rgba(255, 255, 255, 0.8);
-  animation: dotStretchingBefore 2s infinite ease-in;
+  left: 10px;
 }
 
 .dot-stretching::after {
-  width: 10px;
-  height: 10px;
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.8);
   color: rgba(255, 255, 255, 0.8);
-  animation: dotStretchingAfter 2s infinite ease-in;
+  right: 10px;
 }
 
-@keyframes dotStretching {
-  0% {
-    transform: scale(1.25, 1.25);
-  }
-  50%, 60% {
-    transform: scale(0.8, 0.8);
-  }
-  100% {
-    transform: scale(1.25, 1.25);
-  }
-}
-@keyframes dotStretchingBefore {
-  0% {
-    transform: translate(0) scale(0.7, 0.7);
-  }
-  50%, 60% {
-    transform: translate(-20px) scale(1, 1);
-  }
-  100% {
-    transform: translate(0) scale(0.7, 0.7);
-  }
-}
-@keyframes dotStretchingAfter {
-  0% {
-    transform: translate(0) scale(0.7, 0.7);
-  }
-  50%, 60% {
-    transform: translate(20px) scale(1, 1);
-  }
-  100% {
-    transform: translate(0) scale(0.7, 0.7);
-  }
-}
 .greetings {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 0 0 10px 0;
@@ -248,6 +269,7 @@ body {
   color: #fff;
 }
 .greetings__name {
+  transition: 1s;
   display: none;
   position: relative;
   font-size: 4rem;
@@ -256,6 +278,7 @@ body {
 .greetings__enter-name {
   background: transparent;
   border-bottom: 3px solid #fff;
+  transition: 1s;
   font-size: 3rem;
   color: #fff;
   text-align: center;
@@ -266,13 +289,6 @@ body {
   border-radius: 50px;
   border: 2px solid rgba(0, 0, 0, 0.4);
   color: rgba(255, 255, 255, 0.7);
-}
-
-.greetings:hover .dot-stretching::after {
-  left: 10px;
-}
-.greetings:hover .dot-stretching::before {
-  right: 10px;
 }
 
 .windowColor {
@@ -311,6 +327,26 @@ body {
   background-color: #FF7400;
   cursor: pointer;
   height: 30px;
+}
+
+.blue {
+  transition: 1s;
+  color: #009999;
+}
+
+.yellow {
+  transition: 1s;
+  color: #1240AB;
+}
+
+.red {
+  transition: 1s;
+  color: #FFAA00;
+}
+
+.gray {
+  transition: 1s;
+  color: #FF7400;
 }
 
 .target {
