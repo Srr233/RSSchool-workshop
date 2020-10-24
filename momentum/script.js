@@ -235,7 +235,6 @@ async function showWeather(userCity) {
         metricCity.textContent = myLocalStorage.prevCity;
         document.querySelector('.metric').style.display = 'flex';
         document.querySelector('.weather__load').style.display = 'none';
-        return
     }
 }
 
@@ -256,7 +255,7 @@ async function showWeatherCurrent (idIcon, description, temp, city) {
     cityUser.textContent = city;
     weatherIcon.classList.add(`owf-${idIcon}`);
     temperature.textContent = temp + "°";
-    weatherDescription.textContent = description;   
+    weatherDescription.textContent = description;
 }
 //------------------------------------------------------------------METRIC---------------------------------------------------------
 const metric = document.querySelector('.metric');
@@ -313,7 +312,7 @@ document.body.addEventListener('click', e => {
     if (focus.style.display === 'none' && e.target !== inputFocus) {
         inputFocus.style.display = 'none';
         focus.style.display = 'block';
-    } else if (e.target !== inputGreetings) {
+    } else if (e.target !== inputGreetings && name.textContent.length) {
         inputGreetings.style.display = 'none';
         name.style.display = 'block';
     }
@@ -329,38 +328,17 @@ rightClick.addEventListener('click', () => { setBackgroundImage(currentImg, 'rig
 leftClick.addEventListener('click', () => { setBackgroundImage(currentImg, 'left') });
 
 function setBackgroundImage (current, direction) {
+    rightClick.setAttribute('disabled', '');
+    leftClick.setAttribute('disabled', '');
     document.querySelector('.img-change__img').classList.add('animated');
 
     const images = ['01.jpg', '02.jpg', '03.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', 
     '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'];
     
-    const img = document.querySelector('.background-image__img');
+    const img = document.querySelector('.background-image');
     const greeting = document.querySelector('.greetings__welcome');
     const today = new Date();
     const hour = today.getHours();
-
-    const newImg = document.createElement('img');
-    newImg.classList.add('background-image__img');
-    newImg.setAttribute('alt', 'background img');
-    newImg.onload = load;
-
-    rightClick.setAttribute('disabled', '');
-    leftClick.setAttribute('disabled', '');
-
-    function load () {
-        img.classList.add('delete');
-        newImg.classList.add('delete');
-        setTimeout(() => {
-            img.remove();
-            document.querySelector('.background-image').append(newImg);
-            setTimeout(() => {
-                newImg.classList.remove('delete');
-                rightClick.removeAttribute('disabled', '');
-                leftClick.removeAttribute('disabled', '');
-                document.querySelector('.img-change__img').classList.remove('animated');
-            }, 500);
-        }, 500);
-    }
 
     let imgCurrent = images[current];
     if (!direction) imgCurrent = current === 18 ? '01.jpg' : images[current + 1]; 
@@ -377,21 +355,26 @@ function setBackgroundImage (current, direction) {
         break;
     }
     if (hour < 6 ) {
-        newImg.src = `assets/images/night/${imgCurrent}`;
+        img.style.background = `url(assets/images/night/${imgCurrent})`;
         greeting.textContent = 'Good night, ';
     } else if (hour < 12) {
-        newImg.src = `assets/images/morning/${imgCurrent}`;
+        img.style.background = `url(assets/images/morning/${imgCurrent})`;
         greeting.textContent = 'Good morning, ';
         
     } else if (hour < 18) {
-        newImg.src = `assets/images/day/${imgCurrent}`;
+        img.style.background = `url(assets/images/day/${imgCurrent})`;
         greeting.textContent = 'Good day, ';
     } else {
-        newImg.src = `assets/images/evening/${imgCurrent}`;
+        img.style.background = `url(assets/images/evening/${imgCurrent})`;
         greeting.textContent = 'Good evening, ';
     }
 
     currentImg = images.indexOf(imgCurrent);
+    setTimeout(() => {
+        rightClick.removeAttribute('disabled', '');
+        leftClick.removeAttribute('disabled', '');
+        document.querySelector('.img-change__img').classList.remove('animated');
+    }, 1000);
     setTimeout(() => setBackgroundImage(images.indexOf(imgCurrent)), 3600000);
 }
 const quote = document.querySelector('.quote');
@@ -407,10 +390,14 @@ async function getQuote() {
 }
 quote.addEventListener('click', getQuote);
 
-
-showWeather();
-getQuote();
 setBackgroundImage(-1);
-showTime(true);
 showWeek(true);
+showTime(true);
+Promise.all([getQuote(), showWeather()]).then(resolve => {
+    document.querySelector('.doggy').style.display = 'none';
+}, reject => {
+    document.querySelector('.doggy').style.display = 'none';
+    alert('Some problems in quote load, please reload the quote!');
+});
+
 

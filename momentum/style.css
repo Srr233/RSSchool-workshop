@@ -13,11 +13,12 @@
 
 body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  text-shadow: 1px 1px 2px #000;
 }
 
 .img-change__left, .img-change__right {
-  padding: 0px 1.6rem;
-  font-size: 1.9rem;
+  padding: 0px 1.6em;
+  font-size: 1.9em;
   border-radius: 50px;
   background-color: rgba(255, 255, 255, 0.5);
 }
@@ -25,6 +26,22 @@ body {
 .dot-stretching::after, .dot-stretching::before, .dot-stretching {
   width: 5px;
   height: 5px;
+}
+
+.doggy {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+.doggy__img {
+  object-fit: cover;
+  height: 50%;
+  width: 50%;
 }
 
 .wrapp-all {
@@ -41,6 +58,8 @@ body {
 .background-image {
   width: 100vw;
   height: 100vh;
+  background: url(assets/images/evening/03.jpg);
+  transition: background-image 1s ease-in-out;
   position: absolute;
   z-index: -10;
 }
@@ -65,6 +84,7 @@ body {
 
 .top {
   padding: 10px 0 0 0;
+  font-size: 10px;
 }
 .top .content {
   display: flex;
@@ -76,8 +96,8 @@ body {
   align-items: center;
 }
 .img-change__img {
-  width: 5.2rem;
-  height: 5.2rem;
+  width: 5.2em;
+  height: 5.2em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -169,7 +189,7 @@ body {
   display: none;
   background: transparent;
   border-bottom: 3px solid #fff;
-  font-size: 2rem;
+  font-size: 2em;
   color: #fff;
   text-align: center;
 }
@@ -177,22 +197,26 @@ body {
 .metric {
   display: flex;
 }
+.metric__city {
+  font-size: 2em;
+}
+
 .metric:hover {
   transform: scale(1.1);
   cursor: pointer;
 }
 
 .owf {
-  font-size: 7rem;
+  font-size: 7em;
 }
 
 .temperature {
-  font-size: 4rem;
+  font-size: 4em;
 }
 
 .weather-description {
   text-align: center;
-  font-size: 2rem;
+  font-size: 3em;
 }
 
 .time {
@@ -207,16 +231,19 @@ body {
 }
 
 #hour.change {
+  text-shadow: none;
   color: transparent;
   transition: 0.5s;
 }
 
 #minutes.change {
+  text-shadow: none;
   color: transparent;
   transition: 0.5s;
 }
 
 #seconds.change {
+  text-shadow: none;
   color: transparent;
   transition: 0.5s;
 }
@@ -276,31 +303,34 @@ body {
 
 .greetings {
   position: relative;
+  font-size: 10px;
   display: flex;
+  flex-flow: column;
   align-items: center;
   padding: 0 0 10px 0;
 }
 .greetings__welcome {
-  font-size: 4rem;
+  font-size: 4em;
   color: #fff;
 }
 .greetings__name {
   transition: 1s;
   display: none;
   position: relative;
-  font-size: 4rem;
+  font-size: 4em;
   color: #fff;
 }
 .greetings__enter-name {
+  width: 50%;
   background: transparent;
   border-bottom: 3px solid #fff;
   transition: 1s;
-  font-size: 3rem;
+  font-size: 3em;
   color: #fff;
   text-align: center;
 }
 .greetings__button {
-  font-size: 3rem;
+  font-size: 3em;
   background-color: transparent;
   border-radius: 50px;
   border: 2px solid rgba(0, 0, 0, 0.4);
@@ -366,12 +396,13 @@ body {
 }
 
 .target {
+  font-size: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .target__today {
-  font-size: 3rem;
+  font-size: 3em;
   color: #fff;
 }
 
@@ -382,18 +413,18 @@ body {
   height: 49px;
 }
 .todo__done {
-  width: 50rem;
+  width: 70%;
   margin-top: 3px;
   background: transparent;
   border-bottom: 3px solid #fff;
-  font-size: 3rem;
+  font-size: 3em;
   color: #fff;
   text-align: center;
 }
 .todo__todo {
   margin: 0 10px;
   display: none;
-  font-size: 3rem;
+  font-size: 3em;
   align-self: center;
   color: #fff;
 }
@@ -417,22 +448,73 @@ body {
 .quote__text {
   font-size: 3rem;
   text-align: center;
-  color: white;
+  color: #fff;
   margin-right: 5px;
 }
 .quote__btn {
   padding: 10px;
   align-self: flex-end;
   position: absolute;
-  left: -140px;
+  left: -14rem;
 }
 .quote__btn:hover {
   transform: scale(1.1);
 }
 .quote__author {
   position: absolute;
-  right: -140px;
+  right: -14rem;
   align-self: flex-end;
-  color: white;
+  color: #fff;
   font-size: 2rem;
+}
+
+@media (max-width: 1440px) {
+  .top {
+    font-size: 12px;
+  }
+}
+@media (max-width: 640px) {
+  :root {
+    font-size: 8px;
+  }
+
+  .dot {
+    display: none;
+  }
+}
+@media (max-width: 500px) {
+  :root {
+    font-size: 7px;
+  }
+}
+@media (max-width: 446px) {
+  :root {
+    font-size: 6px;
+  }
+
+  .top {
+    font-size: 8px;
+  }
+
+  .target {
+    font-size: 7px;
+  }
+
+  .greetings {
+    font-size: 7px;
+  }
+
+  .todo {
+    font-size: 7px;
+  }
+
+  .quote-btn {
+    padding: 4px;
+    font-size: 2rem;
+  }
+}
+@media (max-width: 380px) {
+  :root {
+    font-size: 5px;
+  }
 }
