@@ -62,6 +62,7 @@ body {
 .flicker {
   position: absolute;
 }
+
 .top {
   padding: 10px 0 0 0;
 }
@@ -211,6 +212,11 @@ body {
 }
 
 #minutes.change {
+  color: transparent;
+  transition: 0.5s;
+}
+
+#seconds.change {
   color: transparent;
   transition: 0.5s;
 }
@@ -398,11 +404,35 @@ body {
   cursor: pointer;
 }
 
+.quote-wrapper {
+  width: 55%;
+  position: relative;
+  margin: 0 auto;
+}
+
 .quote {
   display: flex;
   justify-content: center;
 }
 .quote__text {
   font-size: 3rem;
-  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  color: white;
+  margin-right: 5px;
+}
+.quote__btn {
+  padding: 10px;
+  align-self: flex-end;
+  position: absolute;
+  left: -140px;
+}
+.quote__btn:hover {
+  transform: scale(1.1);
+}
+.quote__author {
+  position: absolute;
+  right: -140px;
+  align-self: flex-end;
+  color: white;
+  font-size: 2rem;
 }

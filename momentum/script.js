@@ -40,14 +40,16 @@ if (myLocalStorage) {
 //-------------------------------------------------------------SHOW-TIME--------------------------------------------------------------
 
 function showTime (start) {
-    const TIME = [document.querySelector('#hour'), document.querySelector('#minutes')];
+    const TIME = [document.querySelector('#hour'), document.querySelector('#minutes'), document.querySelector('#seconds')];
     const DATA = new Date();
     const HOURS = DATA.getHours().toString().length === 1 ? '0' + DATA.getHours().toString() : DATA.getHours().toString() ;
     const MINUTES = DATA.getMinutes().toString().length === 1 ? '0' + DATA.getMinutes().toString() : DATA.getMinutes().toString();
+    const SECONDS = DATA.getSeconds().toString().length === 1 ? '0' + DATA.getSeconds().toString() : DATA.getSeconds().toString();
 
     if (start) {
         TIME[0].textContent = HOURS.length === 1 ? '0' + HOURS : HOURS; 
         TIME[1].textContent = MINUTES.length === 1 ? '0' + MINUTES : MINUTES;
+        TIME[2].textContent = SECONDS.length === 1 ? '0' + SECONDS : SECONDS;
     }
     if (TIME[0].textContent !== HOURS) {
         TIME[0].classList.add('change');
@@ -61,6 +63,12 @@ function showTime (start) {
             TIME[1].textContent = MINUTES;
             TIME[1].classList.remove('change');
         }, 500);        
+    } else if (TIME[2].textContent !== SECONDS) {
+        TIME[2].classList.add('change');
+        setTimeout(() => {
+            TIME[2].textContent = SECONDS;
+            TIME[2].classList.remove('change');
+        }, 500);
     }
     setTimeout(showTime, 1000);
 }
@@ -93,15 +101,18 @@ name.addEventListener('click', clickName);
 inputGreetings.addEventListener('keypress', setName);
 function setName(e) {
     if (e.keyCode === 13) {
-        myLocalStorage.name = inputGreetings.value;
-        name.textContent = inputGreetings.value;
-
-        name.style.display = 'block';
-        inputGreetings.style.display = 'none';
-
-        localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
-    } else {
-
+        if (inputGreetings.value) {
+            myLocalStorage.name = inputGreetings.value;
+            name.textContent = inputGreetings.value;
+    
+            name.style.display = 'block';
+            inputGreetings.style.display = 'none';
+    
+            localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
+        } else if (name.textContent) {
+            name.style.display = 'block';
+            inputGreetings.style.display = 'none';
+        }
     }
 }
 
@@ -122,21 +133,25 @@ inputFocus.addEventListener('keypress', setFocus);
 
 function setFocus(e) {
     if (e.keyCode === 13) {
-        
-        if (!myLocalStorage.focus) {
-            myLocalStorage.focus = {
-                    text: focus.textContent !== '(Enter your focus)' || inputFocus.value,
-                    today: new Date().getDate()
+        if (inputFocus.value) {
+            if (!myLocalStorage.focus) {
+                myLocalStorage.focus = {
+                        text: focus.textContent !== '' || inputFocus.value,
+                        today: new Date().getDate()
+                    }
+                    focus.textContent = myLocalStorage.focus.text;
+                } else {
+                    myLocalStorage.focus.text = e.target === focus ? focus.textContent : inputFocus.value;
+                if (myLocalStorage.focus.today !== new Date().getDate()) myLocalStorage.focus.today = new Date().getDate();
+                    focus.textContent = myLocalStorage.focus.text;
                 }
-                focus.textContent = myLocalStorage.focus.text;
-            } else {
-                myLocalStorage.focus.text = e.target === focus ? focus.textContent : inputFocus.value;
-            if (myLocalStorage.focus.today !== new Date().getDate()) myLocalStorage.focus.today = new Date().getDate();
-                focus.textContent = myLocalStorage.focus.text;
+            
+            localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
+            if (e.target === inputFocus) {
+                inputFocus.style.display = 'none';
+                focus.style.display = 'block';
             }
-        
-        localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
-        if (e.target === inputFocus) {
+        }else if (focus.textContent) {
             inputFocus.style.display = 'none';
             focus.style.display = 'block';
         }
@@ -188,8 +203,8 @@ function changeColor(color) {
 //------------------------------------------------------------------GET-WEATHER---------------------------------------------------------
 
 async function showWeather(userCity) {
-    document.querySelector('.weather__load').style.display = 'block';
     document.querySelector('.metric').style.display = 'none';
+    document.querySelector('.weather__load').style.display = 'block';
 
     let coords;
     let city;
@@ -209,11 +224,19 @@ async function showWeather(userCity) {
         } else currentCords = myLocalStorage.geolocation;
         city = userCity || await getCity(currentCords);
     } else city = userCity;
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ city }&lang=ru&appid=3272373a93d358d7bfb7d5c4eb52994b&units=metric`
-    const res = await fetch(url);
-    const data = await res.json();
-    await showWeatherCurrent(data.weather[0].id, data.weather[0].description, data.main.temp, city);
-    localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ city }&lang=en&appid=3272373a93d358d7bfb7d5c4eb52994b&units=metric`
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        await showWeatherCurrent(data.weather[0].id, data.weather[0].description, data.main.temp, city);
+        localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
+    } catch (e) {
+        alert('Enter correct city name!');
+        metricCity.textContent = myLocalStorage.prevCity;
+        document.querySelector('.metric').style.display = 'flex';
+        document.querySelector('.weather__load').style.display = 'none';
+        return
+    }
 }
 
 async function getCity(coords) {
@@ -254,20 +277,25 @@ function searchWeather(e) {
 
 function setCity(e) {
     if (e.keyCode === 13) {
-        if (!myLocalStorage.city) {
-            myLocalStorage.city = inputCity.value;
-            metricCity.textContent = inputCity.value;
-        } else {
-            myLocalStorage.city = inputCity.value ? inputCity.value : myLocalStorage.city;
-        }
         if (inputCity.value) {
+            myLocalStorage.prevCity = metricCity.textContent;
+            if (!myLocalStorage.city) {
+                myLocalStorage.city = inputCity.value;
+                metricCity.textContent = inputCity.value;
+            } else {
+                myLocalStorage.city = inputCity.value ? inputCity.value : myLocalStorage.city;
+            }
+            if (inputCity.value) {
+                inputCity.style.display = 'none';
+                showWeather(inputCity.value);
+                metricCity.textContent = inputCity.value;
+                inputCity.value = '';
+                
+            }
+            localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
+        } else {
             inputCity.style.display = 'none';
-            showWeather(inputCity.value);
-            metricCity.textContent = inputCity.value;
-            inputCity.value = '';
-            
         }
-        localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
     }
 }
 
@@ -350,24 +378,38 @@ function setBackgroundImage (current, direction) {
     }
     if (hour < 6 ) {
         newImg.src = `assets/images/night/${imgCurrent}`;
-        greeting.textContent = 'Доброй ночи, ';
+        greeting.textContent = 'Good night, ';
     } else if (hour < 12) {
         newImg.src = `assets/images/morning/${imgCurrent}`;
-        greeting.textContent = 'Добрый утро, ';
+        greeting.textContent = 'Good morning, ';
         
     } else if (hour < 18) {
         newImg.src = `assets/images/day/${imgCurrent}`;
-        greeting.textContent = 'Добрый день, ';
+        greeting.textContent = 'Good day, ';
     } else {
         newImg.src = `assets/images/evening/${imgCurrent}`;
-        greeting.textContent = 'Доброй вечер, ';
+        greeting.textContent = 'Good evening, ';
     }
 
     currentImg = images.indexOf(imgCurrent);
     setTimeout(() => setBackgroundImage(images.indexOf(imgCurrent)), 3600000);
 }
+const quote = document.querySelector('.quote');
+const quoteText = document.querySelector('.quote__text');
+const quoteAuthor = document.querySelector('.quote__author');
+
+async function getQuote() {
+    const url = `https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en`;
+    const res = await fetch(url);
+    const data = await res.json();
+    quoteText.textContent = data.quoteText;
+    quoteAuthor.textContent = data.quoteAuthor;
+}
+quote.addEventListener('click', getQuote);
+
 
 showWeather();
+getQuote();
 setBackgroundImage(-1);
 showTime(true);
 showWeek(true);

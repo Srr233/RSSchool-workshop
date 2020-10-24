@@ -50,10 +50,10 @@
                     <div class="week">
                         <span class="week__today"></span>
                     </div>
-                    <time class="time__text"><span id="hour"></span>:<span id="minutes"></span></time>
+                    <time class="time__text"><span id="hour"></span>:<span id="minutes">:</span>:<span id="seconds">00</span></span></time>
                 </div>
                 <div class="greetings">
-                        <span class="greetings__welcome">Salute, </span>
+                        <span class="greetings__welcome"></span>
                         <input type="text" class="greetings__enter-name" value="">
                         <span class="greetings__name" contenteditable="true"></span>
                         <div class="dot">
@@ -70,8 +70,13 @@
             </div>
         </div>
         <div class="content">
-            <div class="quote">
-                    <span class="quote__text">"Every time we need to be closer..."</span>
+            <div class="quote-wrapper">
+                <figure class="quote">
+                        <button class="quote__btn">RELOAD</button>
+                        <blockquote class="quote__text"></blockquote>
+                        <figcaption class="quote__author">
+                        </figcaption>
+                </figure>
             </div>
         </div>
     </div>

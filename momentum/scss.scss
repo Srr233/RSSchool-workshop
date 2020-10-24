@@ -36,6 +36,7 @@ body {
 }
 .content {
     padding: 0 20px;
+    
 }
 
 .background-image {
@@ -67,7 +68,6 @@ body {
 }
 .flicker {
     position: absolute;
-		&__color {}
 }
 .top {
     padding: 10px 0 0 0;
@@ -238,6 +238,10 @@ body {
     transition: .5s;
 }
 #minutes.change {
+    color: transparent;
+    transition: .5s;
+}
+#seconds.change {
     color: transparent;
     transition: .5s;
 }
@@ -435,11 +439,38 @@ body {
         cursor: pointer;
     }
 }
+.quote-wrapper {
+    width: 55%;
+
+    position: relative;
+
+    margin: 0 auto;
+}
 .quote {
     display: flex;
     justify-content: center;
 		&__text {
             font-size: 3rem;
-            color: rgba($color: #fff, $alpha: .8);
+            text-align: center;
+
+            color: rgba($color: #fff, $alpha: 1);
+
+            margin-right: 5px;
+        }
+        &__btn {
+            padding: 10px;
+            align-self: flex-end;
+            position: absolute;
+            left: -140px;
+        }
+        &__btn:hover {
+            transform: scale(1.1);
+        }
+        &__author {
+            position: absolute;
+            right: -140px;
+            align-self: flex-end;
+            color: rgba($color: #fff, $alpha: 1);
+            font-size: 2rem;
         }
 }
