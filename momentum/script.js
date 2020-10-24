@@ -354,20 +354,25 @@ function setBackgroundImage (current, direction) {
             } else imgCurrent = '20.jpg';
         break;
     }
-    if (hour < 6 ) {
-        img.style.background = `url(assets/images/night/${imgCurrent})`;
+    let bgImg = new Image();
+    bgImg.onload = function () {
+        img.style.background = `url(${bgImg.src}) 50% 100% / cover`;
+        img,style.ba
+    };
+    if (hour < 6) {
+        bgImg.src = `assets/images/night/${imgCurrent}`;
         greeting.textContent = 'Good night, ';
     } else if (hour < 12) {
-        img.style.background = `url(assets/images/morning/${imgCurrent})`;
+        bgImg.src = `assets/images/morning/${imgCurrent}`;
         greeting.textContent = 'Good morning, ';
-        
     } else if (hour < 18) {
-        img.style.background = `url(assets/images/day/${imgCurrent})`;
+        bgImg.src = `assets/images/day/${imgCurrent}`;
         greeting.textContent = 'Good day, ';
     } else {
-        img.style.background = `url(assets/images/evening/${imgCurrent})`;
+        bgImg.src = `assets/images/evening/${imgCurrent}`;
         greeting.textContent = 'Good evening, ';
     }
+    
 
     currentImg = images.indexOf(imgCurrent);
     setTimeout(() => {
@@ -397,7 +402,7 @@ Promise.all([getQuote(), showWeather()]).then(resolve => {
     document.querySelector('.doggy').style.display = 'none';
 }, reject => {
     document.querySelector('.doggy').style.display = 'none';
-    alert('Some problems in quote load, please reload the quote!');
+    alert('Some problems in quote load parsing, please reload the quote!');
 });
 
 
