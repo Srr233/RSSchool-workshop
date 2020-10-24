@@ -212,12 +212,17 @@ async function showWeather(userCity) {
     if (!userCity) {
         if (!myLocalStorage.geolocation) {
             coords = await new Promise ((resolve, reject) => {
-                                    navigator.geolocation.getCurrentPosition(e => {
+                                    try {navigator.geolocation.getCurrentPosition(e => {
                                         if(e) {
                                             resolve(e);
-                                        } else alert('Разрешите узнать вашу геолокацию, ну пожалуйста :3');
+                                        }
+                                    }, () => {
+                                        alert('Please, give us your location... Reload the cite again, please.');
+                                        showWeather();
+                                 })} catch (e) {
+                                        alert('Something went wrong... Look at the console');
                                         console.log(e);
-                                    });
+                                 }
                                 });
             currentCords = `${coords.coords.latitude},${coords.coords.longitude}`;
             myLocalStorage.geolocation = currentCords;
