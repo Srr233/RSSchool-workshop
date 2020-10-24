@@ -357,7 +357,6 @@ function setBackgroundImage (current, direction) {
     let bgImg = new Image();
     bgImg.onload = function () {
         img.style.background = `url(${bgImg.src}) 50% 100% / cover`;
-        img,style.ba
     };
     if (hour < 6) {
         bgImg.src = `assets/images/night/${imgCurrent}`;
