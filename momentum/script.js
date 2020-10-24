@@ -188,6 +188,9 @@ function changeColor(color) {
 //------------------------------------------------------------------GET-WEATHER---------------------------------------------------------
 
 async function showWeather(userCity) {
+    document.querySelector('.weather__load').style.display = 'block';
+    document.querySelector('.metric').style.display = 'none';
+
     let coords;
     let city;
     let currentCords = '';
@@ -225,7 +228,8 @@ async function showWeatherCurrent (idIcon, description, temp, city) {
     const temperature = document.querySelector('.temperature');
     const weatherDescription = document.querySelector('.weather-description');
     const cityUser = document.querySelector('.metric__city');
-
+    document.querySelector('.weather__load').style.display = 'none';
+    document.querySelector('.metric').style.display = 'flex';
     cityUser.textContent = city;
     weatherIcon.classList.add(`owf-${idIcon}`);
     temperature.textContent = temp + "°";
@@ -288,8 +292,83 @@ document.body.addEventListener('click', e => {
     if (inputCity.style.display !== 'none' && e.target !== inputCity) inputCity.style.display = 'none';
 });
 
-//---------------------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------SET-BACKGROUND-IMAGE-----------------------------------------------------
+let currentImg = '';
 
-//showTime(true);
-showWeek(true);
+const rightClick = document.querySelector('.img-change__right');
+const leftClick = document.querySelector('.img-change__left');
+rightClick.addEventListener('click', () => { setBackgroundImage(currentImg, 'right') });
+leftClick.addEventListener('click', () => { setBackgroundImage(currentImg, 'left') });
+
+function setBackgroundImage (current, direction) {
+    document.querySelector('.img-change__img').classList.add('animated');
+
+    const images = ['01.jpg', '02.jpg', '03.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', 
+    '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'];
+    
+    const img = document.querySelector('.background-image__img');
+    const greeting = document.querySelector('.greetings__welcome');
+    const today = new Date();
+    const hour = today.getHours();
+
+    const newImg = document.createElement('img');
+    newImg.classList.add('background-image__img');
+    newImg.setAttribute('alt', 'background img');
+    newImg.onload = load;
+
+    rightClick.setAttribute('disabled', '');
+    leftClick.setAttribute('disabled', '');
+
+    function load () {
+        img.classList.add('delete');
+        newImg.classList.add('delete');
+        setTimeout(() => {
+            img.remove();
+            document.querySelector('.background-image').append(newImg);
+            setTimeout(() => {
+                newImg.classList.remove('delete');
+                rightClick.removeAttribute('disabled', '');
+                leftClick.removeAttribute('disabled', '');
+                document.querySelector('.img-change__img').classList.remove('animated');
+            }, 500);
+        }, 500);
+    }
+
+    let imgCurrent = images[current];
+    if (!direction) imgCurrent = current === 18 ? '01.jpg' : images[current + 1]; 
+    switch (direction) {
+        case 'right':
+            if (current < 18) {
+                imgCurrent = images[current + 1];
+            } else imgCurrent = '01.jpg';
+        break;
+        case 'left':
+            if (current > 0) {
+                imgCurrent = images[current - 1];
+            } else imgCurrent = '20.jpg';
+        break;
+    }
+    if (hour < 6 ) {
+        newImg.src = `assets/images/night/${imgCurrent}`;
+        greeting.textContent = 'Доброй ночи, ';
+    } else if (hour < 12) {
+        newImg.src = `assets/images/morning/${imgCurrent}`;
+        greeting.textContent = 'Добрый утро, ';
+        
+    } else if (hour < 18) {
+        newImg.src = `assets/images/day/${imgCurrent}`;
+        greeting.textContent = 'Добрый день, ';
+    } else {
+        newImg.src = `assets/images/evening/${imgCurrent}`;
+        greeting.textContent = 'Доброй вечер, ';
+    }
+
+    currentImg = images.indexOf(imgCurrent);
+    setTimeout(() => setBackgroundImage(images.indexOf(imgCurrent)), 3600000);
+}
+
 showWeather();
+setBackgroundImage(-1);
+showTime(true);
+showWeek(true);
+

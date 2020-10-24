@@ -3,12 +3,6 @@
   0% {
     transform: rotate(0deg);
   }
-  50% {
-    transform: rotate(150deg);
-  }
-  70% {
-    transform: rotate(200deg);
-  }
   100% {
     transform: rotate(360deg);
   }
@@ -54,6 +48,12 @@ body {
   object-fit: cover;
   width: 100%;
   height: 100%;
+  opacity: 1;
+  transition: 0.5s;
+}
+.background-image__img.delete {
+  transition: 0.5s;
+  opacity: 0;
 }
 
 .list-img {
@@ -151,6 +151,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.weather__load {
+  height: 74px;
+  width: 74px;
+  animation: loading2 linear 0.7s infinite;
+}
+.weather__img-load {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
 }
 .weather__newCity {
   width: 100%;
