@@ -1,4 +1,6 @@
 "Use strict";
+alert('Это может занять какое-то время. Пожалуйста, нажмите окей и отдыхайте до начала сеанса! *гав*');
+
 const focus = document.querySelector('.todo__todo');
 const name = document.querySelector('.greetings__name');
 const inputFocus = document.querySelector('.todo__done');
@@ -31,9 +33,6 @@ if (myLocalStorage) {
                 myLocalStorage.focus.today = new Date().getDate();
             }
         }
-    }
-    if (myLocalStorage.geolocation) {
-        showWeather();
     }
 } else myLocalStorage = {};
 
@@ -205,7 +204,6 @@ function changeColor(color) {
 async function showWeather(userCity) {
     document.querySelector('.metric').style.display = 'none';
     document.querySelector('.weather__load').style.display = 'block';
-
     let coords;
     let city;
     let currentCords = '';
@@ -218,7 +216,6 @@ async function showWeather(userCity) {
                                         }
                                     }, () => {
                                         alert('Please, give us your location... Reload the cite again, please.');
-                                        showWeather();
                                  })} catch (e) {
                                         alert('Something went wrong... Look at the console');
                                         console.log(e);
@@ -229,9 +226,13 @@ async function showWeather(userCity) {
         } else currentCords = myLocalStorage.geolocation;
         city = userCity || await getCity(currentCords);
     } else city = userCity;
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ city }&lang=en&appid=3272373a93d358d7bfb7d5c4eb52994b&units=metric`
+    if (!city) {
+        city = "Гондурас";
+    }
+    const url = 'https://api.openweathermap.org/data/2.5/weather?q='+ city +'&lang=en&appid=3272373a93d358d7bfb7d5c4eb52994b&units=metric'
     try {
         const res = await fetch(url);
+        
         const data = await res.json();
         await showWeatherCurrent(data.weather[0].id, data.weather[0].description, data.main.temp, city);
         localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
@@ -379,6 +380,8 @@ function setBackgroundImage (current, direction) {
     
 
     currentImg = images.indexOf(imgCurrent);
+    myLocalStorage.backgroundImg = currentImg + 1;
+    localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
     setTimeout(() => {
         rightClick.removeAttribute('disabled', '');
         leftClick.removeAttribute('disabled', '');
@@ -399,7 +402,9 @@ async function getQuote() {
 }
 quote.addEventListener('click', getQuote);
 
-setBackgroundImage(-1);
+if(myLocalStorage.backgroundImg) {
+    setBackgroundImage(myLocalStorage.backgroundImg);
+} else setBackgroundImage(-1);
 showWeek(true);
 showTime(true);
 Promise.all([getQuote(), showWeather()]).then(resolve => {
