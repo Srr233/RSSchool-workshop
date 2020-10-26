@@ -380,7 +380,7 @@ function setBackgroundImage (current, direction) {
     
 
     currentImg = images.indexOf(imgCurrent);
-    myLocalStorage.backgroundImg = currentImg + 1;
+    myLocalStorage.backgroundImg = currentImg;
     localStorage.setItem('momentum', JSON.stringify(myLocalStorage));
     setTimeout(() => {
         rightClick.removeAttribute('disabled', '');
