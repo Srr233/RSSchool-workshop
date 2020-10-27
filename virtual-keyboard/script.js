@@ -12,7 +12,8 @@ const Keyboard = {
 
   properties: {
     value: "",
-    capsLock: false
+    capsLock: false,
+    shift: false
   },
 
   init() {
@@ -47,8 +48,8 @@ const Keyboard = {
       "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
       "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
       "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
-      "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
-      "space"
+      "shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
+      "space", "done"
     ];
 
     // Creates HTML for an icon
@@ -120,6 +121,17 @@ const Keyboard = {
 
           break;
 
+        case "shift": 
+          keyElement.classList.add('keyboard__key--wide', "keyboard__key--activatable");
+          keyElement.innerHTML = createIconHTML("keyboard_shift");
+
+          keyElement.addEventListener("click", () => {
+            this._toggleShift();
+            keyElement.classList.toggle("keyboard__key--active", this.properties.shift);
+          });
+          
+          break;
+
         default:
           keyElement.textContent = key.toLowerCase();
 
@@ -154,6 +166,13 @@ const Keyboard = {
       if (key.childElementCount === 0) {
         key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
       }
+    }
+  },
+  _toggleShift() {
+    this.properties.shift = !this.properties.shift;
+
+    for (const key of this.elements.keys) {
+
     }
   },
 
