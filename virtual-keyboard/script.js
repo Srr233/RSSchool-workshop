@@ -1,3 +1,4 @@
+"use strict";
 const Keyboard = {
   elements: {
     main: null,
@@ -135,8 +136,20 @@ const Keyboard = {
         default:
           keyElement.textContent = key.toLowerCase();
 
-          keyElement.addEventListener("click", () => {
-            this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+          const symbols = [")", "!", "@", "#", "$", "%", "^", "&", "*", "("];
+          
+          keyElement.addEventListener("click", (e) => {
+
+            if (this.properties.capsLock && !this.properties.shift) {
+              this.properties.value += key.toUpperCase();
+            } else if (!this.properties.capsLock && !this.properties.shift) {
+              this.properties.value += key.toLowerCase();
+            }
+
+            if (this.properties.shift && !this.properties.capsLock) {
+              this.properties.value += symbols[+key];
+            }
+
             this._triggerEvent("oninput");
           });
 
@@ -171,8 +184,22 @@ const Keyboard = {
   _toggleShift() {
     this.properties.shift = !this.properties.shift;
 
+    const symbols = [")", "(", "*", "&", "^", "%", "$", "#", "@", "!"];
+    const symbolsNum = ['0', '9', '8', '7', '6', '5', '4', '3', '2', '1'];
     for (const key of this.elements.keys) {
-
+      if (!this.properties.shift) {
+        if (key.childElementCount === 0 && symbols.includes(key.textContent)) {
+          key.textContent = symbolsNum.pop();
+        } else if (key.childElementCount === 0) {
+          key.textContent = key.textContent.toLowerCase();
+        }
+      } else {
+        if (key.childElementCount === 0 && key.textContent.match(/[0-9]/)) {
+          key.textContent = this.properties.shift ? symbols.pop() : key.textContent;
+        } else if (key.childElementCount === 0) {
+          key.textContent = key.textContent.toUpperCase();
+        }
+      }
     }
   },
 
