@@ -17,7 +17,11 @@ const Keyboard = {
     value: "",
     capsLock: false,
     shift: false,
-    language: null
+    language: null,
+    cursorPositions: {
+      start: 0,
+      end: 0
+    }
   },
 
   init() {
@@ -45,12 +49,12 @@ const Keyboard = {
       });
     });
   },
-
   _createKeys() {
     const fragment = document.createDocumentFragment();
     const keyLayout = [
-      "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
-      "`", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
+      "<", ">",
+      "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
+      "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
       "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "enter",
       "shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
       "en/ru", "space", "done"
@@ -63,9 +67,8 @@ const Keyboard = {
 
     keyLayout.forEach(key => {
       const keyElement = document.createElement("button");
-      const insertLineBreak = ["backspace", "]", "enter", "?"].indexOf(key) !== -1;
+      const insertLineBreak = ["backspace", "]", "enter", "?", ">"].indexOf(key) !== -1;
 
-      // Add attributes/classes
       keyElement.setAttribute("type", "button");
       keyElement.classList.add("keyboard__key");
 
@@ -75,8 +78,28 @@ const Keyboard = {
           keyElement.innerHTML = createIconHTML("backspace");
 
           keyElement.addEventListener("click", () => {
-            this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
-            this._triggerEvent("oninput");
+            const value = this.properties.value;
+            const currentPos = this.properties.cursorPositions;
+            const textArea = document.querySelector(".use-keyboard-input");
+
+            currentPos.start = textArea.selectionStart;
+            currentPos.end = textArea.selectionEnd;
+          
+            if (!currentPos.start && !currentPos.end) {
+              this._updateFocus();
+              return;
+            }
+
+            this.properties.value = value.slice(0, currentPos.start - 1);
+            textArea.value = this.properties.value;
+
+            this.properties.value = value.slice(currentPos.end);
+            textArea.value += this.properties.value;
+
+            this.properties.value = textArea.value;
+            this._updateFocus('delete');
+
+            
           });
 
           break;
@@ -97,7 +120,27 @@ const Keyboard = {
           keyElement.innerHTML = createIconHTML("keyboard_return");
 
           keyElement.addEventListener("click", () => {
-            this.properties.value += "\n";
+            const value = this.properties.value;
+            const currentPos = this.properties.cursorPositions;
+            const textArea = document.querySelector(".use-keyboard-input");
+
+            currentPos.start = textArea.selectionStart;
+            currentPos.end = textArea.selectionEnd;
+
+            if (value.slice(currentPos.end).match(/\w/)) {
+              this.properties.value = value.slice(0, currentPos.start) +
+              '\n' + value.slice(currentPos.end);
+              currentPos.start++;
+              currentPos.end++;
+              textArea.value = this.properties.value;
+            } else {
+              this.properties.value = value.slice(0, currentPos.start) +
+                '\n' + value.slice(currentPos.end);
+              currentPos.start++;
+              currentPos.end++;
+              textArea.value = this.properties.value;
+            }
+            this._updateFocus();
             this._triggerEvent("oninput");
           });
 
@@ -108,8 +151,22 @@ const Keyboard = {
           keyElement.innerHTML = createIconHTML("space_bar");
 
           keyElement.addEventListener("click", () => {
-            this.properties.value += " ";
+            const value = this.properties.value;
+            const currentPos = this.properties.cursorPositions;
+            const textArea = document.querySelector(".use-keyboard-input");
+
+            currentPos.start = textArea.selectionStart + 1;
+            currentPos.end = textArea.selectionEnd + 1;
+
+            if (value) {
+              this.properties.value = value.slice(0, currentPos.start - 1) +
+              ' ' + value.slice(currentPos.end - 1);
+            } else {
+              this.properties.value = ' ';
+            }
+
             this._triggerEvent("oninput");
+            this._updateFocus('space');
           });
 
           break;
@@ -149,29 +206,72 @@ const Keyboard = {
           keyElement.addEventListener("click", () => {
             this.properties.language = this.properties.language === 'en' ? 'ru' : 'en';
             this._reverseLanguage();
+            this._updateFocus();
           });
           break;
+
+        case "<":
+          
+          keyElement.innerHTML = createIconHTML('arrow_left');
+          
+          keyElement.addEventListener('click', () => {
+            this._updateFocus('left');
+          });
+        break;
+
+        case ">":
+          
+          keyElement.innerHTML = createIconHTML('arrow_right');
+          
+          keyElement.addEventListener('click', () => {
+            this._updateFocus('right');
+          });
+        break;
 
         default:
           keyElement.textContent = key.toLowerCase();
 
           const symbols = [")", "!", "@", "#", "$", "%", "^", "&", "*", "("];
+          const textArea = document.querySelector(".use-keyboard-input");
           
           keyElement.addEventListener("click", (e) => {
+            const value = this.properties.value;
+            const currentPos = this.properties.cursorPositions;
+            currentPos.start = textArea.selectionStart + 1;
+            currentPos.end = textArea.selectionEnd + 1;
 
             if (this.properties.capsLock && !this.properties.shift) {
-              this.properties.value += e.target.textContent.toUpperCase();
+              if (value) {
+                this.properties.value = value.slice(0, currentPos.start - 1) +
+                e.target.textContent.toUpperCase() + value.slice(currentPos.end - 1);
+              } else {
+                this.properties.value = e.target.textContent;
+              }
             } else if (!this.properties.capsLock && !this.properties.shift) {
-              this.properties.value += e.target.textContent.toLowerCase();
+              if (value) {
+                this.properties.value = value.slice(0, currentPos.start - 1) +
+                e.target.textContent.toLowerCase() + value.slice(currentPos.end - 1);
+              } else {
+                this.properties.value = e.target.textContent;
+              }
             } else if (this.properties.shift && !this.properties.capsLock && symbols[+key]) {
-              this.properties.value += symbols[+key];
+              if (value) {
+                  this.properties.value = value.slice(0, currentPos.start - 1) +
+                  symbols[+key] + value.slice(currentPos.end - 1);
+              } else {
+                this.properties.value = symbols[+key];
+              }
             } else {
-              this.properties.value += e.target.textContent;
+              if (value) {
+                this.properties.value = value.slice(0, currentPos.start - 1) +
+                e.target.textContent + value.slice(currentPos.end - 1);
+              } else {
+                this.properties.value += e.target.textContent;
+              }
             }
-
             this._triggerEvent("oninput");
+            this._updateFocus('add');
           });
-
           break;
       }
 
@@ -183,6 +283,46 @@ const Keyboard = {
     });
 
     return fragment;
+  },
+
+  _updateFocus(type) {
+    const textArea = document.querySelector(".use-keyboard-input");
+    const currentPos = this.properties.cursorPositions;
+    
+    textArea.focus();
+
+    if (type === 'add') {
+      textArea.selectionStart = currentPos.start;
+      textArea.selectionEnd = currentPos.end;
+    } else if (type === 'delete') {
+      textArea.selectionStart = currentPos.start - 1;
+      textArea.selectionEnd = currentPos.end - 1;
+    } else if (type === 'left') {
+      if (currentPos.start && currentPos.end) {
+        if (currentPos.start !== textArea.selectionStart && currentPos.end !== textArea.selectionEnd) {
+          currentPos.start = textArea.selectionStart;
+          currentPos.end = textArea.selectionEnd;
+        }
+        textArea.selectionStart = currentPos.start - 1;
+        textArea.selectionEnd = currentPos.end - 1;
+      }
+    } else if (type === 'right') {
+      if (currentPos.start !== textArea.selectionStart && currentPos.end !== textArea.selectionEnd) {
+        currentPos.start = textArea.selectionStart;
+        currentPos.end = textArea.selectionEnd;
+      }
+        textArea.selectionStart = currentPos.start + 1;
+        textArea.selectionEnd = currentPos.end + 1;
+    } else if (type === 'space') {
+      textArea.selectionStart = currentPos.start;
+      textArea.selectionEnd = currentPos.end;
+    } else if (currentPos.start && currentPos.end) {
+      textArea.selectionStart = currentPos.start;
+      textArea.selectionEnd = currentPos.end; 
+    }
+    currentPos.start = textArea.selectionStart;
+    currentPos.end = textArea.selectionEnd;
+
   },
 
   _triggerEvent(handlerName) {
@@ -205,6 +345,7 @@ const Keyboard = {
         key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
       }
     }
+    this._updateFocus();
   },
 
   _toggleShift() {
@@ -243,6 +384,7 @@ const Keyboard = {
         }
       }
     }
+    this._updateFocus();
   },
 
   _reverseLanguage() {
@@ -340,3 +482,10 @@ const Keyboard = {
 window.addEventListener("DOMContentLoaded", function () {
   Keyboard.init();
 });
+
+document.querySelector('.use-keyboard-input').addEventListener('keypress', (e) => {
+  if (e.key) {
+    const val = e.target.value.split(0);
+    Keyboard.properties.value = val;
+  }
+})
