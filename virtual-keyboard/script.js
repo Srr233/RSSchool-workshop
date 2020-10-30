@@ -483,7 +483,8 @@ window.addEventListener("DOMContentLoaded", function () {
   Keyboard.init();
 });
 
-document.querySelector('.use-keyboard-input').addEventListener('keypress', (e) => {
+document.querySelector('.use-keyboard-input').addEventListener('keydown', (e) => {
+  console.log(e.key)
   if (e.key) {
     const val = e.target.value.split(0);
     Keyboard.properties.value = val;
