@@ -1,6 +1,6 @@
 "use strict";
 
-//alert() + мерцающая палочка
+//alert('Важные моменты для проверяющих: физическая клавиатура это настоящая клавиатура которую вы используете. Выделяйте и удаляйте ею.') + мерцающая палочка
 const Keyboard = {
   elements: {
     main: null,
@@ -39,10 +39,14 @@ const Keyboard = {
     // Add to DOM
     this.elements.main.appendChild(this.elements.keysContainer);
     document.body.appendChild(this.elements.main);
-
+    let canSpeak = true;
     // Automatically use keyboard for elements with .use-keyboard-input
     document.querySelectorAll(".use-keyboard-input").forEach(element => {
       element.addEventListener("focus", () => {
+        if(canSpeak) {
+          canSpeak = false;
+          hi();
+        }
         this.open(element.value, currentValue => {
           element.value = currentValue;
         });
@@ -176,6 +180,7 @@ const Keyboard = {
           keyElement.innerHTML = createIconHTML("check_circle");
 
           keyElement.addEventListener("click", () => {
+            new Audio('assets/audio/keyPress.mp3').autoplay = true;
             this.close();
             this._triggerEvent("onclose");
           });
@@ -288,7 +293,7 @@ const Keyboard = {
   _updateFocus(type) {
     const textArea = document.querySelector(".use-keyboard-input");
     const currentPos = this.properties.cursorPositions;
-    
+    new Audio('assets/audio/keyPress.mp3').autoplay = true;
     textArea.focus();
 
     if (type === 'add') {
@@ -484,9 +489,31 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 
 document.querySelector('.use-keyboard-input').addEventListener('keydown', (e) => {
-  console.log(e.key)
   if (e.key) {
+    new Audio ('assets/audio/keyPress.mp3').autoplay = true;
     const val = e.target.value.split(0);
     Keyboard.properties.value = val;
   }
-})
+});
+let recognizer = new webkitSpeechRecognition();
+recognizer.interimResults = true;
+recognizer.lang = 'ru-Ru';
+recognizer.onresult = function (event) {
+  let result = event.results[event.resultIndex];
+  const textArea = document.querySelector(".use-keyboard-input");
+  if (result.isFinal) {
+    buttonSpeech.classList.toggle('record');
+    Keyboard.properties.value += result[0].transcript;
+    textArea.value = Keyboard.properties.value;
+    return;
+  }
+};
+let buttonSpeech = document.querySelector('.button-speech');
+buttonSpeech.addEventListener('click', function () {
+  this.classList.toggle('record');
+  recognizer.start();
+});
+
+function hi () {
+  speechSynthesis.speak(new SpeechSynthesisUtterance(`Здравствуйте, сегодня прекрассный день для того, чтобы мы проверили работы других и сами вдохновились! Надеюсь Вам понравится. И да. ЖЫВЕ БЕЛАРУСЬ!`));
+}

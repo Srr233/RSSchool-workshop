@@ -1,11 +1,9 @@
 .use-keyboard-input {
+  position: relative;
   display: block;
-  width: 90%;
-  margin: 30px auto;
-  padding: 10px;
+  width: 100%;
   font-size: 20px;
-  height: calc(100vh - 380px);
-  min-height: 300px;
+  height: calc(100vh - 500px);
 }
 
 .keyboard {
@@ -49,6 +47,18 @@
   position: relative;
 }
 
+.keyboard__key:hover {
+  transition: .5s;
+
+  background-color: #9E0303;
+  border-radius: 50px;
+  opacity: 0.9;
+}
+
+.keyboard__key:active {
+  transition: .2s;
+  transform: scale(0.8);
+}
 .keyboard__key:active {
   background: rgba(255, 255, 255, 0.12);
 }
@@ -97,4 +107,33 @@
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+}
+
+.micro-img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+.button-speech {
+  position: absolute;
+  top: 35px;
+  right: 35px;
+  width: 50px;
+  margin: 0;
+  background-color: transparent;
+  border-color: transparent;
+  outline: transparent;
+  transition: .5s;
+  border-radius: 100px;
+}
+.button-speech:hover {
+  cursor: pointer;
+  transition: .5s;
+  transform: scale(1.2);
+}
+.button-speech:active {
+  transform: scale(1);
+}
+.button-speech.record {
+  background-color: rgba(255, 0, 0, 0.3);
 }
