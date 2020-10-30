@@ -4,7 +4,9 @@ alert(`Важные моменты для проверяющих:
 1. Физическая клавиатура это настоящая клавиатура которую вы используете. Выделяйте и удаляйте ею. 
 2. Всеми силами пытался разобраться с тем как сделать так, чтобы голосовой ввод всегда был разрешен, но не получилось :(
 3. Если вы зайдете через мобильный девайс, то в текстовом поле не будет возможности изменять текст посредством встроенной клавиатуры, а следовательно и курсор не будет виден в ней.
-4. Запись голоса останавливается как только вы прекращаете говорить.`); 
+4. Запись голоса останавливается как только вы прекращаете говорить.
+5. Shift + alt - переводит на другой язык, кнопки немного шалят, может не пройти анимации, раскладка меняется. Чтобы анимация была нормальной, нажмите в начале Alt.
+Надеюсь Вам всё понравится :)`); 
 const isMobile = /Mobile|webOS|BlackBerry|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(navigator.userAgent);
 if (isMobile) {
   document.querySelector('.use-keyboard-input').setAttribute('readonly', '');
@@ -88,6 +90,7 @@ const Keyboard = {
         case "backspace":
           keyElement.classList.add("keyboard__key--wide");
           keyElement.innerHTML = createIconHTML("backspace");
+          keyElement.setAttribute('data-key', 'Backspace');
 
           keyElement.addEventListener("click", () => {
             const value = this.properties.value;
@@ -118,6 +121,7 @@ const Keyboard = {
 
         case "caps":
           keyElement.classList.add("keyboard__key--activatable");
+          keyElement.setAttribute('data-key', 'CapsLock');
           keyElement.innerHTML = createIconHTML("keyboard_capslock");
           keyElement.setAttribute('data-caps', '');
           keyElement.addEventListener("click", () => {
@@ -130,6 +134,7 @@ const Keyboard = {
         case "enter":
           keyElement.classList.add("keyboard__key--wide");
           keyElement.innerHTML = createIconHTML("keyboard_return");
+          keyElement.setAttribute('data-key', 'Enter');
 
           keyElement.addEventListener("click", () => {
             const value = this.properties.value;
@@ -161,6 +166,7 @@ const Keyboard = {
         case "space":
           keyElement.classList.add("keyboard__key--extra-wide");
           keyElement.innerHTML = createIconHTML("space_bar");
+          keyElement.setAttribute('data-key', ' ');
 
           keyElement.addEventListener("click", () => {
             const value = this.properties.value;
@@ -197,7 +203,7 @@ const Keyboard = {
 
         case "shift": 
           keyElement.classList.add('keyboard__key--wide', "keyboard__key--activatable");
-          keyElement.setAttribute('data-shift', '');
+          keyElement.setAttribute('data-key', 'Shift');
           keyElement.innerHTML = "shift";
 
           keyElement.addEventListener("click", () => {
@@ -215,6 +221,7 @@ const Keyboard = {
         case "en/ru": 
           keyElement.classList.add("keyboard__key--wide");
           keyElement.innerHTML = 'en/ru';
+          keyElement.setAttribute('data-key', 'en/ru');
 
           keyElement.addEventListener("click", () => {
             this.properties.language = this.properties.language === 'en' ? 'ru' : 'en';
@@ -226,7 +233,8 @@ const Keyboard = {
         case "<":
           
           keyElement.innerHTML = createIconHTML('arrow_left');
-          
+          keyElement.setAttribute('data-key', 'ArrowLeft');
+
           keyElement.addEventListener('click', () => {
             this._updateFocus('left');
           });
@@ -235,7 +243,8 @@ const Keyboard = {
         case ">":
           
           keyElement.innerHTML = createIconHTML('arrow_right');
-          
+          keyElement.setAttribute('data-key', 'ArrowRight');
+
           keyElement.addEventListener('click', () => {
             this._updateFocus('right');
           });
@@ -497,8 +506,27 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 
 document.querySelector('.use-keyboard-input').addEventListener('keydown', (e) => {
+  let event = new Event('click');
+  if (e.altKey && e.shiftKey) {
+    let keyElem1 = document.querySelector('[data-key="en/ru"]');
+    keyElem1.dispatchEvent(event);
+    keyElem1.classList.add('active');
+    setTimeout(() => keyElem1.classList.remove('active'), 200);
+    return;
+  }
   if (e.key) {
     new Audio ('assets/audio/keyPress.mp3').autoplay = true;
+    let keyElem = Array.from(Keyboard.elements.keys).find(elem => elem.dataset.key === e.key || e.key === elem.textContent);
+    if (keyElem) {
+
+      if (keyElem.dataset.key === "Shift") {
+        keyElem.dispatchEvent(event);
+      } else if (keyElem.dataset.key === "CapsLock") {
+        keyElem.dispatchEvent(event);
+      }
+      keyElem.classList.add('active');
+      setTimeout(() => keyElem.classList.remove('active'), 200);
+    }
     const val = e.target.value.split(0);
     Keyboard.properties.value = val;
   }

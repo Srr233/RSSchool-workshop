@@ -3,7 +3,10 @@
   display: block;
   width: 100%;
   font-size: 20px;
-  height: calc(100vh - 500px);
+  height: calc(100vh - 400px);
+}
+.use-keyboard-input:focus {
+  outline: transparent;
 }
 
 .keyboard {
@@ -30,7 +33,7 @@
   position: relative;
   box-shadow: 1px 1px 2px #000;
   height: 45px;
-  width: 6%;
+  width: 6.6%;
   max-width: 90px;
   margin: 3px;
   border-radius: 4px;
@@ -47,7 +50,13 @@
   padding: 0;
   -webkit-tap-highlight-color: transparent;
 }
-
+.keyboard__key.active {
+  transition: .2s;
+  transform: scale(0.8);
+  background-color:#ece7ff;
+  border-radius: 50px;
+  opacity: 0.9;
+}
 .keyboard__key:hover {
   transition: .5s;
 
