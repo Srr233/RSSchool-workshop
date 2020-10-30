@@ -12,7 +12,7 @@
   bottom: 0;
   width: 100%;
   padding: 5px 0;
-  background: #004134;
+  background: #998FC1;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
   user-select: none;
   transition: bottom 0.4s;
@@ -27,14 +27,16 @@
 }
 
 .keyboard__key {
+  position: relative;
+  box-shadow: 1px 1px 2px #000;
   height: 45px;
   width: 6%;
   max-width: 90px;
   margin: 3px;
   border-radius: 4px;
   border: none;
-  background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  background: #CAC2EA;
+  color: #000;
   font-size: 1.05rem;
   outline: none;
   cursor: pointer;
@@ -44,13 +46,12 @@
   vertical-align: top;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
-  position: relative;
 }
 
 .keyboard__key:hover {
   transition: .5s;
 
-  background-color: #9E0303;
+  background-color:#ece7ff;
   border-radius: 50px;
   opacity: 0.9;
 }
@@ -136,4 +137,19 @@
 }
 .button-speech.record {
   background-color: rgba(255, 0, 0, 0.3);
+}
+
+@media (max-width: 488px) {
+  .keyboard__key {
+    margin: 1px;
+    height: 35px;
+  }
+  .keyboard__key--activatable::after {
+    top: 2px;
+    left: 8px;
+  }
+  .button-speech {
+    top: 10px;
+    right: 10px;
+  }
 }

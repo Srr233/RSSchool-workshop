@@ -1,6 +1,14 @@
 "use strict";
 
-//alert('Важные моменты для проверяющих: физическая клавиатура это настоящая клавиатура которую вы используете. Выделяйте и удаляйте ею.') + мерцающая палочка
+alert(`Важные моменты для проверяющих: 
+1. Физическая клавиатура это настоящая клавиатура которую вы используете. Выделяйте и удаляйте ею. 
+2. Всеми силами пытался разобраться с тем как сделать так, чтобы голосовой ввод всегда был разрешен, но не получилось :(
+3. Если вы зайдете через мобильный девайс, то в текстовом поле не будет возможности изменять текст посредством встроенной клавиатуры, а следовательно и курсор не будет виден в ней.
+4. Запись голоса останавливается как только вы прекращаете говорить.`); 
+const isMobile = /Mobile|webOS|BlackBerry|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(navigator.userAgent);
+if (isMobile) {
+  document.querySelector('.use-keyboard-input').setAttribute('readonly', '');
+}
 const Keyboard = {
   elements: {
     main: null,
@@ -205,7 +213,7 @@ const Keyboard = {
           break;
 
         case "en/ru": 
-          keyElement.classList.add("keyboard__key--wide", "keyboard__key--dark");
+          keyElement.classList.add("keyboard__key--wide");
           keyElement.innerHTML = 'en/ru';
 
           keyElement.addEventListener("click", () => {
