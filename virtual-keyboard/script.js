@@ -1,11 +1,12 @@
 "use strict";
 
 alert(`Важные моменты для проверяющих: 
-1. Физическая клавиатура это настоящая клавиатура которую вы используете. Выделяйте и удаляйте ею. 
+1. Физическая клавиатура это настоящая клавиатура которую вы используете. 
 2. Всеми силами пытался разобраться с тем как сделать так, чтобы голосовой ввод всегда был разрешен, но не получилось :(
 3. Если вы зайдете через мобильный девайс, то в текстовом поле не будет возможности изменять текст посредством встроенной клавиатуры, а следовательно и курсор не будет виден в ней.
 4. Запись голоса останавливается как только вы прекращаете говорить.
 5. Shift + alt - переводит на другой язык, кнопки немного шалят, может не пройти анимации, раскладка меняется. Чтобы анимация была нормальной, нажмите в начале Alt.
+6. Так же будьте внимательны, перед тем как использовать физическую клавиатуру, проверьте, соответствует ли Ваш выбранный язык и язык вирутальной клавиатуры? 
 Надеюсь Вам всё понравится :)`); 
 const isMobile = /Mobile|webOS|BlackBerry|IEMobile|MeeGo|mini|Fennec|Windows Phone|Android|iP(ad|od|hone)/i.test(navigator.userAgent);
 if (isMobile) {
@@ -357,7 +358,8 @@ const Keyboard = {
     this.properties.capsLock = !this.properties.capsLock;
 
     if (this.properties.shift) {
-      document.querySelector('[data-shift]').classList.remove('keyboard__key--active');
+      let i = document.querySelector("[data-key='Shift']");
+      document.querySelector("[data-key='Shift']").classList.remove('keyboard__key--active');
       this._toggleShift();
     }
 
@@ -504,9 +506,15 @@ const Keyboard = {
 window.addEventListener("DOMContentLoaded", function () {
   Keyboard.init();
 });
-
+let isPress = Date.now()
+document.querySelector('.use-keyboard-input').addEventListener('keyup', (e) => {
+  new Audio('assets/audio/keyPress.mp3').autoplay = true;
+  Keyboard.elements.keys[39].classList.remove('active');
+});
 document.querySelector('.use-keyboard-input').addEventListener('keydown', (e) => {
   let event = new Event('click');
+  const textArea = document.querySelector('.use-keyboard-input');
+
   if (e.altKey && e.shiftKey) {
     let keyElem1 = document.querySelector('[data-key="en/ru"]');
     keyElem1.dispatchEvent(event);
@@ -514,20 +522,32 @@ document.querySelector('.use-keyboard-input').addEventListener('keydown', (e) =>
     setTimeout(() => keyElem1.classList.remove('active'), 200);
     return;
   }
+
   if (e.key) {
-    new Audio ('assets/audio/keyPress.mp3').autoplay = true;
     let keyElem = Array.from(Keyboard.elements.keys).find(elem => elem.dataset.key === e.key || e.key === elem.textContent);
     if (keyElem) {
-
-      if (keyElem.dataset.key === "Shift") {
+      if (keyElem.dataset.key === "Shift" && Date.now() - isPress > 700) {
+        isPress = Date.now();
         keyElem.dispatchEvent(event);
-      } else if (keyElem.dataset.key === "CapsLock") {
+      } else if (keyElem.dataset.key === "CapsLock" && Date.now() - isPress > 700) {
+        isPress = Date.now();
         keyElem.dispatchEvent(event);
+      } else if (Date.now() - isPress < 700) {
+        isPress = Date.now();
+        keyElem.classList.add('active');
+        return;
       }
       keyElem.classList.add('active');
       setTimeout(() => keyElem.classList.remove('active'), 200);
     }
-    const val = e.target.value.split(0);
+    let val;
+    if (textArea.selectionStart !== textArea.selectionEnd &&
+      e.key !== "ArrowLeft" &&
+      e.key !== "ArrowRight" &&
+      e.key !== "Shift" &&
+      e.key !== "CapsLock") {
+      val = e.target.value.slice(0, textArea.selectionStart + 1) + e.target.value.slice(textArea.selectionEnd);
+    } else val = e.target.value.slice(0);
     Keyboard.properties.value = val;
   }
 });
