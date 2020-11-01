@@ -29,10 +29,11 @@ const Keyboard = {
   },
 
   properties: {
+    isSound: true,
     value: "",
     capsLock: false,
     shift: false,
-    language: null,
+    language: 'ru',
     cursorPositions: {
       start: 0,
       end: 0
@@ -76,14 +77,13 @@ const Keyboard = {
       "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
       "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "enter",
       "shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
-      "en/ru", "space", "done"
+      "en/ru", "space", "soundOff", "done"
     ];
 
     // Creates HTML for an icon
     const createIconHTML = (icon_name) => {
       return `<i class="material-icons">${icon_name}</i>`;
     };
-
     keyLayout.forEach(key => {
       const keyElement = document.createElement("button");
       const insertLineBreak = ["backspace", "]", "enter", "?", ">"].indexOf(key) !== -1;
@@ -124,6 +124,20 @@ const Keyboard = {
 
           break;
 
+        case "soundOff": 
+          keyElement.classList.add('keyboard__key');
+          keyElement.innerHTML = `<img src='assets/soundsOn.png' style='object-fit: cover; height: 65%; width: 65%;'>`;
+          keyElement.addEventListener('click', (e) => {
+            Keyboard.properties.isSound = !Keyboard.properties.isSound;
+            let target = e.target;
+            while(target.tagName !== 'IMG') {
+              target = target.children[0];
+            }
+            if (target.src.includes('assets/soundsOn.png')) {
+              target.src = 'assets/soundsOff.png';
+            } else target.src = 'assets/soundsOn.png';
+          });
+          break;
         case "caps":
           keyElement.classList.add("keyboard__key--activatable");
           keyElement.setAttribute('data-key', 'CapsLock');
@@ -162,7 +176,7 @@ const Keyboard = {
               currentPos.end++;
               textArea.value = this.properties.value;
             }
-            this._updateFocus();
+            this._updateFocus('enter');
             this._triggerEvent("oninput");
           });
 
@@ -212,11 +226,6 @@ const Keyboard = {
           keyElement.innerHTML = createIconHTML('Shift');
 
           keyElement.addEventListener("click", () => {
-            if (this.properties.capsLock) {
-              document.querySelector('[data-caps]').classList.remove('keyboard__key--active');
-              this.properties.shift = true;
-              this._toggleCapsLock();
-            }
             this._toggleShift();
             keyElement.classList.toggle("keyboard__key--active", this.properties.shift);
           });
@@ -225,11 +234,14 @@ const Keyboard = {
 
         case "en/ru": 
           keyElement.classList.add("keyboard__key--wide");
-          keyElement.innerHTML = createIconHTML('language');
+          keyElement.innerHTML = 'en/ru';
           keyElement.setAttribute('data-key', 'en/ru');
 
           keyElement.addEventListener("click", () => {
             this.properties.language = this.properties.language === 'en' ? 'ru' : 'en';
+            if (this.properties.language === 'ru' && this.properties.isSound) {
+              new Audio('assets/audio/keyPress.mp3').autoplay = true;
+            } else if (this.properties.isSound) new Audio('assets/audio/keyPressRu.mp3').autoplay = true;
             this._reverseLanguage();
             this._updateFocus();
           });
@@ -298,6 +310,7 @@ const Keyboard = {
             }
             this._triggerEvent("oninput");
             this._updateFocus('add');
+
           });
           break;
       }
@@ -315,16 +328,28 @@ const Keyboard = {
   _updateFocus(type) {
     const textArea = document.querySelector(".use-keyboard-input");
     const currentPos = this.properties.cursorPositions;
-    new Audio('assets/audio/keyPress.mp3').autoplay = true;
     textArea.focus();
 
-    if (type === 'add') {
+    if (type === 'add' || type === 'space') {
+      if (this.properties.language === 'ru' && this.properties.isSound) {
+        new Audio('assets/audio/keyPress.mp3').autoplay = true;
+      } else if (this.properties.isSound) new Audio('assets/audio/keyPressRu.mp3').autoplay = true;
       textArea.selectionStart = currentPos.start;
       textArea.selectionEnd = currentPos.end;
     } else if (type === 'delete') {
+      if (this.properties.isSound) new Audio ('assets/audio/delete.WAV').autoplay = true;
       textArea.selectionStart = currentPos.start - 1;
       textArea.selectionEnd = currentPos.end - 1;
+    } else if (type === 'shift') {
+      if (this.properties.isSound) new Audio('assets/audio/shift.mp3').autoplay = true;
+    } else if (type === 'enter') {
+      if (this.properties.isSound) new Audio('assets/audio/enter.mp3').autoplay = true;
+    } else if (type === 'caps') {
+      if (this.properties.isSound) new Audio('assets/audio/caps.mp3').autoplay = true;
     } else if (type === 'left') {
+      if (this.properties.language === 'ru' && this.properties.isSound) {
+        new Audio('assets/audio/keyPress.mp3').autoplay = true;
+      } else if (this.properties.isSound) new Audio('assets/audio/keyPressRu.mp3').autoplay = true;
       if (currentPos.start && currentPos.end) {
         if (currentPos.start !== textArea.selectionStart && currentPos.end !== textArea.selectionEnd) {
           currentPos.start = textArea.selectionStart;
@@ -334,15 +359,15 @@ const Keyboard = {
         textArea.selectionEnd = currentPos.end - 1;
       }
     } else if (type === 'right') {
+      if (this.properties.language === 'ru' && this.properties.isSound) {
+        new Audio('assets/audio/keyPress.mp3').autoplay = true;
+      } else if (this.properties.isSound) new Audio('assets/audio/keyPressRu.mp3').autoplay = true;
       if (currentPos.start !== textArea.selectionStart && currentPos.end !== textArea.selectionEnd) {
         currentPos.start = textArea.selectionStart;
         currentPos.end = textArea.selectionEnd;
       }
         textArea.selectionStart = currentPos.start + 1;
         textArea.selectionEnd = currentPos.end + 1;
-    } else if (type === 'space') {
-      textArea.selectionStart = currentPos.start;
-      textArea.selectionEnd = currentPos.end;
     } else if (currentPos.start && currentPos.end) {
       textArea.selectionStart = currentPos.start;
       textArea.selectionEnd = currentPos.end; 
@@ -361,19 +386,16 @@ const Keyboard = {
   _toggleCapsLock() {
     this.properties.capsLock = !this.properties.capsLock;
 
-    if (this.properties.shift) {
-      let i = document.querySelector("[data-key='Shift']");
-      document.querySelector("[data-key='Shift']").classList.remove('keyboard__key--active');
-      this._toggleShift();
-    }
-
     for (const key of this.elements.keys) {
-      if (key.textContent === 'shift') continue;
       if (key.childElementCount === 0) {
-        key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+        if (this.properties.shift && this.properties.capsLock) {
+          key.textContent = key.textContent.toLowerCase();
+        } else if (this.properties.shift && !this.properties.capsLock) {
+          key.textContent = key.textContent.toUpperCase();
+        } else key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
       }
     }
-    this._updateFocus();
+    this._updateFocus('shift');
   },
 
   _toggleShift() {
@@ -396,7 +418,9 @@ const Keyboard = {
             key.textContent = '?';
           } else key.textContent = auxiliarySignsShiftReverse.pop();
         } else if (key.childElementCount === 0) {
-          key.textContent = key.textContent.toLowerCase();
+          if (this.properties.capsLock) {
+            key.textContent = key.textContent.toUpperCase();
+          } else key.textContent = key.textContent.toLowerCase();
         }
       } else {
         if (key.childElementCount === 0 && key.textContent.match(/[0-9]/)) {
@@ -408,11 +432,13 @@ const Keyboard = {
             key.textContent = '?';
           } else key.textContent = auxiliarySignsShift.pop();
         } else if (key.childElementCount === 0) {
-          key.textContent = key.textContent.toUpperCase();
+          if (this.properties.capsLock) {
+            key.textContent = key.textContent.toLowerCase();
+          } else key.textContent = key.textContent.toUpperCase();
         }
       }
     }
-    this._updateFocus();
+    this._updateFocus('caps');
   },
 
   _reverseLanguage() {
@@ -511,11 +537,12 @@ window.addEventListener("DOMContentLoaded", function () {
   Keyboard.init();
 });
 let isPress = Date.now();
-let currentButton = new Set();
+let currentButton;
 
 document.querySelector('.use-keyboard-input').addEventListener('keyup', (e) => {
-  currentButton.classList.remove('active');
-  new Audio('assets/audio/keyPress.mp3').autoplay = true;
+  if (Keyboard.properties.language === 'ru') {
+    new Audio('assets/audio/keyPress.mp3').autoplay = true;
+  } else new Audio('assets/audio/keyPressRu.mp3').autoplay = true;
 });
 document.querySelector('.use-keyboard-input').addEventListener('keydown', (e) => {
   let event = new Event('click');
@@ -542,6 +569,7 @@ document.querySelector('.use-keyboard-input').addEventListener('keydown', (e) =>
         isPress = Date.now();
       }
       keyElem.classList.add('active');
+      setTimeout(() => keyElem.classList.remove('active'), 200);
       currentButton = keyElem;
     }
     let val;
@@ -555,23 +583,43 @@ document.querySelector('.use-keyboard-input').addEventListener('keydown', (e) =>
     Keyboard.properties.value = val;
   }
 });
+let isRecord = false;
 let recognizer = new webkitSpeechRecognition();
+let resultText = '';
+let resultAll = [];
+
+const textArea = document.querySelector('.use-keyboard-input');
 recognizer.interimResults = true;
-recognizer.lang = 'ru-Ru';
-recognizer.onresult = function (event) {
-  let result = event.results[event.resultIndex];
-  const textArea = document.querySelector(".use-keyboard-input");
-  if (result.isFinal) {
-    buttonSpeech.classList.toggle('record');
-    Keyboard.properties.value += result[0].transcript;
+recognizer.addEventListener('result', (e) => {
+  const transcript = Array.from(e.results)
+  .map(result => result[0])
+  .map(result => result.transcript)
+  .join('');
+  resultText = transcript + ' ';
+});
+recognizer.addEventListener('end', () => {
+  resultAll.push(resultText);
+  if (isRecord) {
+    recognizer.start();
+  } else {
+    Keyboard.properties.value = Keyboard.properties.value + ' ' + resultAll.join('');
     textArea.value = Keyboard.properties.value;
-    return;
+    resultAll = [];
+    resultText = '';
   }
-};
+});
+
 let buttonSpeech = document.querySelector('.button-speech');
 buttonSpeech.addEventListener('click', function () {
-  this.classList.toggle('record');
-  recognizer.start();
+  recognizer.lang = Keyboard.properties.language === 'ru' ? 'en-US' : 'ru-Ru';
+  if (!isRecord) {
+    isRecord = !isRecord;
+    this.classList.add('record');
+    recognizer.start();
+  } else {
+    this.classList.remove('record');
+    isRecord = !isRecord;
+  }
 });
 
 function hi () {
