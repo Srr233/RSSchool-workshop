@@ -1,2 +1,3 @@
-'Use strict';
+import {createSquare} from "./createSquare.js";
 
+"Use strict";
