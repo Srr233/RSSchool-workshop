@@ -7,6 +7,7 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
     
     let count = 0;
     let allElems = [];
+    let wrappersElem = [];
     const mapMove = [];
     const howManyPx = sizeSq * size;
     const game = document.createElement('div');
@@ -16,23 +17,23 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
 
     for (let y = 0; y < size; y++) {
         for (let x = 0; x < size; x++) {
-            count++;
-            allElems.push(createSquare(imgSrc, count, 'square', { x: -x * sizeSq, y: -y * sizeSq }, howManyPx, sizeSq));
+            count++; 
+            wrappersElem.push(createSquare(imgSrc, count, 'square', { x: -x * sizeSq, y: -y * sizeSq }, howManyPx, sizeSq));
         }
     }
-    const lastElem = allElems.pop();
+    const lastElem = wrappersElem.pop();
 
-    allElems = allElems.sort(() => Math.random() - Math.random());
+    wrappersElem = wrappersElem.sort(() => Math.random() - Math.random());
     let row  = [];
 
-    for (let elem of allElems) {
-        game.insertAdjacentElement("beforeend", elem);
+    for (let i = 0; i < wrappersElem.length; i++) {
+        game.insertAdjacentElement("beforeend", wrappersElem[i]);
 
         if (row.length < size) {
-            row.push(elem.dataset.number);
+            row.push(wrappersElem[i].children[0].dataset.number);
         } else {
             mapMove.push(row.slice(0));
-            row = [elem.dataset.number];
+            row = [wrappersElem[i].children[0].dataset.number];
         }
     }
     if (row.length) {
