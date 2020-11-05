@@ -7,7 +7,7 @@ function createSquare (srcImg, number, classForSq = 'square', pos = {}, sizeImg,
     squareWrapper.style.cssText = `position: relative;
                                    width: ${sizeSq}px;
                                    height: ${sizeSq}px;
-                                   margin: 0.1rem;`;
+                                   `;
 
     const square = document.createElement('div');
     squareWrapper.insertAdjacentElement('beforeend', square);
@@ -16,11 +16,14 @@ function createSquare (srcImg, number, classForSq = 'square', pos = {}, sizeImg,
 
     square.classList.add(classForSq);
     square.style.cssText = `position: absolute;
+                            top: 0;
+                            left: 0;
                             width: ${sizeSq}px;
                             height: ${sizeSq}px;
                             background: no-repeat url(${srcImg});
                             background-position: ${pos.x}px ${pos.y}px;
-                            background-size: ${sizeImg}px
+                            background-size: ${sizeImg}px;
+                            z-index: 40;
                             transition: .5s;`;
     square.setAttribute('data-number', number);
 
