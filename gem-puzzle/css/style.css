@@ -5,24 +5,33 @@
 .container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
 }
 
 .gem-puzzle-wrapper {
   margin: 0 auto;
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+}
+
+.gem-puzzle-wrapper.finish {
+  transition: 1s;
+  transform: scale(2);
 }
 
 .square {
-  width: 10rem;
-  height: 10rem;
-  margin: 0.1rem;
-  background-color: red;
+  color: #fff;
+  font-size: 2rem;
+  transition: 0.5s;
+  cursor: pointer;
 }
 
-.cut-img {
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
+.square:hover {
+  transition: 0.5s;
+  z-index: 50;
+  box-shadow: 1px 1px 15px #000;
+  transform: scale(1.05);
 }
