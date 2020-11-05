@@ -97,7 +97,10 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
                         elemPos.direction = "up";
                     } else elemPos.direction = "down";
                 }
-                moveSquare(mapMove, elemPos, sizeSq);
+                if(moveSquare(mapMove, elemPos, sizeSq)) {
+                    addLastElem();
+
+                }
             }
     });
     return {
