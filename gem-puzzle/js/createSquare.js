@@ -20,7 +20,8 @@ function createSquare (srcImg, number, classForSq = 'square', pos = {}, sizeImg,
                             height: ${sizeSq}px;
                             background: no-repeat url(${srcImg});
                             background-position: ${pos.x}px ${pos.y}px;
-                            background-size: ${sizeImg}px`;
+                            background-size: ${sizeImg}px
+                            transition: .5s;`;
     square.setAttribute('data-number', number);
 
     return squareWrapper;
