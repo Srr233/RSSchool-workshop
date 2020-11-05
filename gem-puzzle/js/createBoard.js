@@ -1,4 +1,5 @@
 import {createSquare} from "./createSquare.js";
+import {moveSquare} from "./moveSquare.js";
 
 "Use strict";
 
@@ -6,7 +7,6 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
     if (typeof size !== 'number') throw new Error ('Size is number! for example 4 => 4x4');
     
     let count = 0;
-    let allElems = [];
     let wrappersElem = [];
     const mapMove = [];
     const howManyPx = sizeSq * size;
@@ -53,7 +53,10 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
         let elemPos = {
             arr: 0,
             index: 0,
-            distance: 0
+            distance: 0,
+            direction: '',
+            arrNothing: 0,
+            indexNothing: 0
         }
         let isMove = false;
         im: for (let arr = 0; arr < mapMove.length; arr++) {
@@ -66,23 +69,35 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
                 }
             }
         const posNothing = mapMove[elemPos.arr].indexOf('-');
-        let inLineHere;
 
-        if (posNothing < 0) {
+        if (posNothing === -1) {
             im: for (let arr = 0; arr < mapMove.length; arr++) {
                     if (mapMove[arr][elemPos.index] === '-') {
                         isMove = true;
                         elemPos.distance = Math.max(arr, elemPos.arr) - Math.min(arr, elemPos.arr);
+                        elemPos.arrNothing = arr;
+                        elemPos.indexNothing = elemPos.index;
                         break im;
                     };
                 }
         } else {
-            inLineHere = posNothing;
-            elemPos.distance = Math.max(inLineHere, elemPos.index) - Math.min(inLineHere, elemPos.index);
+            elemPos.distance = Math.max(posNothing, elemPos.index) - Math.min(posNothing, elemPos.index);
+            elemPos.indexNothing = posNothing;
             isMove = true;
         }
+
+        
             if (isMove) {
-                console.log('2')
+                if (posNothing !== -1) {
+                    if (posNothing < elemPos.index) {
+                        elemPos.direction = "left";
+                    } else elemPos.direction = "right";
+                } else {
+                    if (elemPos.arrNothing < elemPos.arr) {
+                        elemPos.direction = "up";
+                    } else elemPos.direction = "down";
+                }
+                moveSquare(mapMove, elemPos, sizeSq);
             }
     });
     return {
