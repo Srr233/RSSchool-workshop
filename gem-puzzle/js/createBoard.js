@@ -46,8 +46,8 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
             throw new Error ("lastElem has already append to game!");
         } else game.appendChild(lastElem);
     }
-
     game.addEventListener('click', e => {
+        //only ONE click for square
         const target = e.target;
         if (!target.classList.contains('square')) return;
         let elemPos = {
@@ -99,7 +99,10 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
                 }
                 if(moveSquare(mapMove, elemPos, sizeSq)) {
                     addLastElem();
-
+                    for (let i of game.children) {
+                        i.children[0].textContent = '';
+                    }
+                    game.classList.add('finish');
                 }
             }
     });
