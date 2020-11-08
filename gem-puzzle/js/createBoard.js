@@ -1,5 +1,6 @@
 import {createSquare} from "./createSquare.js";
 import {moveSquare} from "./moveSquare.js";
+import { counterMove } from "./counterMove.js";
 
 "Use strict";
 
@@ -7,6 +8,7 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
     if (typeof size !== 'number') throw new Error ('Size is number! for example 4 => 4x4');
     
     let count = 0;
+    let move = 0;
     let wrappersElem = [];
     const mapMove = [];
     const howManyPx = sizeSq * size;
@@ -109,6 +111,7 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
             isMove = true;
         }
         if (isMove) {
+            counterMove(++move);
             if (posNothing !== -1) {
                 if (posNothing < elemPos.index) {
                     elemPos.direction = "left";
