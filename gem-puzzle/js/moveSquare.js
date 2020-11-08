@@ -2,7 +2,7 @@
 
 function moveSquare (map, options, sizeSq) {
     //change map
-    const refreshMap = [];
+
     const move = [];
     const moveDOM = [];
     let temp1;
@@ -53,6 +53,20 @@ function moveSquare (map, options, sizeSq) {
     for (let i of move) {
         moveDOM.push(document.querySelector(`[data-number="${i}"]`));
     }
+
+    const isSequence = (arr, num) => {
+        let prev = +num;
+
+        for (let i = 0; i < arr.length; i++) {
+            if (prev + 1 === +arr[i]) {
+                prev++;
+                continue;
+            } else if (+arr[i + 1] !== '-' && arr[i + 1] !== undefined) {
+                return false;
+            }
+        }
+        return true;
+    }
     moveDOM.forEach(elem => {
         const styles = window.getComputedStyle(elem, null);
         const pos = {
@@ -73,19 +87,18 @@ function moveSquare (map, options, sizeSq) {
                 elem.style.left = `${pos.left + sizeSq}px`;
                 break;
         }
-    });
+    }); 
     const isFinish = (() => {
         let next = 0;
         for (let arr of map) {
-            for (let elem of arr) {
-                if (next + 1 === +elem) {
-                    next = +elem;
-                } else if (elem !== '-') return false;
-            }
+            if (isSequence(arr, next)) {
+                next = arr[arr.length - 1];
+                continue;
+            } else return false;
         }
         return true;
     })();
-
     return isFinish;
 }
+
 export { moveSquare };
