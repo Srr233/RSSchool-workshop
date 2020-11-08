@@ -46,8 +46,7 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
             throw new Error ("lastElem has already append to game!");
         } else game.appendChild(lastElem);
     }
-    game.addEventListener('click', e => {
-        //only ONE click for square
+    const mapGo = e => {
         const target = e.target;
         if (!target.classList.contains('square')) return;
         let elemPos = {
@@ -60,52 +59,54 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
         }
         let isMove = false;
         im: for (let arr = 0; arr < mapMove.length; arr++) {
-                for (let elem = 0; elem < mapMove[arr].length; elem++) {
-                    if (mapMove[arr][elem] === target.dataset.number) {
-                        elemPos.index = elem;
-                        elemPos.arr = arr;
-                        break im;
-                    }
+            for (let elem = 0; elem < mapMove[arr].length; elem++) {
+                if (mapMove[arr][elem] === target.dataset.number) {
+                    elemPos.index = elem;
+                    elemPos.arr = arr;
+                    break im;
                 }
             }
+        }
         const posNothing = mapMove[elemPos.arr].indexOf('-');
 
         if (posNothing === -1) {
             im: for (let arr = 0; arr < mapMove.length; arr++) {
-                    if (mapMove[arr][elemPos.index] === '-') {
-                        isMove = true;
-                        elemPos.distance = Math.max(arr, elemPos.arr) - Math.min(arr, elemPos.arr);
-                        elemPos.arrNothing = arr;
-                        elemPos.indexNothing = elemPos.index;
-                        break im;
-                    };
-                }
+                if (mapMove[arr][elemPos.index] === '-') {
+                    isMove = true;
+                    elemPos.distance = Math.max(arr, elemPos.arr) - Math.min(arr, elemPos.arr);
+                    elemPos.arrNothing = arr;
+                    elemPos.indexNothing = elemPos.index;
+                    break im;
+                };
+            }
         } else {
             elemPos.distance = Math.max(posNothing, elemPos.index) - Math.min(posNothing, elemPos.index);
             elemPos.indexNothing = posNothing;
             isMove = true;
         }
-
-        
-            if (isMove) {
-                if (posNothing !== -1) {
-                    if (posNothing < elemPos.index) {
-                        elemPos.direction = "left";
-                    } else elemPos.direction = "right";
-                } else {
-                    if (elemPos.arrNothing < elemPos.arr) {
-                        elemPos.direction = "up";
-                    } else elemPos.direction = "down";
-                }
-                if(moveSquare(mapMove, elemPos, sizeSq)) {
-                    addLastElem();
-                    for (let i of game.children) {
-                        i.children[0].textContent = '';
-                    }
-                    game.classList.add('finish');
-                }
+        if (isMove) {
+            if (posNothing !== -1) {
+                if (posNothing < elemPos.index) {
+                    elemPos.direction = "left";
+                } else elemPos.direction = "right";
+            } else {
+                if (elemPos.arrNothing < elemPos.arr) {
+                    elemPos.direction = "up";
+                } else elemPos.direction = "down";
             }
-    });
+            if (moveSquare(mapMove, elemPos, sizeSq)) {
+                addLastElem();
+                for (let i of game.children) {
+                    i.children[0].textContent = '';
+                }
+                game.classList.add('finish');
+                game.removeEventListener('click', mapGo);
+                Array.from(game.children).forEach(el => el.classList.remove('square'));
+            }
+        }
+    };
+
+    game.addEventListener('click', mapGo);
     return {
         game,
         addLastElem,
