@@ -7,7 +7,25 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    
+    <div class="score-wrapper">
+        <div class="score">
+            <button class="score__reload">RELOAD GAME</button>
+            <time class="score__time">time <span>00</span>:<span>00</span></time>
+            <div class="score__move">moves <span>0</span></div>
+            <div class="score__select-wrapper">
+                <span>select size game</span>
+                <select name="3x3" id="0" class="score__select">
+                    <option value="3">3x3</option>
+                    <option value="4">4x4</option>
+                    <option value="5">5x5</option>
+                    <option value="6">6x6</option>
+                    <option value="7">7x7</option>
+                    <option value="8">8x8</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="container"></div>
     <script src="js/script.js" type="module"></script>
 </body>
 </html>
