@@ -12,7 +12,7 @@ function createSquare (srcImg, number, classForSq = 'square', pos = {}, sizeImg,
     const square = document.createElement('div');
     squareWrapper.insertAdjacentElement('beforeend', square);
 
-    square.textContent = number;
+    square.insertAdjacentHTML('beforeend', `<span class="square__num">${number}</span>`);
 
     square.classList.add(classForSq);
     square.style.cssText = `position: absolute;
