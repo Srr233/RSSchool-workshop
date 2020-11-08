@@ -44,10 +44,10 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
     }
 
     const finish = () => {
+        game.appendChild(lastElem);
         for (let i of game.children) {
             i.children[0].textContent = '';
         }
-        game.appendChild(lastElem);
         game.removeEventListener('click', mapGo);
         game.classList.add('finish');
         Array.from(game.children).forEach(el => el.classList.remove('square'));
