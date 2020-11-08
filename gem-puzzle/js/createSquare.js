@@ -26,6 +26,18 @@ function createSquare (srcImg, number, classForSq = 'square', pos = {}, sizeImg,
                             z-index: 40;
                             transition: .5s;`;
     square.setAttribute('data-number', number);
+    let data = Date.now();
+
+    const stop = e => {
+        const now = Date.now();
+        if (now - data < 500 ) {
+            e.stopPropagation();
+        } else {
+            data = now;
+        }
+    };// stop double click
+
+    square.addEventListener('click', stop);
 
     return squareWrapper;
 }
