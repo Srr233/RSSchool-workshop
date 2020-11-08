@@ -41,10 +41,34 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
         mapMove.push(row);
     }
 
-    const addLastElem = function () {
-        if (game.children[game.children.length -1] === lastElem) {
-            throw new Error ("lastElem has already append to game!");
-        } else game.appendChild(lastElem);
+    const finish = () => {
+        for (let i of game.children) {
+            i.children[0].textContent = '';
+        }
+        game.appendChild(lastElem);
+        game.removeEventListener('click', mapGo);
+        game.classList.add('finish');
+        Array.from(game.children).forEach(el => el.classList.remove('square'));
+    }
+    const makeFinish = () => {
+        const computedStyles = {
+            currentPlace: {},
+            wrongPlace: {}
+        };
+        let goodCurrentElem;
+        let notGoodCurrentElem;
+        for (let i = 0; i < game.children.length; i++) {
+            goodCurrentElem = document.querySelector(`[data-number="${i + 1}"]`);
+            notGoodCurrentElem = game.children[i];
+
+            computedStyles.currentPlace = notGoodCurrentElem.getBoundingClientRect();
+            computedStyles.wrongPlace = goodCurrentElem.parentNode.getBoundingClientRect();
+
+            goodCurrentElem.style.top = computedStyles.currentPlace.top - computedStyles.wrongPlace.top + "px";
+            goodCurrentElem.style.left = computedStyles.currentPlace.left - computedStyles.wrongPlace.left + "px";
+
+            finish();
+        }
     }
     const mapGo = e => {
         const target = e.target;
@@ -95,13 +119,7 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
                 } else elemPos.direction = "down";
             }
             if (moveSquare(mapMove, elemPos, sizeSq)) {
-                addLastElem();
-                for (let i of game.children) {
-                    i.children[0].textContent = '';
-                }
-                game.classList.add('finish');
-                game.removeEventListener('click', mapGo);
-                Array.from(game.children).forEach(el => el.classList.remove('square'));
+                finish();
             }
         }
     };
@@ -109,7 +127,7 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
     game.addEventListener('click', mapGo);
     return {
         game,
-        addLastElem,
+        makeFinish
     }
 }
 
