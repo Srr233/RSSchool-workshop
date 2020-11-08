@@ -2,10 +2,28 @@
   font-size: 10px;
 }
 
+body {
+  background: url(../assets/background.jpg) 50% 100%;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  outline: transparent;
+  border: transparent;
+  cursor: pointer;
+}
+
 .container {
+  max-width: 1280px;
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex-direction: column;
+  justify-content: center;
   width: 100vw;
   height: 100vh;
 }
@@ -13,13 +31,15 @@
 .gem-puzzle-wrapper {
   margin: 0 auto;
   position: relative;
+  border-radius: 10px;
+  background-color: #A3A9C0;
+  padding: 0.5em;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
 .gem-puzzle-wrapper.finish {
   transition: 1s;
-  transform: scale(2);
 }
 
 .square {
@@ -33,5 +53,68 @@
   transition: 0.5s;
   z-index: 50;
   box-shadow: 1px 1px 15px #000;
-  transform: scale(1.05);
+}
+
+.square__num {
+  padding: 0 3%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+}
+
+.score-wrapper {
+  width: 100%;
+  top: 0;
+  position: absolute;
+  background-color: #fff;
+}
+
+.score {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  text-align: center;
+  font-size: 2.4rem;
+}
+.score__select {
+  width: 60px;
+  border-radius: 5px;
+  outline: transparent;
+  border: transparent;
+  margin: 0 auto;
+  color: #fff;
+  background-color: #A3A9C0;
+  font-size: 2.4rem;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.score__select:hover {
+  transition: 0.2s;
+  width: 70px;
+  letter-spacing: 1px;
+}
+.score__select:active {
+  transform: scale(0.9);
+}
+.score__reload {
+  width: 90%;
+  border-radius: 5px;
+  outline: transparent;
+  border: transparent;
+  margin: 0 auto;
+  color: #fff;
+  background-color: #A3A9C0;
+  font-size: 2.4rem;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.score__reload:hover {
+  transition: 0.2s;
+  width: 100%;
+  letter-spacing: 1px;
+}
+.score__reload:active {
+  transform: scale(0.9);
 }

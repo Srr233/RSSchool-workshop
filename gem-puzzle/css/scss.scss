@@ -1,25 +1,55 @@
 :root {
     font-size: 10px;
 }
+$color-game: #A3A9C0;
+@mixin buttons($width) {
+    width: $width;
+    border-radius: 5px;
+    outline: transparent;
+    border: transparent;
+    margin: 0 auto;
+    color: #fff;
+    background-color: $color-game;
+    font-size: 2.4rem;
+    transition: .2s;
+    cursor: pointer;
+}
+body {
+    background: url(../assets/background.jpg) 50% 100%;
+    margin: 0;
+    padding: 0;
+}
+button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    outline: transparent;
+    border: transparent;
+    cursor: pointer;
+}
 .container {
+    max-width: 1280px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
     align-items: center;
+    flex-direction: column;
+    justify-content: center;
     width: 100vw;
     height: 100vh;
-
 }
 .gem-puzzle-wrapper {
     margin: 0 auto;
 
     position: relative;
 
+    border-radius: 10px;
+    background-color:$color-game;
+    padding: 0.5em;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 .gem-puzzle-wrapper.finish {
     transition: 1s;
-    transform: scale(2);
 }
 .square {
     color: #fff;
@@ -32,5 +62,58 @@
     transition: .5s;
     z-index: 50;
     box-shadow: 1px 1px 15px #000;
-    transform: scale(1.05);
+    
+}
+.square__num {
+    padding: 0 3%;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    border-radius: 50px;
+}
+.score-wrapper {
+    width: 100%;
+    top: 0;
+    position: absolute;
+    background-color: #fff;
+}
+.score {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 5px 0;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: center;
+    text-align: center;
+    font-size: 2.4rem;
+    &__time {
+       
+    }
+    &__move {
+
+    }
+    &__select {
+        @include buttons(60px);
+    }
+    &__select:hover {
+        transition: .2s;
+        width: 70px;
+        letter-spacing: 1px;
+    }
+    &__select:active {
+        transform: scale(0.9);
+    }
+    &__reload {
+        @include buttons(90%);
+    }
+    &__reload:hover {
+        transition: .2s;
+        width: 100%;
+        letter-spacing: 1px;
+    }
+    &__reload:active {
+        transform: scale(0.9);
+    }
+}
+.score__select-wrapper {
+
 }
