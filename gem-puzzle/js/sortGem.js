@@ -1,28 +1,17 @@
 "Use strict";
 
-function sortGem (game, size) {
+function sortGem (game) {
     let resultSequence = 0;
     const gameCopy = Array.from(game.children);
-    gameCopy.reduce((a, b, index) => {
-        if (+a.children[0].dataset.number > +b.children[0].dataset.number) {
-            const slice = gameCopy.slice(index);
-            im: for (let i = 0; i < slice.length; i++) {
-                if (+a.children[0].dataset.number > +slice[i].children[0].dataset.number) {
-                    resultSequence++;
-                } else break im;
+    for (let i = 0; i <= gameCopy.length - 1; i++) {
+        for (let j = i + 1; j <= gameCopy.length - 1; j++) {
+            if (+gameCopy[i].textContent > +gameCopy[j].textContent) {
+                resultSequence += 1;
             }
         }
-        return b;
-    });
-    if (size % 2 !== 0) {
-        if (resultSequence % 2 !== 0) {
-            return false;
-        } else return true;
-    } else {
-        if (resultSequence % 2 === 0) {
-            return false;
-        } else return true;
     }
+    console.log(resultSequence)
+    return resultSequence % 2 === 0 ? true : false;
 }
 
 export {sortGem};
