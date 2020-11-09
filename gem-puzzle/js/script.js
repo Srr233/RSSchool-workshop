@@ -28,13 +28,26 @@ const reload = function () {
     const value = document.querySelector('.score__select').value;
 
     if (container.firstElementChild) container.firstElementChild.remove();
-    game = createBoard(+value, size(+value), `assets/img/${(Math.random() * 152).toFixed(0)}.jpg`);
+    game = createBoard(+value, size(+value), `assets/img/${(Math.random() * 151).toFixed(0)}.jpg`);
     container.insertAdjacentElement("beforeend", game.game);
     if(!sortGem(game.game, +value)) {
         reload();
     };
 }
 reload();
+
+const openCloseMenu = function () {
+    const menu = document.querySelector('.wrapper-menu');
+
+    if (menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        menu.classList.add('close');
+    } else {
+        menu.classList.remove('close');
+        menu.classList.add('open');
+    }
+}
+document.querySelector('.menu-button').addEventListener('click', openCloseMenu);
 document.querySelector('.score__reload').addEventListener('click', reload);
 document.querySelector('.score__select').addEventListener('change', reload);
 document.querySelector('.win__close').addEventListener('click', game.closeFinish);
