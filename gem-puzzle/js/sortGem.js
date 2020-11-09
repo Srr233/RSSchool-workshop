@@ -10,7 +10,6 @@ function sortGem (game) {
             }
         }
     }
-    console.log(resultSequence)
     return resultSequence % 2 === 0 ? true : false;
 }
 
