@@ -26,8 +26,8 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
     const lastElem = wrappersElem.pop();
 
     wrappersElem = wrappersElem.sort(() => Math.random() - Math.random());
-    let row  = [];
-
+    
+    let row = [];
     for (let i = 0; i < wrappersElem.length; i++) {
         game.insertAdjacentElement("beforeend", wrappersElem[i]);
 
@@ -44,6 +44,10 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
     }
 
     const finish = () => {
+        document.querySelector('.win__times').textContent = allTime;
+        document.querySelector('.win__moves').textContent = `${move}`;
+        document.querySelector('.win').classList.add('done');
+
         game.appendChild(lastElem);
         for (let i of game.children) {
             i.children[0].textContent = '';
@@ -51,6 +55,9 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
         game.removeEventListener('click', mapGo);
         game.classList.add('finish');
         Array.from(game.children).forEach(el => el.classList.remove('square'));
+        startGame = !startGame;
+        minutes = '0';
+        seconds = '-1';
     }
     const makeFinish = () => {
         const computedStyles = {
@@ -71,6 +78,39 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
 
             finish();
         }
+    }
+    let startGame = false;
+    let minutes = 0;
+    let seconds = 0;
+    let allTime = '';
+    let timeout;
+    const timeWrap = document.querySelector('time');
+
+    const startTime = function () {
+
+        if (startGame) {
+            timeout = setTimeout(startTime, 1000);
+        } else {
+            return;
+        }
+
+        if (+seconds < 59) {
+            timeWrap.children[0].textContent = minutes.toString().length < 2 ? `0${minutes}` : minutes;
+            timeWrap.children[1].textContent = seconds.toString().length < 2 ? `0${++seconds}` : ++seconds;
+        } else {
+            seconds = 0;
+            timeWrap.children[0].textContent = minutes.toString().length < 2 ? `0${++minutes}` : ++minutes;
+            timeWrap.children[1].textContent = seconds.toString().length < 2 ? `0${seconds}` : seconds;
+        }
+        allTime = `${timeWrap.children[0].textContent}:${timeWrap.children[1].textContent}`;
+    }
+    const reloadTime = () => {
+        timeWrap.children[0].textContent = '00';
+        timeWrap.children[1].textContent = '00';
+        return timeout;
+    }
+    const closeFinish = () => {
+        document.querySelector('.win').classList.remove('done');
     }
     const mapGo = e => {
         const target = e.target;
@@ -111,6 +151,10 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
             isMove = true;
         }
         if (isMove) {
+            if (!startGame) {
+                startGame = !startGame;
+                startTime();
+            }
             counterMove(++move);
             if (posNothing !== -1) {
                 if (posNothing < elemPos.index) {
@@ -130,7 +174,9 @@ function createBoard (size = 3, sizeSq = 100, imgSrc) {
     game.addEventListener('click', mapGo);
     return {
         game,
-        makeFinish
+        makeFinish,
+        reloadTime,
+        closeFinish
     }
 }
 
