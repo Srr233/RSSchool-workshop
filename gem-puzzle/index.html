@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="wrapper-win">
+        <div class="win">Ура! Вы решили головоломку за 
+            <span class="win__times"></span> секунд и 
+            <span class="win__moves"></span> ходов!
+            <button class="win__close">x</button>
+        </div>
+    </div>
     <div class="score-wrapper">
         <div class="score">
             <button class="score__reload">RELOAD GAME</button>
             <time class="score__time">time <span>00</span>:<span>00</span></time>
             <div class="score__move">moves <span>0</span></div>
             <div class="score__select-wrapper">
-                <span>select size game</span>
+                <span>size</span>
                 <select name="3x3" id="0" class="score__select">
                     <option value="3">3x3</option>
                     <option value="4">4x4</option>
