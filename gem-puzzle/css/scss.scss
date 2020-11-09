@@ -2,6 +2,28 @@
     font-size: 10px;
 }
 $color-game: #A3A9C0;
+@keyframes close {
+    0% {
+        left: 0;
+    }
+    10% {
+        left: 2%;
+    }
+    100% {
+        left: -100%;
+    }
+}
+@keyframes open {
+     0% {
+        left: -100%;
+    }
+    90% {
+        left: 2%;
+    }
+    100% {
+        left: 0;
+    }
+}
 @mixin buttons($width) {
     width: $width;
     border-radius: 5px;
@@ -72,6 +94,7 @@ button {
 .score-wrapper {
     width: 100%;
     top: 0;
+    z-index: 100;
     position: absolute;
     background-color: #fff;
 }
@@ -80,17 +103,12 @@ button {
     margin: 0 auto;
     padding: 5px 0;
 
+
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     text-align: center;
     font-size: 2.4rem;
-    &__time {
-       
-    }
-    &__move {
-
-    }
     &__select {
         @include buttons(60px);
     }
@@ -112,9 +130,6 @@ button {
     &__reload:active {
         transform: scale(0.9);
     }
-}
-.score__select-wrapper {
-
 }
 .wrapper-win {
     position: absolute;
@@ -154,4 +169,70 @@ button {
     transition: 1s;
     transform: scale(1);
 }
+.menu-button {
+    @include buttons(90%);
+}
+.menu-button:hover {
+    transition: .2s;
+    width: 100%;
+    letter-spacing: 1px;
+}
+.menu-button:active {
+    transform: scale(0.9);
+}
+.wrapper-menu {
+    position: absolute;
 
+    top: 0;
+    left: -100%;
+
+    width: 320px;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 99;
+
+    line-height: 1%;
+
+    background-color: rgba($color: $color-game, $alpha: 0.5);
+
+}
+.wrapper-menu.open {
+    animation-name: open;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}.wrapper-menu.close {
+    animation-name: close;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    button {
+        @include buttons(90%);
+        margin: 1rem 0;
+    }
+    button:hover {
+        transition: .2s;
+        width: 100%;
+        letter-spacing: 1px;
+    }
+    button:active {
+        transform: scale(0.9);
+    }
+}
+.menu__save {
+
+}
+.menu__load {
+}
+.menu__leaders {
+}

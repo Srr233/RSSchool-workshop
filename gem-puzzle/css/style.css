@@ -2,6 +2,28 @@
   font-size: 10px;
 }
 
+@keyframes close {
+  0% {
+    left: 0;
+  }
+  10% {
+    left: 2%;
+  }
+  100% {
+    left: -100%;
+  }
+}
+@keyframes open {
+  0% {
+    left: -100%;
+  }
+  90% {
+    left: 2%;
+  }
+  100% {
+    left: 0;
+  }
+}
 body {
   background: url(../assets/background.jpg) 50% 100%;
   margin: 0;
@@ -64,6 +86,7 @@ button {
 .score-wrapper {
   width: 100%;
   top: 0;
+  z-index: 100;
   position: absolute;
   background-color: #fff;
 }
@@ -73,7 +96,7 @@ button {
   margin: 0 auto;
   padding: 5px 0;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   align-items: center;
   text-align: center;
   font-size: 2.4rem;
@@ -154,4 +177,82 @@ button {
 .win.done {
   transition: 1s;
   transform: scale(1);
+}
+
+.menu-button {
+  width: 90%;
+  border-radius: 5px;
+  outline: transparent;
+  border: transparent;
+  margin: 0 auto;
+  color: #fff;
+  background-color: #A3A9C0;
+  font-size: 2.4rem;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.menu-button:hover {
+  transition: 0.2s;
+  width: 100%;
+  letter-spacing: 1px;
+}
+
+.menu-button:active {
+  transform: scale(0.9);
+}
+
+.wrapper-menu {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 320px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  line-height: 1%;
+  background-color: rgba(163, 169, 192, 0.5);
+}
+
+.wrapper-menu.open {
+  animation-name: open;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.wrapper-menu.close {
+  animation-name: close;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.menu button {
+  width: 90%;
+  border-radius: 5px;
+  outline: transparent;
+  border: transparent;
+  margin: 0 auto;
+  color: #fff;
+  background-color: #A3A9C0;
+  font-size: 2.4rem;
+  transition: 0.2s;
+  cursor: pointer;
+  margin: 1rem 0;
+}
+.menu button:hover {
+  transition: 0.2s;
+  width: 100%;
+  letter-spacing: 1px;
+}
+.menu button:active {
+  transform: scale(0.9);
 }
