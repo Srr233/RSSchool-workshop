@@ -1,6 +1,8 @@
 import {createBoard} from "./createBoard.js";
+import {sortGem} from "./sortGem.js";
 
 "Use strict";
+let game;
 //change image button
 const container = document.querySelector('.container');
 
@@ -16,18 +18,25 @@ const size = function (numSquares) {
     }
     return Math.min(width, top) / numSquares;
 }
-let game = createBoard(3, 100, "assets/img/100.jpg");
-container.insertAdjacentElement("beforeend", game.game);
 
 const reload = function () {
+    if (game) {
+        window.clearTimeout(game.reloadTime());
+        document.querySelector('.win').classList.remove('done');
+    }
     document.querySelector('.score__move').firstElementChild.textContent = 0;
     const value = document.querySelector('.score__select').value;
-    container.firstElementChild.remove();
-    game = createBoard(+value, size(+value), "assets/img/100.jpg");
+
+    if (container.firstElementChild) container.firstElementChild.remove();
+    game = createBoard(+value, size(+value), `assets/img/${(Math.random() * 152).toFixed(0)}.jpg`);
     container.insertAdjacentElement("beforeend", game.game);
+    if(!sortGem(game.game, +value)) {
+        reload();
+    };
 }
 reload();
 document.querySelector('.score__reload').addEventListener('click', reload);
 document.querySelector('.score__select').addEventListener('change', reload);
+document.querySelector('.win__close').addEventListener('click', game.closeFinish);
 
 
