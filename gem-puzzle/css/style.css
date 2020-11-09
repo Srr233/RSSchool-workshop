@@ -117,3 +117,41 @@ button {
 .score__reload:active {
   transform: scale(0.9);
 }
+
+.wrapper-win {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.win {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  z-index: 100;
+  font-size: 4rem;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #A3A9C0;
+  transform: scale(0);
+  transition: 1s;
+}
+.win__close {
+  position: absolute;
+  color: #fff;
+  bottom: 100%;
+  right: 0.5em;
+  font-size: 1em;
+}
+.win__close:hover {
+  transition: 0.5s;
+  transform: scale(1.2);
+}
+
+.win.done {
+  transition: 1s;
+  transform: scale(1);
+}
