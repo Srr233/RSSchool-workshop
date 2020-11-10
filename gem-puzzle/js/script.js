@@ -50,22 +50,7 @@ const openCloseMenu = function () {
         menu.classList.add('open');
     }
 }
-if (localStorage.getItem('game')) {
-    const contain = document.createElement('div');
-    const sizes = JSON.parse(localStorage.getItem('sizes'));
-    const lastElem = document.createElement('div');
-    const mapMove = JSON.parse(localStorage.getItem('mapMove'));
-    contain.innerHTML = localStorage.getItem('game');
-    lastElem.innerHTML = localStorage.getItem('lastElem');
-
-    const optionsSave = {
-        contain,
-        lastElem,
-        mapMove
-    }
-    game = createBoard(sizes.size, sizes.sizeSq, ``, optionsSave);
-    container.insertAdjacentElement("beforeend", game.game);
-} else reload();
+reload();
 document.querySelector('.menu-button').addEventListener('click', openCloseMenu);
 document.querySelector('.score__reload').addEventListener('click', reload);
 document.querySelector('.score__select').addEventListener('change', reload);
@@ -73,5 +58,23 @@ document.querySelector('.win__close').addEventListener('click', game.closeFinish
 document.querySelector('.menu__save').addEventListener('click', () => {
     const value = document.querySelector('.score__select').value;
     saveGame(document.querySelector('.container'), +value, size(+value), game.lastElem, game.mapMove);
+});
+document.querySelector('.menu__load').addEventListener('click', () => {
+    if (localStorage.getItem('game')) {
+        container.firstElementChild.remove();
+        const contain = document.createElement('div');
+        const sizes = JSON.parse(localStorage.getItem('sizes'));
+        const lastElem = document.createElement('div');
+        const mapMove = JSON.parse(localStorage.getItem('mapMove'));
+        contain.innerHTML = localStorage.getItem('game');
+        lastElem.innerHTML = localStorage.getItem('lastElem');
+        const optionsSave = {
+            contain,
+            lastElem,
+            mapMove
+        }
+        game = createBoard(sizes.size, sizes.sizeSq, ``, optionsSave);
+        container.insertAdjacentElement("beforeend", game.game);
+    }
 });
 
