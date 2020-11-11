@@ -155,10 +155,10 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
         }
         if (+seconds < 59) {
             timeWrap.children[0].textContent = minutes.toString().length < 2 ? `0${minutes}` : minutes;
-            timeWrap.children[1].textContent = seconds.toString().length < 2 ? `0${++seconds}` : ++seconds;
+            timeWrap.children[1].textContent = seconds.toString().length < 2 && seconds !== 9 ? `0${++seconds}` : ++seconds;
         } else {
             seconds = 0;
-            timeWrap.children[0].textContent = minutes.toString().length < 2 ? `0${++minutes}` : ++minutes;
+            timeWrap.children[0].textContent = minutes.toString().length < 2 && minutes !== 9 ? `0${++minutes}` : ++minutes;
             timeWrap.children[1].textContent = seconds.toString().length < 2 ? `0${seconds}` : seconds;
         }
         if (timeMove.time) {
