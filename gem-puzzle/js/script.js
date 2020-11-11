@@ -6,7 +6,13 @@ import {saveGame} from "./saveGame.js";
 
 let game;
 let value;
-//change image button
+const records = localStorage.getItem('records');
+const ol = document.querySelector('.leaders__ol');
+if (records) {
+    const parse = JSON.parse(records);
+    ol.insertAdjacentHTML('beforeend', parse);
+    
+}
 const container = document.querySelector('.container');
 
 const size = function (numSquares) {
@@ -31,33 +37,70 @@ const reload = function () {
     value = document.querySelector('.score__select').value;
 
     if (container.firstElementChild) container.firstElementChild.remove();
-    game = createBoard(+value, size(+value), `assets/img/${(Math.random() * 151).toFixed(0)}.jpg`);
+    const img = (Math.random() * 151).toFixed(0); 
+    game = createBoard(+value, size(+value), `assets/img/${img < 1 ? 1 : img}.jpg`);
     if(!sortGem(game.game, +value)) {
         reload();
         return;
     };
     container.insertAdjacentElement("beforeend", game.game);
 }
-
-const openCloseMenu = function () {
+const openCloseMenu = function (e) {
     const menu = document.querySelector('.wrapper-menu');
+    const modal = document.querySelector('.leaders');
 
-    if (menu.classList.contains('open')) {
-        menu.classList.remove('open');
-        menu.classList.add('close');
+    if (modal.classList.contains('open') && e.target.textContent === 'close') {
+        e.target.textContent = 'menu';
+        modal.classList.remove('open');
+        modal.classList.add('close');
+        return;
+    }
+    if (e.target.textContent === 'Leaders') {
+        
+        if (modal.classList.contains('open')) {
+            modal.classList.remove('open');
+            modal.classList.add('close');
+        } else {
+            modal.classList.remove('close');
+            modal.classList.add('open');
+            menu.classList.remove('open');
+            menu.classList.add('close');
+        }
     } else {
-        menu.classList.remove('close');
-        menu.classList.add('open');
+
+        if (menu.classList.contains('open') && e.target.textContent !== 'menu') {
+            e.target.textContent = 'menu';
+            menu.classList.remove('open');
+            menu.classList.add('close');
+        } else {
+            e.target.textContent = 'close';
+            menu.classList.remove('close');
+            menu.classList.add('open');
+        }
     }
 }
 reload();
+let data = Date.now();
 document.querySelector('.menu-button').addEventListener('click', openCloseMenu);
+document.querySelector('.menu__leaders').addEventListener('click', openCloseMenu);
 document.querySelector('.score__reload').addEventListener('click', reload);
 document.querySelector('.score__select').addEventListener('change', reload);
+document.querySelector('.gem-puzzle-wrapper').addEventListener('click', e => {
+    const now = Date.now();
+    if (now - data < 350) {
+        e.stopPropagation();
+    } else {
+        data = now;
+    }
+}, true);
+
 document.querySelector('.win__close').addEventListener('click', game.closeFinish);
 document.querySelector('.menu__save').addEventListener('click', () => {
     const value = document.querySelector('.score__select').value;
+    const saved = document.querySelector('.save');
     saveGame(document.querySelector('.container'), +value, size(+value), game.lastElem, game.mapMove);
+    saved.classList.add('open');
+    setTimeout(() => saved.classList.remove('open'), 2500);
 });
 document.querySelector('.menu__load').addEventListener('click', () => {
     if (localStorage.getItem('game')) {
@@ -66,6 +109,7 @@ document.querySelector('.menu__load').addEventListener('click', () => {
         const sizes = JSON.parse(localStorage.getItem('sizes'));
         const lastElem = document.createElement('div');
         const mapMove = JSON.parse(localStorage.getItem('mapMove'));
+        document.querySelector('.score__select').value = sizes.size;
         contain.innerHTML = localStorage.getItem('game');
         lastElem.innerHTML = localStorage.getItem('lastElem');
         const optionsSave = {

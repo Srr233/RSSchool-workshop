@@ -229,10 +229,66 @@ button {
         transform: scale(0.9);
     }
 }
-.menu__save {
+.save {
+    position: absolute;
 
+    z-index: 120;
+
+    width: 20%;
+    color: #000;
+    text-align: center;
+    font-size: 2.4rem;
+    background-color: #fff;
+    border-radius: 10px;
+
+    top: -100%;
+    transition: 2s;
 }
-.menu__load {
+.save.open {
+    transition: 1s;
+    top: 10%;
 }
-.menu__leaders {
+.leaders {
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+    
+    width: 320px;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    font-size: 2.4rem;
+    color: #fff;
+
+    z-index: 99;
+
+    background-color: rgba($color: $color-game, $alpha: 0.5);
+
+    &__point {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+    &__ol {
+        width: 100%;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+.leaders.open {
+    animation-name: open;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+.leaders.close {
+    animation-name: close;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
 }

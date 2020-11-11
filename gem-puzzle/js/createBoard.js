@@ -65,12 +65,36 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
             mapMove.push(row);
         }
     }
-
+    let infoFinish = {};
     const finish = () => {
         document.querySelector('.win__times').textContent = allTime;
         document.querySelector('.win__moves').textContent = `${move}`;
         document.querySelector('.win').classList.add('done');
 
+        infoFinish = {
+            move,
+            size: document.querySelector('.score__select').value
+        }
+        const leaders = document.querySelector('.leaders__ol');
+        leaders.insertAdjacentHTML('beforeend', `<li class="leaders__li">
+                                                    <span>${move}&nbsp;</span>
+                                                    <span>${infoFinish.size}x${infoFinish.size}</span>
+                                                    </li>`);
+        const leadersUp = Array.from(leaders.children);
+        leadersUp.sort((a, b) => a.firstElementChild.textContent.trim() - b.firstElementChild.textContent.trim());
+        
+        while(leadersUp.length > 10) {
+            leadersUp.pop()
+        }
+        for (let i of leaders.children) {
+            i.remove();
+        }
+        for (let i of leadersUp) {
+            leaders.insertAdjacentElement('beforeend', i);
+        }
+
+        localStorage.setItem('records', JSON.stringify(leaders.innerHTML));
+        
         game.appendChild(lastElem);
         for (let i of game.children) {
             i.children[0].querySelector('.square__num').remove();
@@ -201,7 +225,8 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
         reloadTime,
         closeFinish,
         lastElem,
-        mapMove
+        mapMove,
+        infoFinish
     }
 }
 
