@@ -130,17 +130,26 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
     let minutes = 0;
     let seconds = 0;
     let allTime = '';
-    let timeout;
+    const timeout = {
+        id: 0
+    }
+    const timeMove = {
+        time: null,
+        move: null
+    }
     const timeWrap = document.querySelector('time');
-
     const startTime = function () {
 
         if (startGame) {
-            timeout = setTimeout(startTime, 1000);
+            timeout.id = setTimeout(startTime, 1000);
         } else {
             return;
         }
-
+        
+        if (timeMove.time) {
+            minutes = timeMove.time[0];
+            seconds = timeMove.time[1];
+        }
         if (+seconds < 59) {
             timeWrap.children[0].textContent = minutes.toString().length < 2 ? `0${minutes}` : minutes;
             timeWrap.children[1].textContent = seconds.toString().length < 2 ? `0${++seconds}` : ++seconds;
@@ -149,16 +158,21 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
             timeWrap.children[0].textContent = minutes.toString().length < 2 ? `0${++minutes}` : ++minutes;
             timeWrap.children[1].textContent = seconds.toString().length < 2 ? `0${seconds}` : seconds;
         }
+        if (timeMove.time) {
+            timeMove.time[0] = minutes;
+            timeMove.time[1] = seconds;
+        }
         allTime = `${timeWrap.children[0].textContent}:${timeWrap.children[1].textContent}`;
     }
     const reloadTime = () => {
         timeWrap.children[0].textContent = '00';
         timeWrap.children[1].textContent = '00';
-        return timeout;
+        return timeout.id;
     }
     const closeFinish = () => {
         document.querySelector('.win').classList.remove('done');
     }
+    let isLoad = true;
     const mapGo = e => {
         const target = e.target;
         if (!target.classList.contains('square')) return;
@@ -202,6 +216,10 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
                 startGame = !startGame;
                 startTime();
             }
+            if (timeMove.move && isLoad) {
+                move = timeMove.move;
+                isLoad = false;
+            }
             counterMove(++move);
             if (posNothing !== -1) {
                 if (posNothing < elemPos.index) {
@@ -226,7 +244,9 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
         closeFinish,
         lastElem,
         mapMove,
-        infoFinish
+        infoFinish,
+        timeMove,
+        timeout
     }
 }
 

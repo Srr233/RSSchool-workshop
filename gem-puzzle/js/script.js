@@ -93,12 +93,22 @@ document.querySelector('.gem-puzzle-wrapper').addEventListener('click', e => {
         data = now;
     }
 }, true);
-
+const getNormalTime = function (time) {
+    if (time[0] == 0) {
+        return time[1];
+    } else return time;
+}
+const time = document.querySelector('.score__time');
 document.querySelector('.win__close').addEventListener('click', game.closeFinish);
 document.querySelector('.menu__save').addEventListener('click', () => {
     const value = document.querySelector('.score__select').value;
     const saved = document.querySelector('.save');
-    saveGame(document.querySelector('.container'), +value, size(+value), game.lastElem, game.mapMove);
+    const move = document.querySelector('.score__move');
+
+    game.timeMove.time = [getNormalTime(time.firstElementChild.textContent), getNormalTime(time.lastElementChild.textContent)];
+    game.timeMove.move = move.firstElementChild.textContent;
+
+    saveGame(document.querySelector('.container'), +value, size(+value), game.lastElem, game.mapMove, game.timeMove);
     saved.classList.add('open');
     setTimeout(() => saved.classList.remove('open'), 2500);
 });
@@ -117,7 +127,16 @@ document.querySelector('.menu__load').addEventListener('click', () => {
             lastElem,
             mapMove
         }
+        clearTimeout(game.timeout.id);
         game = createBoard(sizes.size, sizes.sizeSq, ``, optionsSave);
+        const parseTimeMove = JSON.parse(localStorage.getItem('timeMove'));
+        if (parseTimeMove) {
+            game.timeMove.time = [parseTimeMove.time[0], parseTimeMove.time[1]];
+            time.firstElementChild.textContent = game.timeMove.time[0].length < 2 ? 0 + game.timeMove.time[0] : game.timeMove.time[0];
+            time.lastElementChild.textContent = game.timeMove.time[1].length < 2 ? 0 + game.timeMove.time[1] : game.timeMove.time[1];
+            game.timeMove.move = parseTimeMove.move;
+            document.querySelector('.score__move').firstElementChild.textContent = parseTimeMove.move;
+        }
         container.insertAdjacentElement("beforeend", game.game);
     }
 });
