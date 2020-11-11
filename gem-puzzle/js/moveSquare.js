@@ -1,8 +1,6 @@
 "Use strict";
 
 function moveSquare (map, options, sizeSq) {
-    //change map
-
     const move = [];
     const moveDOM = [];
     let temp1;

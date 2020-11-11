@@ -67,6 +67,9 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
     }
     let infoFinish = {};
     const finish = () => {
+        new Audio('assets/sounds/claps.mp3').play();
+        new Audio('assets/sounds/pipe.mp3').play();
+
         document.querySelector('.win__times').textContent = allTime;
         document.querySelector('.win__moves').textContent = `${move}`;
         document.querySelector('.win').classList.add('done');
@@ -212,6 +215,7 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
             isMove = true;
         }
         if (isMove) {
+            new Audio('assets/sounds/axe.mp3').play();
             if (!startGame) {
                 startGame = !startGame;
                 startTime();
