@@ -1,7 +1,7 @@
-"Use strict";
+'Use strict';
 
 function counterMove(count) {
-    document.querySelector('.score__move').firstElementChild.textContent = count;
+  document.querySelector('.score__move').firstElementChild.textContent = count;
 }
 
-export {counterMove};
+export default counterMove;

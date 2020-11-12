@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./gem-puzzle/js",
-    "lint:fix": "eslint ./gem-puzzle/js --fix"
+    "lint:fix": "eslint ./gem-puzzle/js --fix",
+    "eslint": "eslint"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,9 @@
   },
   "homepage": "https://github.com/rolling-scopes-school/srr233-JS2020Q3#readme",
   "devDependencies": {
-    "eslint": "^7.12.1",
+    "eslint": "^7.13.0",
     "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-html": "^6.1.0",
     "eslint-plugin-import": "^2.22.1",

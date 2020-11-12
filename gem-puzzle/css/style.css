@@ -314,3 +314,18 @@ button {
   animation-duration: 3s;
   animation-fill-mode: forwards;
 }
+
+@media (max-width: 940px) {
+  :root {
+    font-size: 8px;
+  }
+}
+@media (max-width: 760px) {
+  :root {
+    font-size: 7px;
+  }
+
+  .score__reload {
+    width: 100%;
+  }
+}
