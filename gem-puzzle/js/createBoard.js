@@ -6,6 +6,10 @@ import { counterMove } from "./counterMove.js";
 
 function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
     if (typeof size !== 'number') throw new Error ('Size is number! for example 4 => 4x4');
+
+    const axe = new Audio('assets/sounds/axe.mp3');
+    const claps = new Audio('assets/sounds/claps.mp3');
+    const pipe = new Audio('assets/sounds/pipe.mp3');
     
     let count = 0;
     let move = 0;
@@ -66,38 +70,40 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
         }
     }
     let infoFinish = {};
-    const finish = () => {
-        new Audio('assets/sounds/claps.mp3').play();
-        new Audio('assets/sounds/pipe.mp3').play();
-
-        document.querySelector('.win__times').textContent = allTime;
-        document.querySelector('.win__moves').textContent = `${move}`;
-        document.querySelector('.win').classList.add('done');
-
-        infoFinish = {
-            move,
-            size: document.querySelector('.score__select').value
-        }
-        const leaders = document.querySelector('.leaders__ol');
-        leaders.insertAdjacentHTML('beforeend', `<li class="leaders__li">
-                                                    <span>${move}&nbsp;</span>
-                                                    <span>${infoFinish.size}x${infoFinish.size}</span>
-                                                    </li>`);
-        const leadersUp = Array.from(leaders.children);
-        leadersUp.sort((a, b) => a.firstElementChild.textContent.trim() - b.firstElementChild.textContent.trim());
+    const finish = (isMakeFinish) => {
+        if (!isMakeFinish) {
+            claps.play();
+            pipe.play();
         
-        while(leadersUp.length > 10) {
-            leadersUp.pop()
-        }
-        for (let i of leaders.children) {
-            i.remove();
-        }
-        for (let i of leadersUp) {
-            leaders.insertAdjacentElement('beforeend', i);
-        }
 
-        localStorage.setItem('records', JSON.stringify(leaders.innerHTML));
-        
+            document.querySelector('.win__times').textContent = allTime;
+            document.querySelector('.win__moves').textContent = `${move}`;
+            document.querySelector('.win').classList.add('done');
+
+            infoFinish = {
+                move,
+                size: document.querySelector('.score__select').value
+            }
+            const leaders = document.querySelector('.leaders__ol');
+            leaders.insertAdjacentHTML('beforeend', `<li class="leaders__li">
+                                                        <span>${move}&nbsp;</span>
+                                                        <span>${infoFinish.size}x${infoFinish.size}</span>
+                                                        </li>`);
+            const leadersUp = Array.from(leaders.children);
+            leadersUp.sort((a, b) => a.firstElementChild.textContent.trim() - b.firstElementChild.textContent.trim());
+            
+            while(leadersUp.length > 10) {
+                leadersUp.pop()
+            }
+            for (let i of leaders.children) {
+                i.remove();
+            }
+            for (let i of leadersUp) {
+                leaders.insertAdjacentElement('beforeend', i);
+            }
+
+            localStorage.setItem('records', JSON.stringify(leaders.innerHTML));
+        }
         game.appendChild(lastElem);
         for (let i of game.children) {
             i.children[0].querySelector('.square__num').remove();
@@ -125,9 +131,8 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
 
             goodCurrentElem.style.top = computedStyles.currentPlace.top - computedStyles.wrongPlace.top + "px";
             goodCurrentElem.style.left = computedStyles.currentPlace.left - computedStyles.wrongPlace.left + "px";
-
-            finish();
         }
+        finish(true);
     }
     let startGame = false;
     let minutes = 0;
@@ -215,7 +220,7 @@ function createBoard (size = 3, sizeSq = 100, imgSrc, savedGame) {
             isMove = true;
         }
         if (isMove) {
-            new Audio('assets/sounds/axe.mp3').play();
+            axe.play();
             if (!startGame) {
                 startGame = !startGame;
                 startTime();

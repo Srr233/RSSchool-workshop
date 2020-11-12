@@ -6,6 +6,7 @@ import {saveGame} from "./saveGame.js";
 
 let game;
 let value;
+const refresh = new Audio('assets/sounds/refresh.mp3');
 const records = localStorage.getItem('records');
 const ol = document.querySelector('.leaders__ol');
 if (records) {
@@ -30,6 +31,7 @@ const size = function (numSquares) {
 
 const reload = function () {
     if (game) {
+        refresh.play();
         window.clearTimeout(game.reloadTime());
         document.querySelector('.win').classList.remove('done');
     }
@@ -56,16 +58,10 @@ const openCloseMenu = function (e) {
         return;
     }
     if (e.target.textContent === 'Leaders') {
-        
-        if (modal.classList.contains('open')) {
-            modal.classList.remove('open');
-            modal.classList.add('close');
-        } else {
             modal.classList.remove('close');
             modal.classList.add('open');
             menu.classList.remove('open');
             menu.classList.add('close');
-        }
     } else {
 
         if (menu.classList.contains('open') && e.target.textContent !== 'menu') {
@@ -85,6 +81,7 @@ document.querySelector('.menu-button').addEventListener('click', openCloseMenu);
 document.querySelector('.menu__leaders').addEventListener('click', openCloseMenu);
 document.querySelector('.score__reload').addEventListener('click', reload);
 document.querySelector('.score__select').addEventListener('change', reload);
+document.querySelector('.menu__finish').addEventListener('click', () => game.makeFinish());
 document.querySelector('.gem-puzzle-wrapper').addEventListener('click', e => {
     const now = Date.now();
     if (now - data < 350) {
@@ -137,6 +134,7 @@ document.querySelector('.menu__load').addEventListener('click', () => {
             game.timeMove.move = parseTimeMove.move;
             document.querySelector('.score__move').firstElementChild.textContent = parseTimeMove.move;
         }
+        refresh.play();
         container.insertAdjacentElement("beforeend", game.game);
     }
 });
