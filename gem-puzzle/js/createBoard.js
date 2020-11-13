@@ -88,6 +88,7 @@ function createBoard(size = 3, sizeSq = 100, imgSrc, savedGame) {
         size: document.querySelector('.score__select').value
       };
       const leaders = document.querySelector('.leaders__ol');
+      const leadersLength = leaders.children.length;
       leaders.insertAdjacentHTML('beforeend', `<li class="leaders__li">
                                                         <span>${move}&nbsp;</span>
                                                         <span>${infoFinish.size}x${infoFinish.size}</span>
@@ -100,8 +101,8 @@ function createBoard(size = 3, sizeSq = 100, imgSrc, savedGame) {
       while (leadersUp.length > 10) {
         leadersUp.pop();
       }
-      for (let i = 0; i < leaders.children.length; i += 1) {
-        leaders.children[i].remove();
+      for (let i = 0; i < leadersLength; i += 1) {
+        leaders.children[0].remove();
       }
       for (let i = 0; i < leadersUp.length; i += 1) {
         leaders.insertAdjacentElement('beforeend', leadersUp[i]);
