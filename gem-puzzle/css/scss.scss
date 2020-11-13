@@ -134,6 +134,8 @@ button {
 .wrapper-win {
     position: absolute;
 
+    font-size: 10px;
+
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -145,7 +147,7 @@ button {
     text-align: center;
     color: #fff;
     z-index: 100;
-    font-size: 4rem;
+    font-size: 4em;
 
     padding: 10px;
 
@@ -237,7 +239,7 @@ button {
     width: 20%;
     color: #000;
     text-align: center;
-    font-size: 2.4rem;
+    font-size: 2.4em;
     background-color: #fff;
     border-radius: 10px;
 
@@ -262,7 +264,7 @@ button {
     justify-content: center;
     flex-direction: column;
 
-    font-size: 2.4rem;
+    font-size: 2.4em;
     color: #fff;
 
     z-index: 99;
