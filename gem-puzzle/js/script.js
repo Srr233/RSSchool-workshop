@@ -119,8 +119,10 @@ document.querySelector('.menu__load').addEventListener('click', () => {
       lastElem,
       mapMove
     };
+
     clearTimeout(game.timeout.id);
     game = createBoard(sizes.size, sizes.sizeSq, '', optionsSave);
+
     const parseTimeMove = JSON.parse(localStorage.getItem('timeMove'));
     const first = time.firstElementChild;
     const last = time.lastElementChild;
