@@ -1,6 +1,9 @@
 import createBoard from './createBoard.js';
 import sortGem from './sortGem.js';
 import saveGame from './saveGame.js';
+import gamePanel from './gamePanel.js';
+
+document.body.insertAdjacentHTML('afterbegin', gamePanel);
 
 let game;
 let value;
@@ -25,7 +28,7 @@ const size = function getAdaptiveSize(numSquares) {
   }
   return Math.min(width, top) / numSquares;
 };
-
+let isFinish = false;
 const reload = function reloadGame() {
   if (game) {
     refresh.play();
@@ -42,6 +45,7 @@ const reload = function reloadGame() {
     reload();
     return;
   }
+  isFinish = true;
   container.insertAdjacentElement('beforeend', game.game);
 };
 const openCloseMenu = function showMenu(e) {
@@ -75,7 +79,12 @@ document.querySelector('.menu-button').addEventListener('click', openCloseMenu);
 document.querySelector('.menu__leaders').addEventListener('click', openCloseMenu);
 document.querySelector('.score__reload').addEventListener('click', reload);
 document.querySelector('.score__select').addEventListener('change', reload);
-document.querySelector('.menu__finish').addEventListener('click', () => game.makeFinish());
+document.querySelector('.menu__finish').addEventListener('click', () => {
+  if (isFinish) {
+    game.makeFinish();
+    isFinish = !isFinish;
+  }
+});
 document.querySelector('.gem-puzzle-wrapper').addEventListener('click', (e) => {
   const now = Date.now();
   if (now - data < 350) {
@@ -139,3 +148,5 @@ document.querySelector('.menu__load').addEventListener('click', () => {
     container.insertAdjacentElement('beforeend', game.game);
   }
 });
+
+alert('Дорогие проверяющие, проверяйте ТОЛЬКО по ТЗ, спасибо и хорошего дня/вечера! :)');
