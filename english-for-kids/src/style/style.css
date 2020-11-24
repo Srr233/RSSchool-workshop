@@ -1,0 +1,226 @@
+@import "normalize.css";
+@keyframes close {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -100%;
+  }
+}
+@keyframes open {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 0;
+  }
+}
+@keyframes flip-2-ver-left-1 {
+  0% {
+    transform: translateX(0) rotateY(0);
+    transform-origin: 0% 50%;
+  }
+  100% {
+    transform: translateX(-100%) rotateY(180deg);
+    transform-origin: 100% 0%;
+  }
+}
+@keyframes flip-2-ver-left-1-normal {
+  0% {
+    transform: translateX(-100%) rotateY(180deg);
+    transform-origin: 100% 0%;
+  }
+  100% {
+    transform: translateX(0) rotateY(0);
+    transform-origin: 0% 50%;
+  }
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-90deg);
+  }
+}
+@keyframes rotate-reverse {
+  0% {
+    transform: rotate(-90deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes train {
+  0% {
+    left: 3.5%;
+  }
+  100% {
+    left: 70%;
+  }
+}
+@keyframes play {
+  0% {
+    left: 70%;
+  }
+  100% {
+    left: 3.5%;
+  }
+}
+:root {
+  font-size: 10px;
+}
+
+body {
+  font-size: 2rem;
+}
+
+.head .container {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.buttonText-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.h1-wrap {
+  text-align: center;
+}
+
+.open-navigation {
+  width: 35px;
+  z-index: 50;
+  display: flex;
+  flex-flow: column;
+  transition: 1s;
+}
+.open-navigation span {
+  border: 2px solid black;
+  margin: 5px 0 5px 0;
+}
+
+.open-navigation.open {
+  animation: rotate 1s ease-in-out forwards;
+}
+
+.open-navigation.close {
+  animation: rotate-reverse 1s ease-in-out forwards;
+}
+
+.navigation {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 320px;
+  background-color: rgba(144, 115, 35, 0.5);
+}
+
+.navigation.open {
+  animation: open 2s ease-in-out forwards;
+}
+
+.navigation.close {
+  animation: hide 2s ease-in-out forwards;
+}
+
+.list {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  font-size: 3rem;
+}
+.list li {
+  margin: 15px 0;
+}
+.container {
+  margin: 0 auto;
+  padding: 0 10px 0 10px;
+  max-width: 1220px;
+  display: flex;
+  justify-content: center;
+}
+
+.word-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.word-wrap.reverse {
+  justify-content: center;
+}
+
+.switch {
+  position: relative;
+  background-color: brown;
+  border-radius: 50px;
+  width: 15rem;
+  text-align: center;
+}
+.switch__toggle {
+  left: 3.5%;
+  position: absolute;
+  height: 4rem;
+  width: 4rem;
+  background-color: #fff;
+  border-radius: 50px;
+}
+.switch__toggle.train {
+  animation: train 0.5s ease-in-out forwards;
+}
+.switch__toggle.play {
+  animation: play 0.5s ease-in-out forwards;
+}
+.switch__text {
+  line-height: 4rem;
+  font-size: 3rem;
+}
+
+.cards {
+  align-self: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+
+.card {
+  margin: 10px 0;
+}
+.card__img-wrapper {
+  width: 25rem;
+  height: 25rem;
+}
+.card__img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+.card__text {
+  font-size: 2rem;
+}
+.card__text.reverse {
+  transform: scale(-1, 1);
+}
+.card__load-wrap {
+  width: 25px;
+  height: 25px;
+}
+.card__load-img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.card.reverse {
+  animation: flip-2-ver-left-1 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+}
+
+.card.normal {
+  animation: flip-2-ver-left-1-normal 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+}
