@@ -1,41 +1,41 @@
 'use strict';
 
+import { forView } from './services.js';
+
 const view = {
   wrapperCardsDiv: document.querySelector('.cards'),
-  appendCards(cards) {
+  appendCards(cards, callback) {
+    forView.clearChildren(this.wrapperCardsDiv);
+
     const currentCards = cards;
     for (let i = 0; i < currentCards.length; i++) {
       const card = currentCards[i];
-      const htmlCard = `<article class="card">
-                        <div class="card__img-wrapper">
-                            <img src="${card.getLinkImg()}" alt="${card.getEnglishWord()}" class="card__img">
-                        </div>
-                        <div class="word-wrap">
-                            <span class="card__text">${card.getEnglishWord()}</span>
-                            <button class="card__load-wrap">
-                                <img src="../assets/icons/load.jpg" alt="loader" class="card__load-img">
-                            </button>
-                        </div>
-                    </article>`;
-      this.wrapperCardsDiv.insertAdjacentHTML('beforeend', htmlCard);
+
+      const elementCard = forView.createElement('card', card.getLinkImg(),
+        card.getEnglishWord(), card.getEnglishWord());
+
+      forView.bindEvent(elementCard, 'click', callback);
+
+      this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
   },
-  appendMainCards(cardsGroups) {
+  appendMainCards(cardsGroups, callback) {
+    forView.clearChildren(this.wrapperCardsDiv);
+
     const keysEntries = cardsGroups.keys();
     const keys = Array.from(keysEntries);
+
     for (let i = 0; i < keys.length; i++) {
       const currentGroup = keys[i];
       const currentCards = cardsGroups.get(currentGroup);
-      const coverCard = currentCards[0];
-      const htmlCard = `<article class="card">
-                        <div class="card__img-wrapper">
-                            <img src="${coverCard.getLinkImg()}" alt="${coverCard.getEnglishWord()}" class="card__img">
-                        </div>
-                        <div class="word-wrap">
-                            <span class="card__text">${currentGroup}</span>
-                        </div>
-                    </article>`;
-      this.wrapperCardsDiv.insertAdjacentHTML('beforeend', htmlCard);
+      const card = currentCards[0];
+
+      const elementCard = forView.createElement('group', card.getLinkImg(),
+        card.getEnglishWord(), currentGroup);
+
+      forView.bindEvent(elementCard, 'click', callback);
+
+      this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
   },
   reverseCard(card, reversedLanguage) {
