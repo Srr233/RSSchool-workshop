@@ -31,17 +31,14 @@ const forView = {
     let contains;
 
     if (typeCard === 'group') {
-      contains = `<article class="card">
-                        <div class="card__img-wrapper">
+      contains = `      <div class="card__img-wrapper">
                             <img src="${linkImg}" alt="${englishWord}" class="card__img">
                         </div>
                         <div class="word-wrap">
                             <span class="card__text">${nameCard}</span>
-                        </div>
-                    </article>`;
+                        </div>`;
     } else if (typeCard === 'card') {
-      contains = `<article class="card">
-                        <div class="card__img-wrapper">
+      contains = `      <div class="card__img-wrapper">
                             <img src="${linkImg}" alt="${englishWord}" class="card__img">
                         </div>
                         <div class="word-wrap">
@@ -49,8 +46,7 @@ const forView = {
                             <button class="card__load-wrap">
                                 <img src="../assets/icons/load.jpg" alt="loader" class="card__load-img">
                             </button>
-                        </div>
-                    </article>`;
+                        </div>`;
     } else {
       throw new Error('Argument typeCard should be only group or card string!');
     }
@@ -60,7 +56,17 @@ const forView = {
 };
 
 const forController = {
+  getCurrentElemCard(target) {
+    let elementCard = target;
 
+    while (elementCard.tagName !== 'ARTICLE' && elementCard !== null) {
+      elementCard = elementCard.parentElement;
+    }
+    if (elementCard === null) {
+      throw new Error('Element card not found!');
+    }
+    return elementCard;
+  },
 };
 
 export {

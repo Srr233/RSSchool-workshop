@@ -31,10 +31,6 @@ class Card {
     return this.currentLanguage;
   }
 
-  getWord() {
-    return this.englishWord;
-  }
-
   getEnglishWord() {
     return this.englishWord;
   }

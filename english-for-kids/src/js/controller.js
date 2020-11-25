@@ -2,34 +2,37 @@
 
 import model from './model.js';
 import view from './view.js';
+import { forController } from './services.js';
 
 const controller = {
   switchPlayTrain(e) {
 
   },
   reverseCurrentCard(e) {
+    const wrapCardElem = forController.getCurrentElemCard(e.target);
+    const name = wrapCardElem.querySelector('.card__text').textContent;
 
+    const currentCard = model.getCurrentCard(name);
+    currentCard.changeLanguage();
+
+    view.reverseCard(wrapCardElem, currentCard.getCurrentLanguage());
   },
   startGame(e) {
 
   },
   selectCategory(e) {
-    let elementCard = e.target;
+    const wrapCardElem = forController.getCurrentElemCard(e.target);
+    const name = wrapCardElem.querySelector('.card__text').textContent;
 
-    while (elementCard.tagName !== 'ARTICLE') {
-      elementCard = elementCard.parentElement;
-    }
-    const currentGroup = elementCard.querySelector('.card__text').textContent;
-
-    model.setCurrentGroup(currentGroup);
-    view.appendCards(model.getCurrentGroup());
+    model.setCurrentGroup(name);
+    view.appendCards(model.getCurrentGroup(), this.reverseCurrentCard);
   },
   pressCard(e) {
 
   },
   initContent(mapCards) {
     model.setGroups(mapCards);
-    view.appendMainCards(mapCards, this.selectCategory);
+    view.appendMainCards(mapCards, this.selectCategory.bind(this));
   },
 };
 

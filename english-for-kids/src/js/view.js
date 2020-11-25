@@ -14,7 +14,9 @@ const view = {
       const elementCard = forView.createElement('card', card.getLinkImg(),
         card.getEnglishWord(), card.getEnglishWord());
 
-      forView.bindEvent(elementCard, 'click', callback);
+      const buttonReverse = elementCard.querySelector('.card__load-wrap');
+
+      forView.bindEvent(buttonReverse, 'click', callback);
 
       this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
@@ -39,7 +41,24 @@ const view = {
     }
   },
   reverseCard(card, reversedLanguage) {
-
+    let isReverse = false;
+    const name = card.querySelector('.card__text');
+    if (!card.classList.contains('reverse')) {
+      card.classList.remove('normal');
+      card.classList.add('reverse');
+      isReverse = true;
+    } else if (!card.classList.contains('normal')) {
+      card.classList.add('normal');
+      card.classList.remove('reverse');
+      isReverse = false;
+    }
+    requestAnimationFrame(() => {
+      if (isReverse) {
+        name.textContent = reversedLanguage;
+      } else {
+        name.textContent = reversedLanguage;
+      }
+    });
   },
   hideNameCards() {
 

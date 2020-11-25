@@ -24,6 +24,14 @@ const model = {
     const currentCards = this.allGroup.get(this.currentGroup);
     currentCards.forEach((card) => { card.play = false; });
   },
+  getCurrentCard(name) {
+    const group = this.allGroup.get(this.currentGroup);
+    const currentCard = group.find((c) => {
+      const isFind = c.getEnglishWord() === name || c.getRussianWord() === name;
+      return isFind;
+    });
+    return currentCard;
+  },
   getCurrentGroup() {
     return this.allGroup.get(this.currentGroup);
   },
