@@ -1,0 +1,402 @@
+{
+    "animals": [
+        {
+            "numberImg": 1,
+            "group": "animals",
+            "russianWord": "Кот",
+            "englishWord": "Cat"
+        },
+        {
+            "numberImg": 2,
+            "group": "animals",
+            "russianWord": "Кот",
+            "englishWord": "Dog"
+        },
+        {
+            "numberImg": 3,
+            "group": "animals",
+            "russianWord": "Медведь",
+            "englishWord": "Bear"
+        },
+        {
+            "numberImg": 4,
+            "group": "animals",
+            "russianWord": "Змея",
+            "englishWord": "Snake"
+        },
+        {
+            "numberImg": 5,
+            "group": "animals",
+            "russianWord": "Мышь",
+            "englishWord": "Mouse"
+        },
+        {
+            "numberImg": 6,
+            "group": "animals",
+            "russianWord": "Корова",
+            "englishWord": "Cow"
+        },
+        {
+            "numberImg": 7,
+            "group": "animals",
+            "russianWord": "Курица",
+            "englishWord": "Chicken"
+        },
+        {
+            "numberImg": 8,
+            "group": "animals",
+            "russianWord": "Енот",
+            "englishWord": "Hedgehog"
+        }
+    ],
+  "clothes": [
+        {
+            "numberImg": 1,
+            "group": "clothes",
+            "russianWord": "Ботинки",
+            "englishWord": "Boots"
+        },
+        {
+            "numberImg": 2,
+            "group": "clothes",
+            "russianWord": "Кроссовки",
+            "englishWord": "Sneakers"
+        },
+        {
+            "numberImg": 3,
+            "group": "clothes",
+            "russianWord": "Рубашка",
+            "englishWord": "Shirt"
+        },
+        {
+            "numberImg": 4,
+            "group": "clothes",
+            "russianWord": "Блузка",
+            "englishWord": "Blouse"
+        },
+        {
+            "numberImg": 5,
+            "group": "clothes",
+            "russianWord": "Носки",
+            "englishWord": "Socks"
+        },
+        {
+            "numberImg": 6,
+            "group": "clothes",
+            "russianWord": "Куртка",
+            "englishWord": "Jacket"
+        },
+        {
+            "numberImg": 7,
+            "group": "clothes",
+            "russianWord": "Перчатки",
+            "englishWord": "Gloves"
+        },
+        {
+            "numberImg": 8,
+            "group": "clothes",
+            "russianWord": "Шапка",
+            "englishWord": "Cap"
+        }
+    ],
+    "emotions": [
+        {
+            "numberImg": 1,
+            "group": "emotions",
+            "russianWord": "Гнев",
+            "englishWord": "Anger"
+        },
+        {
+            "numberImg": 2,
+            "group": "emotions",
+            "russianWord": "Печаль",
+            "englishWord": "Sadness"
+        },
+        {
+            "numberImg": 3,
+            "group": "emotions",
+            "russianWord": "Радость",
+            "englishWord": "Joy"
+        },
+        {
+            "numberImg": 4,
+            "group": "emotions",
+            "russianWord": "Презрение",
+            "englishWord": "Contempt"
+        },
+        {
+            "numberImg": 5,
+            "group": "emotions",
+            "russianWord": "Страх",
+            "englishWord": "fear"
+        },
+        {
+            "numberImg": 6,
+            "group": "emotions",
+            "russianWord": "Безразличие",
+            "englishWord": "Indifference"
+        },
+        {
+            "numberImg": 7,
+            "group": "emotions",
+            "russianWord": "Удивление",
+            "englishWord": "Surprise"
+        },
+        {
+            "numberImg": 8,
+            "group": "emotions",
+            "russianWord": "Отвращение",
+            "englishWord": "Disgust"
+        }
+    ],
+    "food" : [
+        {
+            "numberImg": 1,
+            "group": "food",
+            "russianWord": "Бургер",
+            "englishWord": "Burger"
+        },
+        {
+            "numberImg": 2,
+            "group": "food",
+            "russianWord": "Арбуз",
+            "englishWord": "Watermelon"
+        },
+        {
+            "numberImg": 3,
+            "group": "food",
+            "russianWord": "Картошка",
+            "englishWord": "Potato"
+        },
+        {
+            "numberImg": 4,
+            "group": "food",
+            "russianWord": "Хлеб",
+            "englishWord": "Bread"
+        },
+        {
+            "numberImg": 5,
+            "group": "food",
+            "russianWord": "Стэйк",
+            "englishWord": "Steak"
+        },
+        {
+            "numberImg": 6,
+            "group": "food",
+            "russianWord": "Кекс",
+            "englishWord": "Cake"
+        },
+        {
+            "numberImg": 7,
+            "group": "food",
+            "russianWord": "Капуста",
+            "englishWord": "Cabbage"
+        },
+        {
+            "numberImg": 8,
+            "group": "food",
+            "russianWord": "Мёд",
+            "englishWord": "Honey"
+        }
+    ],
+    "languages": [
+        {
+            "numberImg": 1,
+            "group": "languages",
+            "russianWord": "Русский",
+            "englishWord": "Russian"
+        },
+        {
+            "numberImg": 2,
+            "group": "languages",
+            "russianWord": "Английский",
+            "englishWord": "English"
+        },
+        {
+            "numberImg": 3,
+            "group": "languages",
+            "russianWord": "Немецкий",
+            "englishWord": "German"
+        },
+        {
+            "numberImg": 4,
+            "group": "languages",
+            "russianWord": "Польский",
+            "englishWord": "Polish"
+        },
+        {
+            "numberImg": 5,
+            "group": "languages",
+            "russianWord": "Арабский",
+            "englishWord": "Arab"
+        },
+        {
+            "numberImg": 6,
+            "group": "languages",
+            "russianWord": "Украинский",
+            "englishWord": "Ukrainian"
+        },
+        {
+            "numberImg": 7,
+            "group": "languages",
+            "russianWord": "Японский",
+            "englishWord": "Japanese"
+        },
+        {
+            "numberImg": 8,
+            "group": "languages",
+            "russianWord": "Китайский",
+            "englishWord": "Chinese"
+        }
+    ],
+    "musicalInstruments" : [
+        {
+            "numberImg": 1,
+            "group": "musicalInstruments",
+            "russianWord": "Гитара",
+            "englishWord": "Guitar"
+        },
+        {
+            "numberImg": 2,
+            "group": "musicalInstruments",
+            "russianWord": "Флейта",
+            "englishWord": "Flute"
+        },
+        {
+            "numberImg": 3,
+            "group": "musicalInstruments",
+            "russianWord": "Ханг",
+            "englishWord": "Hang"
+        },
+        {
+            "numberImg": 4,
+            "group": "musicalInstruments",
+            "russianWord": "Скрипка",
+            "englishWord": "Violin"
+        },
+        {
+            "numberImg": 5,
+            "group": "musicalInstruments",
+            "russianWord": "Барабан",
+            "englishWord": "Drum"
+        },
+        {
+            "numberImg": 6,
+            "group": "musicalInstruments",
+            "russianWord": "Аккордеон",
+            "englishWord": "Accordion"
+        },
+        {
+            "numberImg": 7,
+            "group": "musicalInstruments",
+            "russianWord": "Арфа",
+            "englishWord": "Harp"
+        },
+        {
+            "numberImg": 8,
+            "group": "musicalInstruments",
+            "russianWord": "Фортепиано",
+            "englishWord": "Piano"
+        }
+    ],
+    "professions": [
+        {
+            "numberImg": 1,
+            "group": "professions",
+            "russianWord": "Программист",
+            "englishWord": "Programmer"
+        },
+        {
+            "numberImg": 2,
+            "group": "professions",
+            "russianWord": "Швея",
+            "englishWord": "Seamstress"
+        },
+        {
+            "numberImg": 3,
+            "group": "professions",
+            "russianWord": "Водитель",
+            "englishWord": "Driver"
+        },
+        {
+            "numberImg": 4,
+            "group": "professions",
+            "russianWord": "Врач",
+            "englishWord": "Doctor"
+        },
+        {
+            "numberImg": 5,
+            "group": "professions",
+            "russianWord": "Строитель",
+            "englishWord": "Builder"
+        },
+        {
+            "numberImg": 6,
+            "group": "professions",
+            "russianWord": "Авто механик",
+            "englishWord": "Auto Mechanic"
+        },
+        {
+            "numberImg": 7,
+            "group": "professions",
+            "russianWord": "Артист",
+            "englishWord": "Artist"
+        },
+        {
+            "numberImg": 8,
+            "group": "professions",
+            "russianWord": "Художник",
+            "englishWord": "Painter"
+        }
+    ],
+    "sports": [
+        {
+            "numberImg": 1,
+            "group": "sports",
+            "russianWord": "Фехтование",
+            "englishWord": "Fencing"
+        },
+        {
+            "numberImg": 2,
+            "group": "sports",
+            "russianWord": "Альпинизм",
+            "englishWord": "Mountaineering"
+        },
+        {
+            "numberImg": 3,
+            "group": "sports",
+            "russianWord": "Бег",
+            "englishWord": "Jogging"
+        },
+        {
+            "numberImg": 4,
+            "group": "sports",
+            "russianWord": "Футбол",
+            "englishWord": "Football"
+        },
+        {
+            "numberImg": 5,
+            "group": "sports",
+            "russianWord": "Теннис",
+            "englishWord": "Tennis"
+        },
+        {
+            "numberImg": 6,
+            "group": "sports",
+            "russianWord": "Бокс",
+            "englishWord": "Boxing"
+        },
+        {
+            "numberImg": 7,
+            "group": "sports",
+            "russianWord": "Плавание",
+            "englishWord": "Swimming"
+        },
+        {
+            "numberImg": 8,
+            "group": "sports",
+            "russianWord": "Акробатика",
+            "englishWord": "Acrobatics"
+        }
+    ]
+}
