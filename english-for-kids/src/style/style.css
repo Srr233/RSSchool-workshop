@@ -51,7 +51,7 @@
     transform: rotate(0deg);
   }
 }
-@keyframes train {
+@keyframes play {
   0% {
     left: 3.5%;
   }
@@ -59,7 +59,7 @@
     left: 70%;
   }
 }
-@keyframes play {
+@keyframes train {
   0% {
     left: 70%;
   }
@@ -171,11 +171,11 @@ body {
   background-color: #fff;
   border-radius: 50px;
 }
-.switch__toggle.train {
-  animation: train 0.5s ease-in-out forwards;
-}
 .switch__toggle.play {
   animation: play 0.5s ease-in-out forwards;
+}
+.switch__toggle.train {
+  animation: train 0.5s ease-in-out forwards;
 }
 .switch__text {
   line-height: 4rem;

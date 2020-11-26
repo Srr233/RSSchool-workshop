@@ -15,6 +15,17 @@ const forModel = {
 };
 
 const forView = {
+  getCurrentElemCard(target) {
+    let elementCard = target;
+
+    while (elementCard.tagName !== 'ARTICLE' && elementCard !== null) {
+      elementCard = elementCard.parentElement;
+    }
+    if (elementCard === null) {
+      throw new Error('Element card not found!');
+    }
+    return elementCard;
+  },
   clearChildren(element) {
     const length = element.childElementCount;
     if (!length) return;
@@ -26,19 +37,21 @@ const forView = {
     element.addEventListener(eventName, callback);
   },
   createElement(typeCard, linkImg, englishWord, nameCard) {
-    const wrapperCard = document.createElement('article');
-    wrapperCard.classList.add('card');
+    const wrapperCard = document.createElement('div');
     let contains;
 
     if (typeCard === 'group') {
-      contains = `      <div class="card__img-wrapper">
+      contains = `      <article class="card">
+                        <div class="card__img-wrapper">
                             <img src="${linkImg}" alt="${englishWord}" class="card__img">
                         </div>
                         <div class="word-wrap">
                             <span class="card__text">${nameCard}</span>
-                        </div>`;
+                        </div>
+                        </article>`;
     } else if (typeCard === 'card') {
-      contains = `      <div class="card__img-wrapper">
+      contains = `      <article class="card">
+                        <div class="card__img-wrapper">
                             <img src="${linkImg}" alt="${englishWord}" class="card__img">
                         </div>
                         <div class="word-wrap">
@@ -46,7 +59,8 @@ const forView = {
                             <button class="card__load-wrap">
                                 <img src="../assets/icons/load.jpg" alt="loader" class="card__load-img">
                             </button>
-                        </div>`;
+                        </div>
+                        </article>`;
     } else {
       throw new Error('Argument typeCard should be only group or card string!');
     }
@@ -56,7 +70,7 @@ const forView = {
 };
 
 const forController = {
-  getCurrentElemCard(target) {
+  getName(target) {
     let elementCard = target;
 
     while (elementCard.tagName !== 'ARTICLE' && elementCard !== null) {
@@ -65,7 +79,7 @@ const forController = {
     if (elementCard === null) {
       throw new Error('Element card not found!');
     }
-    return elementCard;
+    return elementCard.querySelector('.card__text').textContent;
   },
 };
 
