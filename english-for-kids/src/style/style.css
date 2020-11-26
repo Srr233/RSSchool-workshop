@@ -103,11 +103,11 @@ body {
 }
 
 .open-navigation.open {
-  animation: rotate 1s ease-in-out forwards;
+  animation: rotate 0.5s ease-in-out forwards;
 }
 
 .open-navigation.close {
-  animation: rotate-reverse 1s ease-in-out forwards;
+  animation: rotate-reverse 0.5s ease-in-out forwards;
 }
 
 .navigation {
@@ -122,11 +122,11 @@ body {
 }
 
 .navigation.open {
-  animation: open 2s ease-in-out forwards;
+  animation: open 1s ease-in-out forwards;
 }
 
 .navigation.close {
-  animation: hide 2s ease-in-out forwards;
+  animation: close 2s ease-in-out forwards;
 }
 
 .list {

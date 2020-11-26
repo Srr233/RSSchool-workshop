@@ -16,6 +16,8 @@ const controller = {
     if (e.type === 'mouseleave' && child.classList.contains('reverse')) {
       name = forController.getName(child);
       target = child;
+    } else if (e.type === 'mouseleave') {
+      return;
     } else {
       name = forController.getName(e.target);
       target = e.target;
@@ -41,10 +43,17 @@ const controller = {
   pressCard(e) {
 
   },
+  openMenu(e) {
+    view.openCloseMenu();
+  },
   initContent(mapCards) {
     model.setGroups(mapCards);
     view.appendMainCards(mapCards, this.selectCategory.bind(this));
-    view.bindSwitchFoo(this.switchPlayTrain);
+    view.bindFoo({
+      switchFoo: this.switchPlayTrain,
+      burgerMenuFoo: this.openMenu,
+      navFoo: this.selectCategory.bind(this),
+    });
     view.bindStartGameFoo(this.startGame);
   },
 };

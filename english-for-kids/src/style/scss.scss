@@ -139,10 +139,10 @@ body {
     transition: 1s;
 }
 .open-navigation.open {
-    animation: rotate 1s ease-in-out forwards;
+    animation: rotate .5s ease-in-out forwards;
 }
 .open-navigation.close {
-    animation: rotate-reverse 1s ease-in-out forwards;
+    animation: rotate-reverse .5s ease-in-out forwards;
 }
 .navigation {
     position: absolute;
@@ -157,10 +157,10 @@ body {
     background-color: rgba($color: #907323, $alpha: .5);
 }
 .navigation.open {
-    animation: open 2s ease-in-out forwards;
+    animation: open 1s ease-in-out forwards;
 }
 .navigation.close {
-    animation: hide 2s ease-in-out forwards;
+    animation: close 2s ease-in-out forwards;
 }
 .list {
     display: flex;

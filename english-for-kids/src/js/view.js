@@ -4,6 +4,10 @@ import { forView } from './services.js';
 
 const view = {
   wrapperCardsDiv: document.querySelector('.cards'),
+  burgerMenu: document.querySelector('.open-navigation'),
+  navigation: document.querySelector('.navigation'),
+  links: document.querySelectorAll('.list__link'),
+  switch: document.querySelector('.switch__toggle'),
   appendCards(cards, callbacks) {
     forView.clearChildren(this.wrapperCardsDiv);
 
@@ -71,15 +75,30 @@ const view = {
 
   },
   openCloseMenu() {
+    const isOpen = this.burgerMenu.classList.contains('open');
 
+    if (isOpen) {
+      this.navigation.classList.add('close');
+      this.navigation.classList.remove('open');
+
+      this.burgerMenu.classList.add('close');
+      this.burgerMenu.classList.remove('open');
+    } else {
+      this.navigation.classList.add('open');
+      this.navigation.classList.remove('close');
+
+      this.burgerMenu.classList.add('open');
+      this.burgerMenu.classList.remove('close');
+    }
   },
   showPlayTrain() {
 
   },
-  bindSwitchFoo(callback) {
-    const buttonSwitch = document.querySelector('.switch__toggle');
-
-    forView.bindEvent(buttonSwitch, 'click', callback);
+  bindFoo(callbacks) {
+    const { switchFoo, burgerMenuFoo, navFoo } = callbacks;
+    forView.bindEvent(this.switch, 'click', switchFoo);
+    forView.bindEvent(this.burgerMenu, 'click', burgerMenuFoo);
+    this.links.forEach((e) => forView.bindEvent(e, 'click', navFoo));
   },
   bindStartGameFoo(callback) {
 

@@ -69,11 +69,25 @@ const forView = {
   },
 };
 
+function createCamelCase(text) {
+  let res = text.toLowerCase().split(' ');
+
+  if (res.length > 1) {
+    res = res.map((val, index) => (index ? val[0].toUpperCase() + val.slice(1)
+      : val));
+  }
+  return res.join('');
+}
+
 const forController = {
   getName(target) {
     let elementCard = target;
 
-    while (elementCard.tagName !== 'ARTICLE' && elementCard !== null) {
+    if (elementCard.tagName === 'A') {
+      return createCamelCase(elementCard.textContent);
+    }
+
+    while (elementCard !== null && elementCard.tagName !== 'ARTICLE') {
       elementCard = elementCard.parentElement;
     }
     if (elementCard === null) {
