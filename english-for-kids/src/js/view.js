@@ -7,7 +7,8 @@ const view = {
   burgerMenu: document.querySelector('.open-navigation'),
   navigation: document.querySelector('.navigation'),
   links: document.querySelectorAll('.list__link'),
-  switch: document.querySelector('.switch__toggle'),
+  switchToggle: document.querySelector('.switch__toggle'),
+  switchText: document.querySelector('.switch__text'),
   appendCards(cards, callbacks) {
     forView.clearChildren(this.wrapperCardsDiv);
 
@@ -71,8 +72,13 @@ const view = {
     }
     wrapperName.textContent = reversedLanguage;
   },
-  hideNameCards() {
-
+  hideOpenNameCards(isOpen) {
+    const namesWrap = document.querySelectorAll('.word-wrap');
+    if (isOpen) {
+      namesWrap.forEach((e) => { e.style.display = 'none'; });
+    } else {
+      namesWrap.forEach((e) => { e.style.display = 'flex'; });
+    }
   },
   openCloseMenu() {
     const isOpen = this.burgerMenu.classList.contains('open');
@@ -92,11 +98,29 @@ const view = {
     }
   },
   showPlayTrain() {
+    const text = this.switchText.textContent;
+    const changedText = text === 'play' ? 'train' : 'play';
 
+    this.switchText.textContent = changedText;
+
+    switch (changedText) {
+      case 'play':
+        this.switchToggle.classList.add('play');
+        this.switchToggle.classList.remove('train');
+        this.hideOpenNameCards(true);
+        break;
+      case 'train':
+        this.switchToggle.classList.add('train');
+        this.switchToggle.classList.remove('play');
+        this.hideOpenNameCards(false);
+        break;
+      default:
+        throw new Error('Not found class');
+    }
   },
   bindFoo(callbacks) {
     const { switchFoo, burgerMenuFoo, navFoo } = callbacks;
-    forView.bindEvent(this.switch, 'click', switchFoo);
+    forView.bindEvent(this.switchToggle, 'click', switchFoo);
     forView.bindEvent(this.burgerMenu, 'click', burgerMenuFoo);
     this.links.forEach((e) => forView.bindEvent(e, 'click', navFoo));
   },
