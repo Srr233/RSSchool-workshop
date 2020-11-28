@@ -195,6 +195,7 @@ body {
     justify-content: center;
 }
 .switch {
+    display: none;
     position: relative;
 
     background-color: brown;
@@ -268,4 +269,20 @@ body {
 .card.normal {
     -webkit-animation: flip-2-ver-left-1-normal 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 	        animation: flip-2-ver-left-1-normal 0.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+}
+
+.start {
+    display: flex;
+    justify-content: center;
+    &__button {
+        display: none;
+        width: 8rem;
+        border-radius: 50%;
+        padding: 1rem;
+    }
+    &__img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+    }
 }

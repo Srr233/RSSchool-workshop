@@ -4,49 +4,57 @@
             "numberImg": 1,
             "group": "animals",
             "russianWord": "Кот",
-            "englishWord": "Cat"
+            "englishWord": "Cat",
+            "numberSound": 1 
         },
         {
             "numberImg": 2,
             "group": "animals",
             "russianWord": "Собака",
-            "englishWord": "Dog"
+            "englishWord": "Dog",
+            "numberSound": 2 
         },
         {
             "numberImg": 3,
             "group": "animals",
             "russianWord": "Медведь",
-            "englishWord": "Bear"
+            "englishWord": "Bear",
+            "numberSound": 3 
         },
         {
             "numberImg": 4,
             "group": "animals",
             "russianWord": "Змея",
-            "englishWord": "Snake"
+            "englishWord": "Snake",
+            "numberSound": 4 
         },
         {
             "numberImg": 5,
             "group": "animals",
             "russianWord": "Мышь",
-            "englishWord": "Mouse"
+            "englishWord": "Mouse",
+            "numberSound": 5 
         },
         {
             "numberImg": 6,
             "group": "animals",
             "russianWord": "Корова",
-            "englishWord": "Cow"
+            "englishWord": "Cow",
+            "numberSound": 6 
         },
         {
             "numberImg": 7,
             "group": "animals",
             "russianWord": "Курица",
-            "englishWord": "Chicken"
+            "englishWord": "Chicken",
+            "numberSound": 7 
         },
         {
             "numberImg": 8,
             "group": "animals",
             "russianWord": "Енот",
-            "englishWord": "Hedgehog"
+            "englishWord": "Hedgehog",
+            "numberSound": 8 
         }
     ],
   "clothes": [
@@ -54,49 +62,57 @@
             "numberImg": 1,
             "group": "clothes",
             "russianWord": "Ботинки",
-            "englishWord": "Boots"
+            "englishWord": "Boots",
+            "numberSound": 1 
         },
         {
             "numberImg": 2,
             "group": "clothes",
             "russianWord": "Кроссовки",
-            "englishWord": "Sneakers"
+            "englishWord": "Sneakers",
+            "numberSound": 2 
         },
         {
             "numberImg": 3,
             "group": "clothes",
             "russianWord": "Рубашка",
-            "englishWord": "Shirt"
+            "englishWord": "Shirt",
+            "numberSound": 3 
         },
         {
             "numberImg": 4,
             "group": "clothes",
             "russianWord": "Блузка",
-            "englishWord": "Blouse"
+            "englishWord": "Blouse",
+            "numberSound": 4 
         },
         {
             "numberImg": 5,
             "group": "clothes",
             "russianWord": "Носки",
-            "englishWord": "Socks"
+            "englishWord": "Socks",
+            "numberSound": 5 
         },
         {
             "numberImg": 6,
             "group": "clothes",
             "russianWord": "Куртка",
-            "englishWord": "Jacket"
+            "englishWord": "Jacket",
+            "numberSound": 6 
         },
         {
             "numberImg": 7,
             "group": "clothes",
             "russianWord": "Перчатки",
-            "englishWord": "Gloves"
+            "englishWord": "Gloves",
+            "numberSound": 7 
         },
         {
             "numberImg": 8,
             "group": "clothes",
             "russianWord": "Шапка",
-            "englishWord": "Cap"
+            "englishWord": "Cap",
+            "numberSound": 8 
         }
     ],
     "emotions": [
@@ -104,49 +120,57 @@
             "numberImg": 1,
             "group": "emotions",
             "russianWord": "Гнев",
-            "englishWord": "Anger"
+            "englishWord": "Anger",
+            "numberSound": 1 
         },
         {
             "numberImg": 2,
             "group": "emotions",
             "russianWord": "Печаль",
-            "englishWord": "Sadness"
+            "englishWord": "Sadness",
+            "numberSound": 2 
         },
         {
             "numberImg": 3,
             "group": "emotions",
             "russianWord": "Радость",
-            "englishWord": "Joy"
+            "englishWord": "Joy",
+            "numberSound": 3 
         },
         {
             "numberImg": 4,
             "group": "emotions",
             "russianWord": "Презрение",
-            "englishWord": "Contempt"
+            "englishWord": "Contempt",
+            "numberSound": 4 
         },
         {
             "numberImg": 5,
             "group": "emotions",
             "russianWord": "Страх",
-            "englishWord": "fear"
+            "englishWord": "fear",
+            "numberSound": 5 
         },
         {
             "numberImg": 6,
             "group": "emotions",
             "russianWord": "Безразличие",
-            "englishWord": "Indifference"
+            "englishWord": "Indifference",
+            "numberSound": 6 
         },
         {
             "numberImg": 7,
             "group": "emotions",
             "russianWord": "Удивление",
-            "englishWord": "Surprise"
+            "englishWord": "Surprise",
+            "numberSound": 7 
         },
         {
             "numberImg": 8,
             "group": "emotions",
             "russianWord": "Отвращение",
-            "englishWord": "Disgust"
+            "englishWord": "Disgust",
+            "numberSound": 8 
         }
     ],
     "food" : [
@@ -154,49 +178,57 @@
             "numberImg": 1,
             "group": "food",
             "russianWord": "Бургер",
-            "englishWord": "Burger"
+            "englishWord": "Burger",
+            "numberSound": 1 
         },
         {
             "numberImg": 2,
             "group": "food",
             "russianWord": "Арбуз",
-            "englishWord": "Watermelon"
+            "englishWord": "Watermelon",
+            "numberSound": 2 
         },
         {
             "numberImg": 3,
             "group": "food",
             "russianWord": "Картошка",
-            "englishWord": "Potato"
+            "englishWord": "Potato",
+            "numberSound": 3 
         },
         {
             "numberImg": 4,
             "group": "food",
             "russianWord": "Хлеб",
-            "englishWord": "Bread"
+            "englishWord": "Bread",
+            "numberSound": 4 
         },
         {
             "numberImg": 5,
             "group": "food",
             "russianWord": "Стэйк",
-            "englishWord": "Steak"
+            "englishWord": "Steak",
+            "numberSound": 5 
         },
         {
             "numberImg": 6,
             "group": "food",
             "russianWord": "Кекс",
-            "englishWord": "Cake"
+            "englishWord": "Cake",
+            "numberSound": 6 
         },
         {
             "numberImg": 7,
             "group": "food",
             "russianWord": "Капуста",
-            "englishWord": "Cabbage"
+            "englishWord": "Cabbage",
+            "numberSound": 7 
         },
         {
             "numberImg": 8,
             "group": "food",
             "russianWord": "Мёд",
-            "englishWord": "Honey"
+            "englishWord": "Honey",
+            "numberSound": 8 
         }
     ],
     "languages": [
@@ -204,49 +236,57 @@
             "numberImg": 1,
             "group": "languages",
             "russianWord": "Русский",
-            "englishWord": "Russian"
+            "englishWord": "Russian",
+            "numberSound": 1 
         },
         {
             "numberImg": 2,
             "group": "languages",
             "russianWord": "Английский",
-            "englishWord": "English"
+            "englishWord": "English",
+            "numberSound": 2 
         },
         {
             "numberImg": 3,
             "group": "languages",
             "russianWord": "Немецкий",
-            "englishWord": "German"
+            "englishWord": "German",
+            "numberSound": 3 
         },
         {
             "numberImg": 4,
             "group": "languages",
             "russianWord": "Польский",
-            "englishWord": "Polish"
+            "englishWord": "Polish",
+            "numberSound": 4 
         },
         {
             "numberImg": 5,
             "group": "languages",
             "russianWord": "Арабский",
-            "englishWord": "Arab"
+            "englishWord": "Arab",
+            "numberSound": 5 
         },
         {
             "numberImg": 6,
             "group": "languages",
             "russianWord": "Украинский",
-            "englishWord": "Ukrainian"
+            "englishWord": "Ukrainian",
+            "numberSound": 6 
         },
         {
             "numberImg": 7,
             "group": "languages",
             "russianWord": "Японский",
-            "englishWord": "Japanese"
+            "englishWord": "Japanese",
+            "numberSound": 7 
         },
         {
             "numberImg": 8,
             "group": "languages",
             "russianWord": "Китайский",
-            "englishWord": "Chinese"
+            "englishWord": "Chinese",
+            "numberSound": 8 
         }
     ],
     "musicalInstruments" : [
@@ -254,49 +294,57 @@
             "numberImg": 1,
             "group": "musicalInstruments",
             "russianWord": "Гитара",
-            "englishWord": "Guitar"
+            "englishWord": "Guitar",
+            "numberSound": 1 
         },
         {
             "numberImg": 2,
             "group": "musicalInstruments",
             "russianWord": "Флейта",
-            "englishWord": "Flute"
+            "englishWord": "Flute",
+            "numberSound": 2 
         },
         {
             "numberImg": 3,
             "group": "musicalInstruments",
             "russianWord": "Ханг",
-            "englishWord": "Hang"
+            "englishWord": "Hang",
+            "numberSound": 3 
         },
         {
             "numberImg": 4,
             "group": "musicalInstruments",
             "russianWord": "Скрипка",
-            "englishWord": "Violin"
+            "englishWord": "Violin",
+            "numberSound": 4 
         },
         {
             "numberImg": 5,
             "group": "musicalInstruments",
             "russianWord": "Барабан",
-            "englishWord": "Drum"
+            "englishWord": "Drum",
+            "numberSound": 5 
         },
         {
             "numberImg": 6,
             "group": "musicalInstruments",
             "russianWord": "Аккордеон",
-            "englishWord": "Accordion"
+            "englishWord": "Accordion",
+            "numberSound": 6 
         },
         {
             "numberImg": 7,
             "group": "musicalInstruments",
             "russianWord": "Арфа",
-            "englishWord": "Harp"
+            "englishWord": "Harp",
+            "numberSound": 7 
         },
         {
             "numberImg": 8,
             "group": "musicalInstruments",
             "russianWord": "Фортепиано",
-            "englishWord": "Piano"
+            "englishWord": "Piano",
+            "numberSound": 8 
         }
     ],
     "professions": [
@@ -304,49 +352,57 @@
             "numberImg": 1,
             "group": "professions",
             "russianWord": "Программист",
-            "englishWord": "Programmer"
+            "englishWord": "Programmer",
+            "numberSound": 1 
         },
         {
             "numberImg": 2,
             "group": "professions",
             "russianWord": "Швея",
-            "englishWord": "Seamstress"
+            "englishWord": "Seamstress",
+            "numberSound": 2 
         },
         {
             "numberImg": 3,
             "group": "professions",
             "russianWord": "Водитель",
-            "englishWord": "Driver"
+            "englishWord": "Driver",
+            "numberSound": 3 
         },
         {
             "numberImg": 4,
             "group": "professions",
             "russianWord": "Врач",
-            "englishWord": "Doctor"
+            "englishWord": "Doctor",
+            "numberSound": 4 
         },
         {
             "numberImg": 5,
             "group": "professions",
             "russianWord": "Строитель",
-            "englishWord": "Builder"
+            "englishWord": "Builder",
+            "numberSound": 5 
         },
         {
             "numberImg": 6,
             "group": "professions",
             "russianWord": "Авто механик",
-            "englishWord": "Auto Mechanic"
+            "englishWord": "Auto Mechanic",
+            "numberSound": 6 
         },
         {
             "numberImg": 7,
             "group": "professions",
             "russianWord": "Артист",
-            "englishWord": "Artist"
+            "englishWord": "Artist",
+            "numberSound": 7 
         },
         {
             "numberImg": 8,
             "group": "professions",
             "russianWord": "Художник",
-            "englishWord": "Painter"
+            "englishWord": "Painter",
+            "numberSound": 8 
         }
     ],
     "sports": [
@@ -354,49 +410,57 @@
             "numberImg": 1,
             "group": "sports",
             "russianWord": "Фехтование",
-            "englishWord": "Fencing"
+            "englishWord": "Fencing",
+            "numberSound": 1 
         },
         {
             "numberImg": 2,
             "group": "sports",
             "russianWord": "Альпинизм",
-            "englishWord": "Mountaineering"
+            "englishWord": "Mountaineering",
+            "numberSound": 2 
         },
         {
             "numberImg": 3,
             "group": "sports",
             "russianWord": "Бег",
-            "englishWord": "Jogging"
+            "englishWord": "Jogging",
+            "numberSound": 3 
         },
         {
             "numberImg": 4,
             "group": "sports",
             "russianWord": "Футбол",
-            "englishWord": "Football"
+            "englishWord": "Football",
+            "numberSound": 4 
         },
         {
             "numberImg": 5,
             "group": "sports",
             "russianWord": "Теннис",
-            "englishWord": "Tennis"
+            "englishWord": "Tennis",
+            "numberSound": 5 
         },
         {
             "numberImg": 6,
             "group": "sports",
             "russianWord": "Бокс",
-            "englishWord": "Boxing"
+            "englishWord": "Boxing",
+            "numberSound": 6 
         },
         {
             "numberImg": 7,
             "group": "sports",
             "russianWord": "Плавание",
-            "englishWord": "Swimming"
+            "englishWord": "Swimming",
+            "numberSound": 7 
         },
         {
             "numberImg": 8,
             "group": "sports",
             "russianWord": "Акробатика",
-            "englishWord": "Acrobatics"
+            "englishWord": "Acrobatics",
+            "numberSound": 8 
         }
     ]
 }

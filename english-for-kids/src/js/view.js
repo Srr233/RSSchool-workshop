@@ -7,8 +7,10 @@ const view = {
   burgerMenu: document.querySelector('.open-navigation'),
   navigation: document.querySelector('.navigation'),
   links: document.querySelectorAll('.list__link'),
+  switch: document.querySelector('.switch'),
   switchToggle: document.querySelector('.switch__toggle'),
   switchText: document.querySelector('.switch__text'),
+  startButton: document.querySelector('.start__button'),
   appendCards(cards, callbacks) {
     forView.clearChildren(this.wrapperCardsDiv);
 
@@ -26,6 +28,7 @@ const view = {
 
       this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
+    this.switch.style.display = 'inline';
   },
   appendMainCards(cardsGroups, callback) {
     forView.clearChildren(this.wrapperCardsDiv);
@@ -45,6 +48,8 @@ const view = {
 
       this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
+
+    this.switch.style.display = 'none';
   },
   reverseCard(target, reversedLanguage) {
     const wrapCardElem = forView.getCurrentElemCard(target);
@@ -107,21 +112,30 @@ const view = {
       case 'play':
         this.switchToggle.classList.add('play');
         this.switchToggle.classList.remove('train');
+        this.startButton.style.display = 'inline';
         this.hideOpenNameCards(true);
         break;
       case 'train':
         this.switchToggle.classList.add('train');
         this.switchToggle.classList.remove('play');
+        this.startButton.style.display = 'none';
         this.hideOpenNameCards(false);
         break;
       default:
         throw new Error('Not found class');
     }
+    return changedText === 'play';
+  },
+  reading(sound) {
+    new Audio(sound).play();
   },
   bindFoo(callbacks) {
-    const { switchFoo, burgerMenuFoo, navFoo } = callbacks;
+    const {
+      switchFoo, burgerMenuFoo, navFoo, pressCard,
+    } = callbacks;
     forView.bindEvent(this.switchToggle, 'click', switchFoo);
     forView.bindEvent(this.burgerMenu, 'click', burgerMenuFoo);
+    forView.bindEvent(this.wrapperCardsDiv, 'click', pressCard);
     this.links.forEach((e) => forView.bindEvent(e, 'click', navFoo));
   },
   bindStartGameFoo(callback) {

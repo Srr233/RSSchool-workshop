@@ -16,6 +16,7 @@ function init() {
         c.group,
         c.russianWord,
         c.englishWord,
+        c.numberSound,
       ));
       cardsMap.set(key, transformedCard);
     }

@@ -2,11 +2,17 @@
 
 import model from './model.js';
 import view from './view.js';
-import { forController } from './services.js';
+import { forController, forModel } from './services.js';
 
 const controller = {
   switchPlayTrain(e) {
-    view.showPlayTrain();
+    const isPlay = view.showPlayTrain();
+
+    if (isPlay) {
+      model.play();
+    } else {
+      model.train();
+    }
   },
   reverseCurrentCard(e) {
     let name;
@@ -27,6 +33,7 @@ const controller = {
     currentCard.changeLanguage();
 
     view.reverseCard(target, currentCard.getCurrentLanguage());
+    e.stopPropagation();
   },
   startGame(e) {
 
@@ -39,9 +46,13 @@ const controller = {
       reverse: this.reverseCurrentCard,
       press: this.pressCard,
     });
+    e.stopPropagation();
   },
   pressCard(e) {
+    const name = forController.getName(e.target);
+    const currentCard = model.getCurrentCard(name);
 
+    view.reading(currentCard.getLinkSound());
   },
   openMenu(e) {
     view.openCloseMenu();
@@ -53,6 +64,7 @@ const controller = {
       switchFoo: this.switchPlayTrain,
       burgerMenuFoo: this.openMenu,
       navFoo: this.selectCategory.bind(this),
+      pressCard: this.pressCard,
     });
     view.bindStartGameFoo(this.startGame);
   },

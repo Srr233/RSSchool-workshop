@@ -3,7 +3,7 @@
 import { forCard } from './services.js';
 
 class Card {
-  constructor(img, group, russian, english) {
+  constructor(img, group, russian, english, sound) {
     this.play = false;
     this.reversed = false;
     this.img = img;
@@ -11,7 +11,8 @@ class Card {
     this.russianWord = russian;
     this.englishWord = english;
     this.currentLanguage = english;
-    this.linkImg = forCard.createLink(img, group);
+    this.linkImg = forCard.createLinkImg(img, group);
+    this.linkSound = forCard.createLinkSound(sound, group);
   }
 
   getNumberImg() {
@@ -20,6 +21,10 @@ class Card {
 
   getLinkImg() {
     return this.linkImg;
+  }
+
+  getLinkSound() {
+    return this.linkSound;
   }
 
   changeLanguage() {

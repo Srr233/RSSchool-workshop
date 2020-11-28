@@ -1,12 +1,19 @@
 'use strict';
 
 const forCard = {
-  createLink(numberImg, group) {
+  createLinkImg(numberImg, group) {
     let num;
     if (numberImg.toString().length < 2) {
       num = `0${numberImg}`;
     }
     return `../assets/img/${group}/${num}.jpg`;
+  },
+  createLinkSound(numberSound, group) {
+    let num;
+    if (numberSound.toString().length < 2) {
+      num = `0${numberSound}`;
+    }
+    return `../assets/sounds/${group}/${num}.mp3`;
   },
 };
 
