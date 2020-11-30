@@ -102,6 +102,12 @@
     100% { left: 3.5%; }
 }
 
+%img-wrap {
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+}
+
 :root {
     font-size: 10px;
 }
@@ -279,7 +285,7 @@ body {
 
 .start {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     &__button {
         display: none;
         width: 8rem;
@@ -288,9 +294,14 @@ body {
         padding: 1rem;
     }
     &__img {
-        object-fit: cover;
-        height: 100%;
-        width: 100%;
+        @extend %img-wrap;
+    }
+
+    &__stars-img-wrap {
+        width: 4rem;
+    }
+    &__stars-img {
+        @extend %img-wrap;
     }
 }
 

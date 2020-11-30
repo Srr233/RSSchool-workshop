@@ -98,6 +98,19 @@ const forView = {
     wrapperCard.insertAdjacentHTML('beforeend', contains);
     return wrapperCard;
   },
+  createStar(isCorrect) {
+    const wrapperCard = document.createElement('div');
+    wrapperCard.classList.add('start__stars-img-wrap');
+    let contains;
+
+    if (isCorrect) {
+      contains = '<img src="../assets/icons/correct.jpg" alt="not correct" class="start__stars-img">';
+    } else {
+      contains = '<img src="../assets/icons/notCorrect.jpg" alt="not correct" class="start__stars-img">';
+    }
+    wrapperCard.insertAdjacentHTML(contains);
+    return wrapperCard;
+  },
 };
 
 function createCamelCase(text) {
