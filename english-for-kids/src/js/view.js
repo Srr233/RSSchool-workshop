@@ -11,7 +11,7 @@ const view = {
   switchToggle: document.querySelector('.switch__toggle'),
   switchText: document.querySelector('.switch__text'),
   startButton: document.querySelector('.start__button'),
-  appendCards(cards, callbacks) {
+  appendCards(cards, callback) {
     forView.clearChildren(this.wrapperCardsDiv);
 
     const currentCards = cards;
@@ -23,8 +23,8 @@ const view = {
 
       const buttonReverse = elementCard.querySelector('.card__load-wrap');
 
-      forView.bindEvent(buttonReverse, 'click', callbacks.reverse);
-      forView.bindEvent(elementCard, 'mouseleave', callbacks.reverse);
+      forView.bindEvent(buttonReverse, 'click', callback);
+      forView.bindEvent(elementCard, 'mouseleave', callback);
 
       this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
@@ -129,17 +129,24 @@ const view = {
   reading(sound) {
     new Audio(sound).play();
   },
+  showGoodBad(isGood, target) {
+    const card = forView.getCurrentElemCard(target);
+
+    if (isGood) {
+      card.classList.add('correct');
+    } else {
+
+    }
+  },
   bindFoo(callbacks) {
     const {
-      switchFoo, burgerMenuFoo, navFoo, pressCard,
+      switchFoo, burgerMenuFoo, navFoo, pressCard, startGame,
     } = callbacks;
     forView.bindEvent(this.switchToggle, 'click', switchFoo);
     forView.bindEvent(this.burgerMenu, 'click', burgerMenuFoo);
     forView.bindEvent(this.wrapperCardsDiv, 'click', pressCard);
+    forView.bindEvent(this.startButton, 'click', startGame);
     this.links.forEach((e) => forView.bindEvent(e, 'click', navFoo));
-  },
-  bindStartGameFoo(callback) {
-
   },
 };
 

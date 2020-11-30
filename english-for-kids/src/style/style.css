@@ -192,6 +192,7 @@ body {
 
 .card {
   margin: 10px 0;
+  transition: 0.5s;
 }
 .card__img-wrapper {
   width: 25rem;
@@ -224,6 +225,11 @@ body {
 
 .card.normal {
   animation: flip-2-ver-left-1-normal 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+}
+
+.card.correct {
+  transition: 0.5s;
+  opacity: 0.5;
 }
 
 .start {
