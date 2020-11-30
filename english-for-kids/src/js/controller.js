@@ -78,7 +78,7 @@ const controller = {
   pressCard(e) {
     const name = forController.getNormalCaseName(e.target);
     const currentCard = model.getCurrentCard(name);
-    const canPress = forController.getCurrentElemCard(e.target).dataset.selected;
+    const canPress = e.target.dataset.selected;
 
     if (this.play) {
       const index = this.currentIndexCard;

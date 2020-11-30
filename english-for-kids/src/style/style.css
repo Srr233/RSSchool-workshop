@@ -250,6 +250,9 @@ body {
   border-radius: 50%;
   padding: 1rem;
 }
+.start__star-wrap {
+  display: flex;
+}
 .start__stars-img-wrap {
   width: 4rem;
 }

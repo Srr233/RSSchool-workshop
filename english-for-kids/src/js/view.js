@@ -11,6 +11,7 @@ const view = {
   switchToggle: document.querySelector('.switch__toggle'),
   switchText: document.querySelector('.switch__text'),
   startButton: document.querySelector('.start__button'),
+  starWrap: document.querySelector('.start__star-wrap'),
   groupName: document.querySelector('.group__text'),
   appendCards(cards, callback, name) {
     forView.clearChildren(this.wrapperCardsDiv);
@@ -134,12 +135,18 @@ const view = {
   },
   showGoodBad(isGood, target) {
     const card = forView.getCurrentElemCard(target);
+    const star = forView.createStar(isGood);
+    const lengthStars = forView.howManyLength('.start__stars-img-wrap');
 
+    if (lengthStars > 5) {
+      this.starWrap.firstElementChild.remove();
+    }
     if (isGood) {
       card.classList.add('correct');
       card.dataset.selected = true;
+      this.starWrap.insertAdjacentElement('beforeend', star);
     } else {
-
+      this.starWrap.insertAdjacentElement('beforeend', star);
     }
   },
   toggleStartButton(switcher) {

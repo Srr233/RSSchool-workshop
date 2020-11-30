@@ -108,8 +108,12 @@ const forView = {
     } else {
       contains = '<img src="../assets/icons/notCorrect.jpg" alt="not correct" class="start__stars-img">';
     }
-    wrapperCard.insertAdjacentHTML(contains);
+    wrapperCard.insertAdjacentHTML('beforeend', contains);
     return wrapperCard;
+  },
+  howManyLength(selector) {
+    const elements = document.querySelectorAll(selector);
+    return elements.length;
   },
 };
 

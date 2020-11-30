@@ -296,7 +296,9 @@ body {
     &__img {
         @extend %img-wrap;
     }
-
+    &__star-wrap {
+        display: flex;
+    }
     &__stars-img-wrap {
         width: 4rem;
     }
