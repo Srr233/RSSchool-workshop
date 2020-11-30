@@ -111,6 +111,13 @@ const forView = {
     wrapperCard.insertAdjacentHTML('beforeend', contains);
     return wrapperCard;
   },
+  showGoodBad(isGood) {
+    if (isGood) {
+
+    } else {
+
+    }
+  },
   howManyLength(selector) {
     const elements = document.querySelectorAll(selector);
     return elements.length;

@@ -123,6 +123,7 @@ const view = {
         this.switchToggle.classList.add('train');
         this.switchToggle.classList.remove('play');
         this.startButton.style.display = 'none';
+        forView.clearChildren(this.starWrap);
         this.hideOpenNameCards(false);
         break;
       default:
