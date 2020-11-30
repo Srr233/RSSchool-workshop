@@ -11,7 +11,8 @@ const view = {
   switchToggle: document.querySelector('.switch__toggle'),
   switchText: document.querySelector('.switch__text'),
   startButton: document.querySelector('.start__button'),
-  appendCards(cards, callback) {
+  groupName: document.querySelector('.group__text'),
+  appendCards(cards, callback, name) {
     forView.clearChildren(this.wrapperCardsDiv);
 
     const currentCards = cards;
@@ -28,6 +29,8 @@ const view = {
 
       this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
+    this.groupName.textContent = name;
+    this.groupName.style.display = 'inline';
     this.switch.style.display = 'inline';
   },
   appendMainCards(cardsGroups, callback) {
@@ -134,8 +137,18 @@ const view = {
 
     if (isGood) {
       card.classList.add('correct');
+      card.dataset.selected = true;
     } else {
 
+    }
+  },
+  toggleStartButton(switcher) {
+    const img = this.startButton.querySelector('.start__img');
+
+    if (switcher) {
+      img.src = '../assets/icons/load2.png';
+    } else {
+      img.src = '../assets/icons/start.png';
     }
   },
   bindFoo(callbacks) {

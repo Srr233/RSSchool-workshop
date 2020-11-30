@@ -12,6 +12,7 @@ const controller = {
   switchPlayTrain() {
     const isPlay = view.showPlayTrain();
     if (!isPlay) {
+      view.toggleStartButton(false);
       this.currentIndexCard = 0;
       this.sortGroups = [];
       this.start = false;
@@ -25,12 +26,12 @@ const controller = {
     const child = e.target.firstElementChild;
 
     if (e.type === 'mouseleave' && child.classList.contains('reverse')) {
-      name = forController.getName(child);
+      name = forController.getNormalCaseName(child);
       target = child;
     } else if (e.type === 'mouseleave') {
       return;
     } else {
-      name = forController.getName(e.target);
+      name = forController.getNormalCaseName(e.target);
       target = e.target;
     }
 
@@ -47,6 +48,7 @@ const controller = {
       const cards = model.getCurrentGroup();
       cards.sort(() => Math.random() - Math.random());
       view.reading(cards[0].getLinkSound());
+      view.toggleStartButton(true);
       this.sortGroups = cards;
     } else {
       const index = this.currentIndexCard;
@@ -54,20 +56,29 @@ const controller = {
       const card = this.sortGroups[index];
 
       if (index === length) {
-
-      } else { view.reading(card.getLinkSound()); }
+        this.start = false;
+        this.play = false;
+        view.toggleStartButton(false);
+      } else {
+        setTimeout(() => view.reading(card.getLinkSound()), 1000);
+      }
     }
   },
   selectCategory(e) {
-    const name = forController.getName(e.target);
+    const name = forController.getCamelCaseName(e.target);
 
-    model.setCurrentGroup(name);
-    view.appendCards(model.getCurrentGroup(), this.reverseCurrentCard);
-    e.stopPropagation();
+    if (name === 'main') {
+      view.appendMainCards(model.allGroup, this.selectCategory.bind(this));
+    } else {
+      model.setCurrentGroup(name);
+      view.appendCards(model.getCurrentGroup(), this.reverseCurrentCard, name);
+      e.stopPropagation();
+    }
   },
   pressCard(e) {
-    const name = forController.getName(e.target);
+    const name = forController.getNormalCaseName(e.target);
     const currentCard = model.getCurrentCard(name);
+    const canPress = forController.getCurrentElemCard(e.target).dataset.selected;
 
     if (this.play) {
       const index = this.currentIndexCard;
@@ -75,8 +86,9 @@ const controller = {
         this.currentIndexCard += 1;
         view.showGoodBad(true, e.target);
         this.startGame();
-      } else {
-        view.reading('../assets/sounds/No/No.mp3');
+        view.reading('../assets/sounds/choice/Yes.mp3');
+      } else if (!canPress) {
+        view.reading('../assets/sounds/choice/No.mp3');
         view.showGoodBad(false, e.target);
       }
     } else {
@@ -88,7 +100,7 @@ const controller = {
   },
   initContent(mapCards) {
     model.setGroups(mapCards);
-    view.appendMainCards(mapCards, this.selectCategory.bind(this));
+    view.appendMainCards(model.allGroup, this.selectCategory.bind(this));
     view.bindFoo({
       switchFoo: this.switchPlayTrain.bind(this),
       burgerMenuFoo: this.openMenu,

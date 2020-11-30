@@ -126,7 +126,7 @@ body {
 .open-navigation {
     width: 35px;
 
-    z-index: 50;
+    z-index: 51;
 
     display: flex;
     flex-flow: column;
@@ -145,10 +145,11 @@ body {
     animation: rotate-reverse .5s ease-in-out forwards;
 }
 .navigation {
-    position: absolute;
+    position: fixed;
     
     top: 0;
     left: -100%;
+    z-index: 50;
     display: flex;
     justify-content: center;
     height: 100vh;
@@ -282,6 +283,7 @@ body {
     &__button {
         display: none;
         width: 8rem;
+        background-color: transparent;
         border-radius: 50%;
         padding: 1rem;
     }
@@ -289,5 +291,11 @@ body {
         object-fit: cover;
         height: 100%;
         width: 100%;
+    }
+}
+
+.group {
+    &__text {
+        display: none;
     }
 }

@@ -92,7 +92,7 @@ body {
 
 .open-navigation {
   width: 35px;
-  z-index: 50;
+  z-index: 51;
   display: flex;
   flex-flow: column;
   transition: 1s;
@@ -111,9 +111,10 @@ body {
 }
 
 .navigation {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: -100%;
+  z-index: 50;
   display: flex;
   justify-content: center;
   height: 100vh;
@@ -239,6 +240,7 @@ body {
 .start__button {
   display: none;
   width: 8rem;
+  background-color: transparent;
   border-radius: 50%;
   padding: 1rem;
 }
@@ -246,4 +248,8 @@ body {
   object-fit: cover;
   height: 100%;
   width: 100%;
+}
+
+.group__text {
+  display: none;
 }

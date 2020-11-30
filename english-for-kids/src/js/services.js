@@ -21,6 +21,29 @@ const forModel = {
 
 };
 
+function createNormalCase(text) {
+  const normalText = text.trim();
+  let res = '';
+  let copy = normalText;
+  const isUpLetter = copy.match(/[A-Z]/);
+
+  if (isUpLetter) {
+    for (let i = 0; i < normalText.length; i++) {
+      if (normalText[i].toUpperCase() === normalText[i] && normalText[i] !== ' ') {
+        res += `${copy.slice(0, i)} `;
+        copy = copy.slice(i);
+      }
+    }
+    res += copy;
+    res = res.toLowerCase().trim();
+    res = res[0].toUpperCase() + res.slice(1);
+  } else {
+    res = copy;
+    res = res[0].toUpperCase() + res.slice(1);
+  }
+  return res;
+}
+
 const forView = {
   getCurrentElemCard(target) {
     let elementCard = target;
@@ -43,7 +66,8 @@ const forView = {
   bindEvent(element, eventName, callback) {
     element.addEventListener(eventName, callback);
   },
-  createElement(typeCard, linkImg, englishWord, nameCard) {
+  createElement(typeCard, linkImg, englishWord, name) {
+    const nameCard = createNormalCase(name);
     const wrapperCard = document.createElement('div');
     let contains;
 
@@ -77,7 +101,7 @@ const forView = {
 };
 
 function createCamelCase(text) {
-  let res = text.toLowerCase().split(' ');
+  let res = text.trim().toLowerCase().split(' ');
 
   if (res.length > 1) {
     res = res.map((val, index) => (index ? val[0].toUpperCase() + val.slice(1)
@@ -85,23 +109,31 @@ function createCamelCase(text) {
   }
   return res.join('');
 }
+function searchCurrentCard(target) {
+  if (target.tagName === 'A') {
+    return target;
+  }
+  let elementCard = target;
 
+  while (elementCard !== null && elementCard.tagName !== 'ARTICLE') {
+    elementCard = elementCard.parentElement;
+  }
+  if (elementCard === null) {
+    throw new Error('Element card not found!');
+  }
+
+  return elementCard;
+}
 const forController = {
-  getName(target) {
-    let elementCard = target;
-
-    if (elementCard.tagName === 'A') {
-      return createCamelCase(elementCard.textContent);
-    }
-
-    while (elementCard !== null && elementCard.tagName !== 'ARTICLE') {
-      elementCard = elementCard.parentElement;
-    }
-    if (elementCard === null) {
-      throw new Error('Element card not found!');
-    }
-    return elementCard.querySelector('.card__text').textContent;
+  getNormalCaseName(target) {
+    const currentCard = searchCurrentCard(target);
+    return createNormalCase(currentCard.textContent);
   },
+  getCamelCaseName(target) {
+    const currentCard = searchCurrentCard(target);
+    return createCamelCase(currentCard.textContent);
+  },
+  getCurrentElemCard: searchCurrentCard,
 };
 
 export {
