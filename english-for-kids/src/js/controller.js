@@ -74,6 +74,7 @@ const controller = {
       view.appendCards(model.getCurrentGroup(), this.reverseCurrentCard, name);
       e.stopPropagation();
     }
+    view.setCategory(forController.getNormalCaseName(e.target));
   },
   pressCard(e) {
     const name = forController.getNormalCaseName(e.target);

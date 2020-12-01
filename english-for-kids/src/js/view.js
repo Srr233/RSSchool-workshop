@@ -30,8 +30,7 @@ const view = {
 
       this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
-    this.groupName.textContent = name;
-    this.groupName.style.display = 'inline';
+    this.setCategory(name);
     this.switch.style.display = 'inline';
   },
   appendMainCards(cardsGroups, callback) {
@@ -186,6 +185,10 @@ const view = {
         doneElement.remove();
       }, 5000);
     }
+  },
+  setCategory(name) {
+    this.groupName.textContent = name;
+    this.groupName.style.display = 'inline';
   },
   bindFoo(callbacks) {
     const {

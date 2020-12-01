@@ -256,10 +256,6 @@ body {
 .start__stars-img-wrap {
   width: 4rem;
 }
-.group__text {
-  display: none;
-}
-
 .end {
   position: absolute;
   top: 0;
