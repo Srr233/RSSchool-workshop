@@ -99,24 +99,44 @@ const forView = {
     return wrapperCard;
   },
   createStar(isCorrect) {
-    const wrapperCard = document.createElement('div');
-    wrapperCard.classList.add('start__stars-img-wrap');
+    const wrapperStar = document.createElement('div');
+    wrapperStar.classList.add('start__stars-img-wrap');
     let contains;
 
     if (isCorrect) {
-      contains = '<img src="../assets/icons/correct.jpg" alt="not correct" class="start__stars-img">';
+      wrapperStar.dataset.correct = true;
+      contains = '<img src="../assets/icons/correct.jpg" alt="correct" class="start__stars-img">';
     } else {
       contains = '<img src="../assets/icons/notCorrect.jpg" alt="not correct" class="start__stars-img">';
     }
-    wrapperCard.insertAdjacentHTML('beforeend', contains);
-    return wrapperCard;
+    wrapperStar.insertAdjacentHTML('beforeend', contains);
+    return wrapperStar;
   },
-  showGoodBad(isGood) {
-    if (isGood) {
+  createFinish(imgLink, text) {
+    const wrapperFinish = document.createElement('div');
+    wrapperFinish.classList.add('end');
 
-    } else {
+    const contains = `<div class="end__img-wrap">
+                          <img src="${imgLink}" alt="happy" class="end__img">
+                      </div>
+                      <span class="end__text">
+                          ${text}
+                      </span>
+    `;
 
-    }
+    wrapperFinish.insertAdjacentHTML('beforeend', contains);
+    return wrapperFinish;
+  },
+  checkEnd(cards) {
+    const children = Array.from(cards);
+    return children.every((e) => e.firstElementChild.classList.contains('correct'));
+  },
+  checkStars(stars) {
+    const children = Array.from(stars);
+    return children.every((e) => {
+      const a = e.dataset.correct !== undefined;
+      return a;
+    });
   },
   howManyLength(selector) {
     const elements = document.querySelectorAll(selector);

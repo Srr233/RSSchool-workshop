@@ -78,18 +78,29 @@ const controller = {
   pressCard(e) {
     const name = forController.getNormalCaseName(e.target);
     const currentCard = model.getCurrentCard(name);
-    const canPress = e.target.dataset.selected;
+    const currentElemCard = forController.getCurrentElemCard(e.target);
+    const canPress = currentElemCard.classList.contains('correct');
+    let isEnd;
 
     if (this.play) {
       const index = this.currentIndexCard;
       if (this.sortGroups[index] === currentCard) {
         this.currentIndexCard += 1;
-        view.showGoodBad(true, e.target);
+        isEnd = view.showGoodBad(true, e.target);
         this.startGame();
         view.reading('../assets/sounds/choice/Yes.mp3');
       } else if (!canPress) {
         view.reading('../assets/sounds/choice/No.mp3');
         view.showGoodBad(false, e.target);
+      }
+      if (isEnd) {
+        this.currentIndexCard = 0;
+        this.sortGroups = [];
+        this.start = false;
+        this.play = false;
+        view.toDefault();
+        view.toggleStartButton(false);
+        view.appendMainCards(model.allGroup, this.selectCategory.bind(this));
       }
     } else {
       view.reading(currentCard.getLinkSound());

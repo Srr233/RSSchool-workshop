@@ -144,11 +144,15 @@ const view = {
     }
     if (isGood) {
       card.classList.add('correct');
-      card.dataset.selected = true;
       this.starWrap.insertAdjacentElement('beforeend', star);
     } else {
       this.starWrap.insertAdjacentElement('beforeend', star);
     }
+
+    const isEnd = forView.checkEnd(this.wrapperCardsDiv.children);
+
+    this.showResult(isEnd);
+    return isEnd;
   },
   toggleStartButton(switcher) {
     const img = this.startButton.querySelector('.start__img');
@@ -157,6 +161,30 @@ const view = {
       img.src = '../assets/icons/load2.png';
     } else {
       img.src = '../assets/icons/start.png';
+    }
+  },
+  toDefault() {
+    this.switchText.textContent = 'play';
+    this.showPlayTrain();
+  },
+  showResult(isSuccess) {
+    if (isSuccess) {
+      const isGameOver = forView.checkStars(this.starWrap.children);
+      let doneElement;
+      if (isGameOver) {
+        doneElement = forView.createFinish('../assets/img/end/happy.jpg', 'Молодец!');
+        this.reading('../assets/sounds/choice/success.mp3');
+      } else {
+        doneElement = forView.createFinish('../assets/img/end/sadness.jpg', 'Попробуй ещё!');
+        this.reading('../assets/sounds/choice/failure.mp3');
+      }
+      document.body.insertAdjacentElement('beforeend', doneElement);
+      this.wrapperCardsDiv.style.display = 'none';
+
+      setTimeout(() => {
+        this.wrapperCardsDiv.style.display = 'flex';
+        doneElement.remove();
+      }, 5000);
     }
   },
   bindFoo(callbacks) {
