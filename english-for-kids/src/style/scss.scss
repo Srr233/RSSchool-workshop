@@ -192,6 +192,7 @@ body {
 
 }
 .wrapper {
+    width: 100%;
 }
 .word-wrap {
     display: flex;
@@ -331,4 +332,34 @@ body {
 		&__img {}
 
 		&__text {}
+}
+
+.statistics {
+    display: none;
+		&__buttons {}
+
+		&__wrapper {}
+
+		&__cardInfo {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+            text-align: center;
+        }
+
+		&__name {}
+
+		&__asked {}
+
+		&__hit {}
+
+		&__miss {}
+
+		&__percent {}
+
+		&__train {}
+}
+.categories {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+    text-align: center;
 }

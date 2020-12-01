@@ -13,7 +13,10 @@ const view = {
   startButton: document.querySelector('.start__button'),
   starWrap: document.querySelector('.start__star-wrap'),
   groupName: document.querySelector('.group__text'),
+  statistics: document.querySelector('.statistics'),
   appendCards(cards, callback, name) {
+    this.statistics.style.display = 'none';
+
     forView.clearChildren(this.wrapperCardsDiv);
 
     const currentCards = cards;
@@ -34,6 +37,8 @@ const view = {
     this.switch.style.display = 'inline';
   },
   appendMainCards(cardsGroups, callback) {
+    this.statistics.style.display = 'none';
+
     forView.clearChildren(this.wrapperCardsDiv);
 
     const keysEntries = cardsGroups.keys();
@@ -53,6 +58,11 @@ const view = {
     }
 
     this.switch.style.display = 'none';
+  },
+  appendStatistics() {
+    this.switch.style.display = 'none';
+    forView.clearChildren(this.wrapperCardsDiv);
+    this.statistics.style.display = 'inline';
   },
   reverseCard(target, reversedLanguage) {
     const wrapCardElem = forView.getCurrentElemCard(target);

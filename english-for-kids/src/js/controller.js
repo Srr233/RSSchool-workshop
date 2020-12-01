@@ -69,6 +69,8 @@ const controller = {
 
     if (name === 'main') {
       view.appendMainCards(model.allGroup, this.selectCategory.bind(this));
+    } else if (name === 'statistics') {
+      view.appendStatistics();
     } else {
       model.setCurrentGroup(name);
       view.appendCards(model.getCurrentGroup(), this.reverseCurrentCard, name);

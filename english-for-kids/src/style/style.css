@@ -153,6 +153,10 @@ body {
   justify-content: center;
 }
 
+.wrapper {
+  width: 100%;
+}
+
 .word-wrap {
   display: flex;
   justify-content: space-between;
@@ -266,4 +270,17 @@ body {
   justify-content: center;
   flex-direction: column;
   background-color: #fff;
+}
+.statistics {
+  display: none;
+}
+.statistics__cardInfo {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  text-align: center;
+}
+.categories {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  text-align: center;
 }
