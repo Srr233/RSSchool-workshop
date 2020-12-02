@@ -346,8 +346,10 @@ body {
             text-align: center;
         }
 
-		&__name {}
-
+        &__name {}
+        &__name.color {
+            background-color: red;
+        }
 		&__asked {}
 
 		&__hit {}

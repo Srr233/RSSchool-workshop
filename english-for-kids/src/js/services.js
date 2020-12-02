@@ -44,6 +44,39 @@ function createNormalCase(text) {
   return res;
 }
 
+function createCamelCase(text) {
+  let res = text.trim().toLowerCase().split(' ');
+
+  if (res.length > 1) {
+    res = res.map((val, index) => (index ? val[0].toUpperCase() + val.slice(1)
+      : val));
+  }
+  return res.join('');
+}
+function searchCurrentCard(target) {
+  if (target.tagName === 'A') {
+    return target;
+  }
+  let elementCard = target;
+
+  while (elementCard !== null && elementCard.tagName !== 'ARTICLE') {
+    elementCard = elementCard.parentElement;
+  }
+  if (elementCard === null) {
+    throw new Error('Element card not found!');
+  }
+
+  return elementCard;
+}
+
+function getNormalCaseName(target) {
+  const currentCard = searchCurrentCard(target);
+  return createNormalCase(currentCard.textContent);
+}
+function getCamelCaseName(target) {
+  const currentCard = searchCurrentCard(target);
+  return createCamelCase(currentCard.textContent);
+}
 const forView = {
   getCurrentElemCard(target) {
     let elementCard = target;
@@ -112,6 +145,26 @@ const forView = {
     wrapperStar.insertAdjacentHTML('beforeend', contains);
     return wrapperStar;
   },
+  createNormalCase,
+  createCardInfoElement(englishName, russianName, newGroup) {
+    let contains;
+    if (newGroup) {
+      contains = `<div class="statistics__cardInfo color">
+                      <span class="statistics__name">${englishName}</span>
+                  </div>`;
+    } else {
+      contains = `<div class="statistics__cardInfo">
+                      <span class="statistics__name">${englishName} / ${russianName}</span>
+                      <span class="statistics__asked">0</span>
+                      <span class="statistics__hit">0</span>
+                      <span class="statistics__miss">0</span>
+                      <span class="statistics__percent">0</span>
+                      <span class="statistics__train">0</span>
+                  </div>`;
+    }
+
+    return contains;
+  },
   createFinish(imgLink, text) {
     const wrapperFinish = document.createElement('div');
     wrapperFinish.classList.add('end');
@@ -143,40 +196,9 @@ const forView = {
     return elements.length;
   },
 };
-
-function createCamelCase(text) {
-  let res = text.trim().toLowerCase().split(' ');
-
-  if (res.length > 1) {
-    res = res.map((val, index) => (index ? val[0].toUpperCase() + val.slice(1)
-      : val));
-  }
-  return res.join('');
-}
-function searchCurrentCard(target) {
-  if (target.tagName === 'A') {
-    return target;
-  }
-  let elementCard = target;
-
-  while (elementCard !== null && elementCard.tagName !== 'ARTICLE') {
-    elementCard = elementCard.parentElement;
-  }
-  if (elementCard === null) {
-    throw new Error('Element card not found!');
-  }
-
-  return elementCard;
-}
 const forController = {
-  getNormalCaseName(target) {
-    const currentCard = searchCurrentCard(target);
-    return createNormalCase(currentCard.textContent);
-  },
-  getCamelCaseName(target) {
-    const currentCard = searchCurrentCard(target);
-    return createCamelCase(currentCard.textContent);
-  },
+  getNormalCaseName,
+  getCamelCaseName,
   getCurrentElemCard: searchCurrentCard,
 };
 

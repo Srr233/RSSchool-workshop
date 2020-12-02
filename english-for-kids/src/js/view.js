@@ -3,17 +3,18 @@
 import { forView } from './services.js';
 
 const view = {
-  wrapperCardsDiv: document.querySelector('.cards'),
-  burgerMenu: document.querySelector('.open-navigation'),
-  navigation: document.querySelector('.navigation'),
-  links: document.querySelectorAll('.list__link'),
   switch: document.querySelector('.switch'),
-  switchToggle: document.querySelector('.switch__toggle'),
+  links: document.querySelectorAll('.list__link'),
+  wrapperCardsDiv: document.querySelector('.cards'),
+  navigation: document.querySelector('.navigation'),
+  groupName: document.querySelector('.group__text'),
+  statistics: document.querySelector('.statistics'),
   switchText: document.querySelector('.switch__text'),
   startButton: document.querySelector('.start__button'),
   starWrap: document.querySelector('.start__star-wrap'),
-  groupName: document.querySelector('.group__text'),
-  statistics: document.querySelector('.statistics'),
+  burgerMenu: document.querySelector('.open-navigation'),
+  switchToggle: document.querySelector('.switch__toggle'),
+  statisticsWrapper: document.querySelector('.statistics__wrapper'),
   appendCards(cards, callback, name) {
     this.statistics.style.display = 'none';
 
@@ -194,6 +195,34 @@ const view = {
         this.wrapperCardsDiv.style.display = 'flex';
         doneElement.remove();
       }, 5000);
+    }
+  },
+  showStatistics(cards) {
+    const calls = localStorage.getItem('statistics');
+
+    if (calls) {
+      const parse = JSON.parse(calls);
+      this.statisticsWrapper.insertAdjacentHTML('beforeend', parse);
+    } else {
+      const keys = Array.from(cards.keys());
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        const array = cards.get(key);
+        const normalKeyName = forView.createNormalCase(key);
+        const textGroupHTML = forView.createCardInfoElement(normalKeyName, null, true);
+        this.statisticsWrapper.insertAdjacentHTML('beforeend', textGroupHTML);
+
+        for (let j = 0; j < array.length; j++) {
+          const cardInfo = array[j];
+          const englishWord = cardInfo.getEnglishWord();
+          const russianWord = cardInfo.getRussianWord();
+          const textHTML = forView.createCardInfoElement(englishWord, russianWord);
+
+          this.statisticsWrapper.insertAdjacentHTML('beforeend', textHTML);
+        }
+      }
+      const inner = this.statisticsWrapper.innerHTML.trim();
+      localStorage.setItem('statistics', inner);
     }
   },
   setCategory(name) {

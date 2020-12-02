@@ -109,7 +109,7 @@ const controller = {
       view.reading(currentCard.getLinkSound());
     }
   },
-  openMenu(e) {
+  openMenu() {
     view.openCloseMenu();
   },
   initContent(mapCards) {
@@ -122,6 +122,7 @@ const controller = {
       pressCard: this.pressCard.bind(this),
       startGame: this.startGame.bind(this),
     });
+    view.showStatistics(model.allGroup);
   },
 };
 
