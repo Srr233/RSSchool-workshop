@@ -77,9 +77,9 @@ const controller = {
       model.setCurrentGroup(name);
       view.appendCards(model.getCurrentGroup(), this.reverseCurrentCard, name);
       view.checkSwitcher();
-      e.stopPropagation();
     }
     view.setCategory(forController.getNormalCaseName(e.target));
+    e.stopPropagation();
   },
   pressCard(e) {
     const name = forController.getNormalCaseName(e.target);
@@ -129,7 +129,11 @@ const controller = {
 
     view.sortBy(sorting);
   },
-  openMenu() {
+  openMenu(e) {
+    const tag = e.target.tagName;
+    if (tag === 'NAV' || tag === 'UL' || tag === 'LI') {
+      return;
+    }
     view.openCloseMenu();
   },
   initContent(mapCards) {

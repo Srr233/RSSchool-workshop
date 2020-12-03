@@ -355,3 +355,19 @@ body {
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
     text-align: center;
 }
+
+.wrapperNavigator {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: .5);
+
+    transition: .5s;
+}
+.wrapperNavigator.open {
+    top: 0;
+
+    transition: .5s;
+}

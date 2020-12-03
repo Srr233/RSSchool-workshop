@@ -15,6 +15,7 @@ const view = {
   starWrap: document.querySelector('.start__star-wrap'),
   burgerMenu: document.querySelector('.open-navigation'),
   switchToggle: document.querySelector('.switch__toggle'),
+  wrapperNavigator: document.querySelector('.wrapperNavigator'),
   statisticsWrapper: document.querySelector('.statistics__wrapper'),
   categories: document.querySelector('.categories'),
   sorting: 'up',
@@ -108,7 +109,7 @@ const view = {
   },
   openCloseMenu() {
     const isOpen = this.burgerMenu.classList.contains('open');
-
+    this.wrapperNavigator.classList.toggle('open');
     if (isOpen) {
       this.navigation.classList.add('close');
       this.navigation.classList.remove('open');
@@ -316,10 +317,12 @@ const view = {
       switchFoo, burgerMenuFoo, navFoo, pressCard, startGame, sortStatistics,
     } = callbacks;
     forView.bindEvent(this.switchToggle, 'click', switchFoo);
-    forView.bindEvent(this.burgerMenu, 'click', burgerMenuFoo);
-    forView.bindEvent(this.wrapperCardsDiv, 'click', pressCard);
     forView.bindEvent(this.startButton, 'click', startGame);
+    forView.bindEvent(this.burgerMenu, 'click', burgerMenuFoo);
     forView.bindEvent(this.categories, 'click', sortStatistics);
+    forView.bindEvent(this.wrapperCardsDiv, 'click', pressCard);
+    forView.bindEvent(this.wrapperNavigator, 'click', burgerMenuFoo);
+    forView.bindEvent(Array.from(this.links), 'click', burgerMenuFoo);
     this.links.forEach((e) => forView.bindEvent(e, 'click', navFoo));
   },
 };

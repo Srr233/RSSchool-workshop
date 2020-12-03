@@ -115,7 +115,9 @@ const forView = {
     }
   },
   bindEvent(element, eventName, callback) {
-    element.addEventListener(eventName, callback);
+    if (Array.isArray(element)) {
+      element.forEach((e) => { e.addEventListener('click', callback); });
+    } else { element.addEventListener(eventName, callback); }
   },
   createElement(typeCard, linkImg, englishWord, name) {
     const nameCard = createNormalCase(name);
