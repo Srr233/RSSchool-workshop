@@ -85,7 +85,8 @@ const controller = {
     const name = forController.getNormalCaseName(e.target);
     const currentCard = model.getCurrentCard(name);
     const currentElemCard = forController.getCurrentElemCard(e.target);
-    const canPress = currentElemCard.classList.contains('correct');
+    const canPress = currentElemCard.classList.contains('correct')
+    || currentElemCard.classList.contains('reverse');
     let isEnd;
 
     if (this.play && this.start) {
@@ -112,7 +113,7 @@ const controller = {
         view.toggleStartButton(false);
         view.appendMainCards(model.allGroup, this.selectCategory.bind(this));
       }
-    } else if (!this.play) {
+    } else if (!this.play && !canPress) {
       view.updateStatistics(name, 'train');
       view.reading(currentCard.getLinkSound());
     }
