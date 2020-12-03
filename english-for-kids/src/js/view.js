@@ -3,6 +3,7 @@
 import { forView } from './services.js';
 
 const view = {
+  start: document.querySelector('.start'),
   switch: document.querySelector('.switch'),
   links: document.querySelectorAll('.list__link'),
   wrapperCardsDiv: document.querySelector('.cards'),
@@ -37,6 +38,7 @@ const view = {
       this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
     this.setCategory(name);
+    this.start.style.display = 'flex';
   },
   appendMainCards(cardsGroups, callback) {
     this.statistics.style.display = 'none';
@@ -58,11 +60,17 @@ const view = {
 
       this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
+    this.start.style.display = 'none';
   },
   appendStatistics() {
     this.switch.style.display = 'none';
     forView.clearChildren(this.wrapperCardsDiv);
     this.statistics.style.display = 'inline';
+  },
+  checkSwitcher() {
+    if (this.switch.textContent.trim() === 'play') {
+      this.hideOpenNameCards(true);
+    }
   },
   reverseCard(target, reversedLanguage) {
     const wrapCardElem = forView.getCurrentElemCard(target);

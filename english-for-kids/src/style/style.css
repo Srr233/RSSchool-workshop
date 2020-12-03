@@ -168,7 +168,7 @@ body {
 }
 
 .switch {
-  display: none;
+  display: inline;
   position: relative;
   background-color: brown;
   border-radius: 50px;
