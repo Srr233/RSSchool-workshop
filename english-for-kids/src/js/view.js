@@ -15,6 +15,8 @@ const view = {
   burgerMenu: document.querySelector('.open-navigation'),
   switchToggle: document.querySelector('.switch__toggle'),
   statisticsWrapper: document.querySelector('.statistics__wrapper'),
+  categories: document.querySelector('.categories'),
+  sorting: 'up',
   appendCards(cards, callback, name) {
     this.statistics.style.display = 'none';
 
@@ -35,7 +37,6 @@ const view = {
       this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
     this.setCategory(name);
-    this.switch.style.display = 'inline';
   },
   appendMainCards(cardsGroups, callback) {
     this.statistics.style.display = 'none';
@@ -57,8 +58,6 @@ const view = {
 
       this.wrapperCardsDiv.insertAdjacentElement('beforeend', elementCard);
     }
-
-    this.switch.style.display = 'none';
   },
   appendStatistics() {
     this.switch.style.display = 'none';
@@ -133,6 +132,7 @@ const view = {
         this.switchToggle.classList.add('train');
         this.switchToggle.classList.remove('play');
         this.startButton.style.display = 'none';
+        forView.removeAllClasses('correct');
         forView.clearChildren(this.starWrap);
         this.hideOpenNameCards(false);
         break;
@@ -149,7 +149,7 @@ const view = {
     const star = forView.createStar(isGood);
     const lengthStars = forView.howManyLength('.start__stars-img-wrap');
 
-    if (lengthStars > 5) {
+    if (lengthStars > 8) {
       this.starWrap.firstElementChild.remove();
     }
     if (isGood) {
@@ -209,8 +209,7 @@ const view = {
         const key = keys[i];
         const array = cards.get(key);
         const normalKeyName = forView.createNormalCase(key);
-        const textGroupHTML = forView.createCardInfoElement(normalKeyName, null, true);
-        this.statisticsWrapper.insertAdjacentHTML('beforeend', textGroupHTML);
+        const groupHTML = forView.createCardInfoElement(normalKeyName, null, true);
 
         for (let j = 0; j < array.length; j++) {
           const cardInfo = array[j];
@@ -218,25 +217,101 @@ const view = {
           const russianWord = cardInfo.getRussianWord();
           const textHTML = forView.createCardInfoElement(englishWord, russianWord);
 
-          this.statisticsWrapper.insertAdjacentHTML('beforeend', textHTML);
+          groupHTML.insertAdjacentHTML('beforeend', textHTML);
         }
+        this.statisticsWrapper.insertAdjacentElement('beforeend', groupHTML);
       }
       const inner = this.statisticsWrapper.innerHTML.trim();
-      localStorage.setItem('statistics', inner);
+      const stringify = JSON.stringify(inner);
+      localStorage.setItem('statistics', stringify);
     }
   },
   setCategory(name) {
     this.groupName.textContent = name;
     this.groupName.style.display = 'inline';
   },
+  updateStatistics(name, columnName) {
+    const infoElem = forView.searchElementStatistics(name, this.statisticsWrapper);
+    const columnWrap = infoElem.querySelector(`.statistics__${columnName}`);
+
+    if (columnName !== 'percent') {
+      const num = +columnWrap.textContent;
+
+      columnWrap.textContent = num + 1;
+    } else {
+      const hit = +infoElem.querySelector('.statistics__hit').textContent;
+      const miss = +infoElem.querySelector('.statistics__miss').textContent;
+      let res = `${(miss / (miss + hit)).toFixed(2)}%`;
+      res = res.split('.');
+      columnWrap.textContent = res.pop();
+    }
+    forView.saveGame('statistics', this.statisticsWrapper.innerHTML);
+  },
+  sortBy(nameSort) {
+    this.sorting = this.sorting === 'up' ? 'down' : 'up';
+
+    const name = nameSort;
+    let allStatistics = this.statisticsWrapper.children;
+
+    function sortByNum(first, second) {
+      if (first.tagName === 'SPAN') return 0;
+      if (second.tagName === 'SPAN') return 1;
+      const info = first.querySelector(`.statistics__${name}`).textContent.match(/\d+/g);
+      const info2 = second.querySelector(`.statistics__${name}`).textContent.match(/\d+/g);
+      const num1 = +info.join('');
+      const num2 = +info2.join('');
+
+      if (this.sorting === 'up') {
+        return num2 - num1;
+      }
+      return num1 - num2;
+    }
+    function sortByName(first, second) {
+      if (first.tagName === 'SPAN') return 0;
+      if (second.tagName === 'SPAN') return 1;
+
+      const info = first.querySelector(`.statistics__${name}`).textContent.split(' ')[0];
+      const info2 = second.querySelector(`.statistics__${name}`).textContent.split(' ')[0];
+
+      if (this.sorting === 'up') {
+        return info.charCodeAt() - info2.charCodeAt();
+      }
+      return info2.charCodeAt() - info.charCodeAt();
+    }
+    function sortGroupName(first, second) {
+      const info = first.firstElementChild.textContent;
+      const info2 = second.firstElementChild.textContent;
+
+      if (this.sorting === 'up') {
+        return info.charCodeAt() - info2.charCodeAt();
+      }
+      return info2.charCodeAt() - info.charCodeAt();
+    }
+    allStatistics = Array.from(allStatistics);
+
+    if (name === 'name') {
+      allStatistics.sort(sortGroupName.bind(this));
+      forView.addAllChildren(this.statisticsWrapper, Array.from(allStatistics));
+    }
+    for (let i = 0; i < allStatistics.length; i++) {
+      const group = Array.from(allStatistics[i].children);
+
+      if (name === 'name') {
+        forView.addAllChildren(allStatistics[i], group.sort(sortByName.bind(this)));
+      } else {
+        forView.addAllChildren(allStatistics[i], group.sort(sortByNum.bind(this)));
+      }
+    }
+  },
   bindFoo(callbacks) {
     const {
-      switchFoo, burgerMenuFoo, navFoo, pressCard, startGame,
+      switchFoo, burgerMenuFoo, navFoo, pressCard, startGame, sortStatistics,
     } = callbacks;
     forView.bindEvent(this.switchToggle, 'click', switchFoo);
     forView.bindEvent(this.burgerMenu, 'click', burgerMenuFoo);
     forView.bindEvent(this.wrapperCardsDiv, 'click', pressCard);
     forView.bindEvent(this.startButton, 'click', startGame);
+    forView.bindEvent(this.categories, 'click', sortStatistics);
     this.links.forEach((e) => forView.bindEvent(e, 'click', navFoo));
   },
 };

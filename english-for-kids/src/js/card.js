@@ -4,8 +4,6 @@ import { forCard } from './services.js';
 
 class Card {
   constructor(img, group, russian, english, sound) {
-    this.played = false;
-    this.reversed = false;
     this.img = img;
     this.group = group;
     this.russianWord = russian;

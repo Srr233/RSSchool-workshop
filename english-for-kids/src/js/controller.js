@@ -48,6 +48,7 @@ const controller = {
       const cards = model.getCurrentGroup();
       cards.sort(() => Math.random() - Math.random());
       view.reading(cards[0].getLinkSound());
+      view.updateStatistics(cards[0].getEnglishWord(), 'asked');
       view.toggleStartButton(true);
       this.sortGroups = cards;
     } else {
@@ -60,6 +61,7 @@ const controller = {
         this.play = false;
         view.toggleStartButton(false);
       } else {
+        view.updateStatistics(card.getEnglishWord(), 'asked');
         setTimeout(() => view.reading(card.getLinkSound()), 1000);
       }
     }
@@ -85,16 +87,20 @@ const controller = {
     const canPress = currentElemCard.classList.contains('correct');
     let isEnd;
 
-    if (this.play) {
+    if (this.play && this.start) {
       const index = this.currentIndexCard;
       if (this.sortGroups[index] === currentCard) {
         this.currentIndexCard += 1;
         isEnd = view.showGoodBad(true, e.target);
+        view.updateStatistics(name, 'hit');
+        view.updateStatistics(name, 'percent');
         this.startGame();
         view.reading('../assets/sounds/choice/Yes.mp3');
       } else if (!canPress) {
-        view.reading('../assets/sounds/choice/No.mp3');
+        view.updateStatistics(name, 'miss');
+        view.updateStatistics(name, 'percent');
         view.showGoodBad(false, e.target);
+        view.reading('../assets/sounds/choice/No.mp3');
       }
       if (isEnd) {
         this.currentIndexCard = 0;
@@ -105,9 +111,21 @@ const controller = {
         view.toggleStartButton(false);
         view.appendMainCards(model.allGroup, this.selectCategory.bind(this));
       }
-    } else {
+    } else if (!this.play) {
+      view.updateStatistics(name, 'train');
       view.reading(currentCard.getLinkSound());
     }
+  },
+  sortStatistics(e) {
+    let sorting = e.target.textContent.toLowerCase();
+
+    if (sorting === '% wrong') {
+      sorting = 'percent';
+    } else if (sorting === 'category / word') {
+      sorting = 'name';
+    }
+
+    view.sortBy(sorting);
   },
   openMenu() {
     view.openCloseMenu();
@@ -115,14 +133,15 @@ const controller = {
   initContent(mapCards) {
     model.setGroups(mapCards);
     view.appendMainCards(model.allGroup, this.selectCategory.bind(this));
+    view.showStatistics(model.allGroup);
     view.bindFoo({
       switchFoo: this.switchPlayTrain.bind(this),
       burgerMenuFoo: this.openMenu,
       navFoo: this.selectCategory.bind(this),
       pressCard: this.pressCard.bind(this),
       startGame: this.startGame.bind(this),
+      sortStatistics: this.sortStatistics,
     });
-    view.showStatistics(model.allGroup);
   },
 };
 

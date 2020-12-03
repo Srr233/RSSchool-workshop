@@ -17,10 +17,6 @@ const forCard = {
   },
 };
 
-const forModel = {
-
-};
-
 function createNormalCase(text) {
   const normalText = text.trim();
   let res = '';
@@ -73,10 +69,12 @@ function getNormalCaseName(target) {
   const currentCard = searchCurrentCard(target);
   return createNormalCase(currentCard.textContent);
 }
+
 function getCamelCaseName(target) {
   const currentCard = searchCurrentCard(target);
   return createCamelCase(currentCard.textContent);
 }
+
 const forView = {
   getCurrentElemCard(target) {
     let elementCard = target;
@@ -91,9 +89,29 @@ const forView = {
   },
   clearChildren(element) {
     const length = element.childElementCount;
-    if (!length) return;
+    if (!length) {
+      return;
+    }
     for (let i = 0; i < length; i++) {
       element.firstElementChild.remove();
+    }
+  },
+  removeAllClasses(nameClass) {
+    const elements = document.querySelectorAll(`.${nameClass}`);
+    Array.from(elements).forEach((e) => {
+      e.classList.remove(nameClass);
+    });
+  },
+  addAllChildren(parent, childrenArray) {
+    const [wrapper, children] = [parent, childrenArray];
+
+    for (let i = 0; i < children.length; i++) {
+      wrapper.insertAdjacentElement('beforeend', children[i]);
+
+      if (children[i].childElementCount) {
+        const grandchildren = Array.from(children[i].children);
+        this.addAllChildren(children[i], grandchildren);
+      }
     }
   },
   bindEvent(element, eventName, callback) {
@@ -145,20 +163,25 @@ const forView = {
     wrapperStar.insertAdjacentHTML('beforeend', contains);
     return wrapperStar;
   },
+  saveGame(key, value) {
+    const stringify = JSON.stringify(value);
+    localStorage.setItem(key, stringify);
+  },
   createNormalCase,
   createCardInfoElement(englishName, russianName, newGroup) {
     let contains;
     if (newGroup) {
-      contains = `<div class="statistics__cardInfo color">
-                      <span class="statistics__name">${englishName}</span>
-                  </div>`;
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('color');
+      wrapper.insertAdjacentHTML('beforeend', `<span class="statistics__name">${englishName}</span>`);
+      contains = wrapper;
     } else {
-      contains = `<div class="statistics__cardInfo">
+      contains = `<div class="statistics__cardInfo" data-name="${englishName}">
                       <span class="statistics__name">${englishName} / ${russianName}</span>
                       <span class="statistics__asked">0</span>
                       <span class="statistics__hit">0</span>
                       <span class="statistics__miss">0</span>
-                      <span class="statistics__percent">0</span>
+                      <span class="statistics__percent">0%</span>
                       <span class="statistics__train">0</span>
                   </div>`;
     }
@@ -180,6 +203,9 @@ const forView = {
     wrapperFinish.insertAdjacentHTML('beforeend', contains);
     return wrapperFinish;
   },
+  searchElementStatistics(name, wrapElement) {
+    return wrapElement.querySelector(`[data-name="${name}"]`);
+  },
   checkEnd(cards) {
     const children = Array.from(cards);
     return children.every((e) => e.firstElementChild.classList.contains('correct'));
@@ -190,6 +216,9 @@ const forView = {
       const a = e.dataset.correct !== undefined;
       return a;
     });
+  },
+  saveStatistics(key, value) {
+    localStorage.setItem(key, value);
   },
   howManyLength(selector) {
     const elements = document.querySelectorAll(selector);
@@ -203,5 +232,5 @@ const forController = {
 };
 
 export {
-  forCard, forModel, forView, forController,
+  forCard, forView, forController,
 };
