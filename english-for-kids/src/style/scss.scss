@@ -253,7 +253,7 @@ body {
     display: inline;
     position: relative;
 
-    background-color: rgba($color: #00000067, $alpha: .2);
+    background-color: rgba($color: #000000, $alpha: .2);
     border-radius: 50px;
     width: 15rem;
     text-align: center;
@@ -387,8 +387,11 @@ body {
 
 .statistics {
     display: none;
-		&__buttons {}
-
+        &__buttons {}
+        
+        .color {
+            margin: 10px 0;
+        }
 		&__cardInfo {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
@@ -405,6 +408,18 @@ body {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
     text-align: center;
+
+    span {
+        background-color: rgba($color: #000000, $alpha: .2);
+        border-radius: 15px;
+
+        cursor: pointer;
+
+        transition: .5s;
+    }
+    span:active {
+        transform: scale(0.9);
+    }
 }
 
 .wrapperNavigator {
