@@ -114,18 +114,25 @@ const view = {
     const isOpen = this.burgerMenu.classList.contains('open');
     this.wrapperNavigator.classList.toggle('open');
     if (isOpen) {
+      this.body.style.overflow = 'auto';
       this.navigation.classList.add('close');
       this.navigation.classList.remove('open');
 
       this.burgerMenu.classList.add('close');
       this.burgerMenu.classList.remove('open');
     } else {
+      this.body.style.overflow = 'hidden';
       this.navigation.classList.add('open');
       this.navigation.classList.remove('close');
 
       this.burgerMenu.classList.add('open');
       this.burgerMenu.classList.remove('close');
     }
+    setTimeout(() => {
+      Array.from(this.links).forEach((e) => {
+        e.classList.toggle('text-focus-in');
+      });
+    }, 500);
   },
   showPlayTrain() {
     const text = this.switchText.textContent;
