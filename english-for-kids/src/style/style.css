@@ -323,6 +323,10 @@ body {
 .start__stars-img-wrap {
   width: 4rem;
 }
+.group__text {
+  font-size: 3rem;
+}
+
 .end {
   position: absolute;
   top: 0;
@@ -394,4 +398,15 @@ body {
 .footer__img {
   height: 100%;
   width: 100%;
+}
+
+@media (max-width: 768px) {
+  :root {
+    font-size: 9px;
+  }
+}
+@media (max-width: 375px) {
+  .start__stars-img-wrap {
+    width: 3rem;
+  }
 }

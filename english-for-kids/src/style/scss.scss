@@ -420,6 +420,7 @@ body {
 
 .group {
     &__text {
+        font-size: 3rem;
     }
 }
 
@@ -519,4 +520,15 @@ body {
             height: 100%;
             width: 100%;
         }
+}
+
+@media (max-width: 768px) {
+    :root {
+        font-size: 9px;
+    }
+} 
+@media (max-width: 375px) {
+    .start__stars-img-wrap {
+        width: 3rem;
+    }
 }
