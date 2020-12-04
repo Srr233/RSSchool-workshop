@@ -79,6 +79,9 @@ const controller = {
     } else if (name === 'statistics') {
       view.appendStatistics();
       view.turnOnSwitcher();
+      if (this.play) {
+        this.switchPlayTrain();
+      }
     } else {
       model.setCurrentGroup(name);
       view.appendCards(model.getCurrentGroup(), this.reverseCurrentCard, name);

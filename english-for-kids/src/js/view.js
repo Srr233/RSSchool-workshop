@@ -138,6 +138,9 @@ const view = {
     }, 500);
   },
   showPlayTrain() {
+    if (this.groupName.textContent === 'Statistics') {
+      return;
+    }
     const text = this.switchText.textContent;
     const changedText = text === 'play' ? 'train' : 'play';
 
@@ -166,6 +169,13 @@ const view = {
   reading(sound) {
     new Audio(sound).play();
   },
+  rotateButton() {
+    this.startButton.classList.remove('rotate-center');
+    setTimeout(() => this.startButton.classList.add('rotate-center'));
+  },
+  clickStartButton() {
+    this.startButton.classList.add('slide-right');
+  },
   showGoodBad(isGood, target) {
     const card = forView.getCurrentElemCard(target);
     const star = forView.createStar(isGood);
@@ -187,8 +197,9 @@ const view = {
     return isEnd;
   },
   toggleStartButton(switcher) {
-    const img = this.startButton.querySelector('.start__img');
+    this.startButton.classList.remove('slide-right');
 
+    const img = this.startButton.querySelector('.start__img');
     if (switcher) {
       img.src = '../assets/icons/load2.png';
     } else {
