@@ -215,16 +215,17 @@ const view = {
       const isGameOver = forView.checkStars(this.starWrap.children);
       let doneElement;
       if (isGameOver) {
-        doneElement = forView.createFinish('../assets/img/end/happy.jpg', 'Молодец!');
+        doneElement = forView.createFinish('../assets/img/end/happy.jpg', 'Good!');
         this.reading('../assets/sounds/choice/success.mp3');
       } else {
-        doneElement = forView.createFinish('../assets/img/end/sadness.jpg', 'Попробуй ещё!');
+        doneElement = forView.createFinish('../assets/img/end/sadness.jpg', 'Try again!');
         this.reading('../assets/sounds/choice/failure.mp3');
       }
+      this.burgerMenu.style.zIndex = 0;
       document.body.insertAdjacentElement('beforeend', doneElement);
       this.wrapperCardsDiv.style.display = 'none';
-
       setTimeout(() => {
+        this.burgerMenu.style.zIndex = 51;
         this.wrapperCardsDiv.style.display = 'flex';
         doneElement.remove();
       }, 5000);
