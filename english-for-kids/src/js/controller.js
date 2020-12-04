@@ -67,6 +67,9 @@ const controller = {
     }
   },
   selectCategory(e) {
+    if (e.target.classList.contains('cards') || !e.target.classList[0]) {
+      return;
+    }
     const name = forController.getCamelCaseName(e.target);
 
     if (name === 'main') {
@@ -82,6 +85,9 @@ const controller = {
     e.stopPropagation();
   },
   pressCard(e) {
+    if (e.target.classList.contains('cards') || !e.target.classList[0]) {
+      return;
+    }
     const name = forController.getNormalCaseName(e.target);
     const currentCard = model.getCurrentCard(name);
     const currentElemCard = forController.getCurrentElemCard(e.target);
