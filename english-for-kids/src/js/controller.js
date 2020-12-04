@@ -49,9 +49,11 @@ const controller = {
       cards.sort(() => Math.random() - Math.random());
       view.reading(cards[0].getLinkSound());
       view.updateStatistics(cards[0].getEnglishWord(), 'asked');
-      view.toggleStartButton(true);
+      view.clickStartButton();
+      setTimeout(() => { view.toggleStartButton(true); }, 1000);
       this.sortGroups = cards;
     } else {
+      view.rotateButton();
       const index = this.currentIndexCard;
       const { length } = this.sortGroups;
       const card = this.sortGroups[index];
@@ -76,10 +78,13 @@ const controller = {
       view.appendMainCards(model.allGroup, this.selectCategory.bind(this));
     } else if (name === 'statistics') {
       view.appendStatistics();
+      view.turnOnSwitcher();
     } else {
       model.setCurrentGroup(name);
       view.appendCards(model.getCurrentGroup(), this.reverseCurrentCard, name);
       view.checkSwitcher();
+      this.switchPlayTrain();
+      this.switchPlayTrain();
       view.turnOnSwitcher();
     }
     view.setCategory(forController.getNormalCaseName(e.target));
