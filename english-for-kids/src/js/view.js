@@ -76,6 +76,9 @@ const view = {
       this.hideOpenNameCards(true);
     }
   },
+  turnOnSwitcher() {
+    this.switch.style.display = 'inline';
+  },
   reverseCard(target, reversedLanguage) {
     const wrapCardElem = forView.getCurrentElemCard(target);
     const wrapperName = wrapCardElem.querySelector('.card__text');

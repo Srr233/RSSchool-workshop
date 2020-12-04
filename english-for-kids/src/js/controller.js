@@ -80,6 +80,7 @@ const controller = {
       model.setCurrentGroup(name);
       view.appendCards(model.getCurrentGroup(), this.reverseCurrentCard, name);
       view.checkSwitcher();
+      view.turnOnSwitcher();
     }
     view.setCategory(forController.getNormalCaseName(e.target));
     e.stopPropagation();
