@@ -158,9 +158,9 @@ const forView = {
 
     if (isCorrect) {
       wrapperStar.dataset.correct = true;
-      contains = '<img src="../assets/icons/correct.jpg" alt="correct" class="start__stars-img">';
+      contains = '<img src="../assets/icons/correct.png" alt="correct" class="start__stars-img">';
     } else {
-      contains = '<img src="../assets/icons/notCorrect.jpg" alt="not correct" class="start__stars-img">';
+      contains = '<img src="../assets/icons/notCorrect.png" alt="not correct" class="start__stars-img">';
     }
     wrapperStar.insertAdjacentHTML('beforeend', contains);
     return wrapperStar;
