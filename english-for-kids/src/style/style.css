@@ -1,4 +1,5 @@
 @import "normalize.css";
+@import "stylesheet.css";
 @keyframes close {
   0% {
     left: 0;
@@ -79,6 +80,11 @@
 
 body {
   font-size: 2rem;
+  font-family: "a_Futurica";
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-size: cover !important;
 }
 
 .head .container {
@@ -301,4 +307,22 @@ body {
 .wrapperNavigator.open {
   top: 0;
   transition: 0.5s;
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  justify-self: end;
+}
+.footer__info {
+  text-align: center;
+  margin: 0 10px;
+}
+.footer__wrapper {
+  width: 8rem;
+}
+.footer__img {
+  height: 100%;
+  width: 100%;
 }

@@ -3,6 +3,7 @@
 import { forView } from './services.js';
 
 const view = {
+  body: document.body,
   start: document.querySelector('.start'),
   switch: document.querySelector('.switch'),
   links: document.querySelectorAll('.list__link'),
@@ -21,6 +22,7 @@ const view = {
   sorting: 'up',
   appendCards(cards, callback, name) {
     this.statistics.style.display = 'none';
+    this.body.style.background = 'url(../assets/img/background/boat.jpg) no-repeat center fixed';
 
     forView.clearChildren(this.wrapperCardsDiv);
 
@@ -43,6 +45,7 @@ const view = {
   },
   appendMainCards(cardsGroups, callback) {
     this.statistics.style.display = 'none';
+    this.body.style.background = 'url(../assets/img/background/car.jpg) no-repeat center fixed';
 
     forView.clearChildren(this.wrapperCardsDiv);
 

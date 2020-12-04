@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'a_Futurica';
+    src: url('../assets/fonts/a_Futurica.eot');
+    src: url('../assets/fonts/a_Futurica.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/a_Futurica.woff2') format('woff2'),
+        url('../assets/fonts/a_Futurica.ttf') format('ttf'),
+        url('../assets/fonts/a_Futurica.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
