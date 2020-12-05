@@ -139,7 +139,7 @@ const view = {
   },
   showPlayTrain() {
     if (this.groupName.textContent === 'Statistics') {
-      return;
+      return false;
     }
     const text = this.switchText.textContent;
     const changedText = text === 'play' ? 'train' : 'play';

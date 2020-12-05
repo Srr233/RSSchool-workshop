@@ -11,8 +11,14 @@
         "sourceType": "module"
     },
     "rules": {
-        "strict": "off",
-        "linebreak-style": "off",
+        "strict": [
+            "error",
+            "window"
+        ],
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
         "quotes": ["error", "single"],
         "no-param-reassign": [
             "error",
