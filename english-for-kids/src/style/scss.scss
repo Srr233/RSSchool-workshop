@@ -221,11 +221,31 @@ body {
     
     transition: 1s;
 }
-.open-navigation.open {
-    animation: rotate .5s ease-in-out forwards;
-}
 .open-navigation.close {
-    animation: rotate-reverse .5s ease-in-out forwards;
+    span:nth-child(1) {
+        transform: rotate(0deg);
+        transition: .5s;
+    }
+    span:nth-child(2) {
+        display: inline;
+    }
+    span:nth-child(3) {
+        transform: rotate(0deg);
+        transition: .5s;
+    }
+}
+.open-navigation.open {
+    span:nth-child(1) {
+        transform: rotate(25deg);
+        transition: .5s;
+    }
+    span:nth-child(2) {
+        display: none;
+    }
+    span:nth-child(3) {
+        transform: rotate(-25deg);
+        transition: .5s;
+    }
 }
 .navigation {
     position: fixed;

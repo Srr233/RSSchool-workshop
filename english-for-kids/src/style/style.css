@@ -142,12 +142,28 @@ body {
   margin: 5px 0 5px 0;
 }
 
-.open-navigation.open {
-  animation: rotate 0.5s ease-in-out forwards;
+.open-navigation.close span:nth-child(1) {
+  transform: rotate(0deg);
+  transition: 0.5s;
+}
+.open-navigation.close span:nth-child(2) {
+  display: inline;
+}
+.open-navigation.close span:nth-child(3) {
+  transform: rotate(0deg);
+  transition: 0.5s;
 }
 
-.open-navigation.close {
-  animation: rotate-reverse 0.5s ease-in-out forwards;
+.open-navigation.open span:nth-child(1) {
+  transform: rotate(25deg);
+  transition: 0.5s;
+}
+.open-navigation.open span:nth-child(2) {
+  display: none;
+}
+.open-navigation.open span:nth-child(3) {
+  transform: rotate(-25deg);
+  transition: 0.5s;
 }
 
 .navigation {
