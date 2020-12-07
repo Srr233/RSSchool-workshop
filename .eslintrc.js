@@ -16,10 +16,6 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
-        "strict": [
-            "error",
-            "window"
-        ],
         "linebreak-style": [
             "error",
             "windows"
@@ -37,5 +33,13 @@ module.exports = {
                 "allowForLoopAfterthoughts": true
             }
         ],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "always",
+                "json": "always"
+            }
+        ]
     }
 };
