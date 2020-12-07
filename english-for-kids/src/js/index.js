@@ -2,6 +2,8 @@
 
 import controller from './controller.js';
 import Card from './card.js';
+import '../style/style.css';
+import '../style/scss.scss';
 
 function init() {
   function createCards(parsedCards) {
