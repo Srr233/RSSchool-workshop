@@ -22,7 +22,7 @@ const view = {
   sorting: 'up',
   appendCards(cards, callback, name) {
     this.statistics.style.display = 'none';
-    this.body.style.background = 'url(../assets/img/background/boat.jpg) no-repeat center fixed';
+    this.body.style.background = 'url(assets/img/background/boat.jpg) no-repeat center fixed';
 
     forView.clearChildren(this.wrapperCardsDiv);
 
@@ -45,7 +45,7 @@ const view = {
   },
   appendMainCards(cardsGroups, callback) {
     this.statistics.style.display = 'none';
-    this.body.style.background = 'url(../assets/img/background/car.jpg) no-repeat center fixed';
+    this.body.style.background = 'url(assets/img/background/car.jpg) no-repeat center fixed';
 
     forView.clearChildren(this.wrapperCardsDiv);
 
@@ -201,9 +201,9 @@ const view = {
 
     const img = this.startButton.querySelector('.start__img');
     if (switcher) {
-      img.src = '../assets/icons/load2.png';
+      img.src = 'assets/icons/load2.png';
     } else {
-      img.src = '../assets/icons/start.png';
+      img.src = 'assets/icons/start.png';
     }
   },
   toDefault() {
@@ -215,11 +215,11 @@ const view = {
       const isGameOver = forView.checkStars(this.starWrap.children);
       let doneElement;
       if (isGameOver) {
-        doneElement = forView.createFinish('../assets/img/end/happy.jpg', 'Good!');
-        this.reading('../assets/sounds/choice/success.mp3');
+        doneElement = forView.createFinish('assets/img/end/happy.jpg', 'Good!');
+        this.reading('assets/sounds/choice/success.mp3');
       } else {
-        doneElement = forView.createFinish('../assets/img/end/sadness.jpg', 'Try again!');
-        this.reading('../assets/sounds/choice/failure.mp3');
+        doneElement = forView.createFinish('assets/img/end/sadness.jpg', 'Try again!');
+        this.reading('assets/sounds/choice/failure.mp3');
       }
       this.burgerMenu.style.zIndex = 0;
       document.body.insertAdjacentElement('beforeend', doneElement);

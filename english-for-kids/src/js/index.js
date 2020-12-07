@@ -31,7 +31,7 @@ function init() {
   }
 
   const request = new XMLHttpRequest();
-  request.open('GET', '../assets/content/allCards.json');
+  request.open('GET', 'assets/content/allCards.json');
   request.onload = () => {
     const allCardsMap = createCards(JSON.parse(request.response));
     initController(allCardsMap);

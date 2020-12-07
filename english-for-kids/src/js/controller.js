@@ -112,12 +112,12 @@ const controller = {
         view.updateStatistics(name, 'hit');
         view.updateStatistics(name, 'percent');
         this.startGame();
-        view.reading('../assets/sounds/choice/Yes.mp3');
+        view.reading('assets/sounds/choice/Yes.mp3');
       } else if (!canPress) {
         view.updateStatistics(name, 'miss');
         view.updateStatistics(name, 'percent');
         view.showGoodBad(false, e.target);
-        view.reading('../assets/sounds/choice/No.mp3');
+        view.reading('assets/sounds/choice/No.mp3');
       }
       if (isEnd) {
         this.currentIndexCard = 0;

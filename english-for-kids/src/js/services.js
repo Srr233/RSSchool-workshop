@@ -6,14 +6,14 @@ const forCard = {
     if (numberImg.toString().length < 2) {
       num = `0${numberImg}`;
     }
-    return `../assets/img/${group}/${num}.jpg`;
+    return `assets/img/${group}/${num}.jpg`;
   },
   createLinkSound(numberSound, group) {
     let num;
     if (numberSound.toString().length < 2) {
       num = `0${numberSound}`;
     }
-    return `../assets/sounds/${group}/${num}.mp3`;
+    return `assets/sounds/${group}/${num}.mp3`;
   },
 };
 
@@ -141,7 +141,7 @@ const forView = {
                         <div class="word-wrap">
                             <span class="card__text">${nameCard}</span>
                             <button class="card__load-wrap">
-                                <img src="../assets/icons/load.jpg" alt="loader" class="card__load-img">
+                                <img src="assets/icons/load.jpg" alt="loader" class="card__load-img">
                             </button>
                         </div>
                         </article>`;
@@ -158,9 +158,9 @@ const forView = {
 
     if (isCorrect) {
       wrapperStar.dataset.correct = true;
-      contains = '<img src="../assets/icons/correct.png" alt="correct" class="start__stars-img">';
+      contains = '<img src="assets/icons/correct.png" alt="correct" class="start__stars-img">';
     } else {
-      contains = '<img src="../assets/icons/notCorrect.png" alt="not correct" class="start__stars-img">';
+      contains = '<img src="assets/icons/notCorrect.png" alt="not correct" class="start__stars-img">';
     }
     wrapperStar.insertAdjacentHTML('beforeend', contains);
     return wrapperStar;
