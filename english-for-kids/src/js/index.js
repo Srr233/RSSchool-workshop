@@ -1,4 +1,4 @@
-'use strict';
+
 
 import controller from './controller.js';
 import Card from './card.js';

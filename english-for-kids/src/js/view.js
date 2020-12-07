@@ -1,4 +1,4 @@
-'use strict';
+
 
 import { forView } from './services.js';
 
@@ -23,7 +23,8 @@ const view = {
   appendCards(cards, callback, name) {
     this.statistics.style.display = 'none';
     this.body.style.background = 'url(assets/img/background/boat.jpg) no-repeat center fixed';
-
+    forView.clearLinksClass(this.links, 'current');
+    forView.addClassCurrentLink(this.links, name, 'current');
     forView.clearChildren(this.wrapperCardsDiv);
 
     const currentCards = cards;
@@ -46,7 +47,8 @@ const view = {
   appendMainCards(cardsGroups, callback) {
     this.statistics.style.display = 'none';
     this.body.style.background = 'url(assets/img/background/car.jpg) no-repeat center fixed';
-
+    forView.clearLinksClass(this.links, 'current');
+    forView.addClassCurrentLink(this.links, 'Main', 'current');
     forView.clearChildren(this.wrapperCardsDiv);
 
     const keysEntries = cardsGroups.keys();

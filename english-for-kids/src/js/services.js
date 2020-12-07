@@ -1,4 +1,4 @@
-'use strict';
+
 
 const forCard = {
   createLinkImg(numberImg, group) {
@@ -95,6 +95,18 @@ const forView = {
     for (let i = 0; i < length; i++) {
       element.firstElementChild.remove();
     }
+  },
+  clearLinksClass(links, deleteClass) {
+    const arr = Array.from(links);
+    arr.forEach(element => {
+      element.classList.remove(deleteClass);
+    });
+  },
+  addClassCurrentLink(links, name, classLink) {
+    const normalName = createNormalCase(name);
+    const arr = Array.from(links);
+    const child = arr.find(element => element.textContent === normalName);
+    child.classList.add(classLink);
   },
   removeAllClasses(nameClass) {
     const elements = document.querySelectorAll(`.${nameClass}`);

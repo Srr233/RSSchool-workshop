@@ -1,5 +1,3 @@
-'use strict';
-
 const model = {
   currentGroup: '',
   allGroup: new Map(),
@@ -25,5 +23,4 @@ const model = {
     return this.allGroup.get(this.currentGroup);
   },
 };
-
 export default model;
