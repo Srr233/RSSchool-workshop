@@ -1,0 +1,68 @@
+$background: rgba(255,255,255,0.8);
+$background-hover: rgba(255,255,255);
+$box-shadow: 0 0 0.5rem rgba(0,0,0,0.2);
+$border-radius: 0.125rem;
+$transition: all 0.5s ease;
+$color-dark: #343a40;
+
+#interactive-map {
+  position: relative;  
+  height: 100%;    
+  font-size: 0.875rem;
+}
+
+.info {
+  padding: 0.5rem;
+  background: $background;
+  box-shadow: $box-shadow;
+  border-radius: $border-radius;
+
+  h4 {
+    margin: 0 0 0.25rem;
+    text-align: center;
+  }
+}
+
+.legend {
+  line-height: 1.125rem;
+
+  i {
+    width: 1.125rem;
+    height: 1.125rem;
+    float: left;
+    margin-right: 0.5rem;
+  }
+}
+
+.setting {
+  position: absolute;
+  bottom: 1.385rem;
+  left: 0.635rem;
+  z-index: 1000;  
+
+  input {
+    margin-right: 0.5rem;
+  }
+
+  input:hover, label:hover {
+    cursor: pointer;
+  }
+}
+
+// .leaflet-interactive {
+//   transition: $transition;
+// }
+
+.leaflet-touch .leaflet-bar {
+  border: none;
+  box-shadow: $box-shadow;
+  border-radius: $border-radius;
+
+  a {
+    background: $background;
+    transition: $transition;
+    &:hover {
+      background: $background-hover;
+    }
+  }
+}

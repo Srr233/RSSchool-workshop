@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+src/index2.html
+src/styles/graph-component.css
+src/styles/graph-component.css.map
+src/styles/index.css
+src/styles/index.css.map
