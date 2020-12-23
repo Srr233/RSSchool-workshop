@@ -70,7 +70,7 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: file => {
-              let dirNameInsideAssets = path.relative(path.join(__dirname, 'src'), path.dirname(file));
+              let dirNameInsideAssets = path.relative(path.join(__dirname, 'covid-dashboard/src'), path.dirname(file));
               return `${dirNameInsideAssets}/[name].[ext]`;
             }
           }
