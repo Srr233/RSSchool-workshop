@@ -78,11 +78,17 @@ export default class InteractiveMapView {
       this.elements.map.fitWorld();
     }
 
-    // eslint-disable-next-line no-underscore-dangle
-    const country = Object.values(this.geoJsonLayer._layers)
-      .find((item) => item.feature.properties.countryInfo.iso2 === code);
+    const country = this.model.data.features
+      .find((item) => item.properties && item.properties.countryInfo.iso2 === code);
 
-    this.elements.map.fitBounds(country.getBounds());
+    if (!country) return;
+
+    const latLong = [
+      country.properties.countryInfo.lat,
+      country.properties.countryInfo.long
+    ];
+
+    this.elements.map.setView(latLong, this.elements.map.getZoom());
   }
 
   createInfo() {
@@ -169,7 +175,10 @@ export default class InteractiveMapView {
     const latLong = layer.feature.properties
       ? [layer.feature.properties.countryInfo.lat, layer.feature.properties.countryInfo.long]
       : layer.getCenter();
+    const code = layer.feature.properties ? layer.feature.properties.countryInfo.iso2 : '';
+    const info = document.querySelectorAll('.info')[1];
 
+    info.setAttribute('code', code);
     this.elements.map.setView(latLong, this.elements.map.getZoom());
   }
 

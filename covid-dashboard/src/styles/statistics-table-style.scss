@@ -1,7 +1,9 @@
-
+$color-cases: #3f007d;
+$color-death: #67000d;
+$color-recovered: #00441b;
 $scrollbar-thumb: #5c5c5c;
 $scrollbar: #404040;
-$dark: #212529;
+$dark: #343a40; 
 $secondary: #6c757d;
 $light:#f8f9fa;
 * {
@@ -17,7 +19,7 @@ $light:#f8f9fa;
     flex-direction: column;
 }
 %padding-blocks {
-    padding: 0 1em;
+    padding: 0.25rem;
 }
 %scrollBar {
     overflow-y: auto;
@@ -40,18 +42,27 @@ $light:#f8f9fa;
     }
     @extend %colors;
 }
+
 .ST {
     display: flex;
     height: 100%;
     justify-items: center;
-    font-size: 16px;
+    font-size: 1rem;
 
-    div + div {
-        margin: 0 10px;
-    }
     p {
-        margin: .5em 0;
-        border-bottom: 1px solid $dark;
+        font-size: 1rem;
+        font-weight: 600;            
+        margin: 0.25rem 0;
+        padding: 0.25rem 0;
+        transition: all 0.25s ease;
+        border-bottom: 0.15rem solid $color-cases;
+        border-right: 0.15rem solid $color-cases;
+
+        &:hover {
+            font-size: 1.1rem;            
+            border-bottom: 0.05rem solid $color-cases;
+            border-right: 0.05rem solid $color-cases;
+        }
     }
     button {
         background-color: transparent;
@@ -79,28 +90,56 @@ $light:#f8f9fa;
         }
 
 		&__info-name {
+            font-size: 1rem;
+            font-weight: 900;
+            padding: 0.25rem;
             color: $dark;
         }
 
 		&__info-number {
+            font-size: 1rem;
+            font-weight: 900;
+            padding: 0.25rem;
             color: $dark;
         }
 
 		&__info-list {
             @extend %list;
+            padding: 0.25rem;
         }
         &__info-list-country {
             color: $dark;
         }
-        &__info-list-number {
-            color: $secondary;
+        &__info-list-number {  
+            font-weight: 900;          
+            color: $color-cases;
         }
         &__info-list-status {
             color: $secondary;
         }
 
         &__info-buttons {
-            @extend %buttons-wrap;
+            margin-top: 0.25rem;
+            padding: 0.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            font-weight: 900;
+
+            button {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 1.5rem;
+                opacity: 0.5;
+                transition: all 0.5s ease;
+                
+                &:hover {
+                    cursor: pointer;
+                    opacity: 1;
+                }
+            }
         }
         &__info-buttons-img-wrapper {
             width: 1em;

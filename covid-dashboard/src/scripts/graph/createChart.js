@@ -1,8 +1,8 @@
 import Chart from 'chart.js';
 
-export default function createChart(canvasNode, dataArray, dateArray, color, magnitude) {
+export default function createChart(canvasNode, dataArray, dateArray, color, magnitude, chartType) {
   return new Chart(canvasNode, {
-    type: 'bar',
+    type: chartType,
 
     data: {
       labels: dataArray,
@@ -31,7 +31,7 @@ export default function createChart(canvasNode, dataArray, dateArray, color, mag
         yAxes: [{
           ticks: {
             maxTicksLimit: 5,
-            fontSize: 14,
+            fontSize: 12,
             callback: function xTips(value) {
               if (magnitude === 'per 100K') {
                 return Math.round(value * 1000) / 1000;
@@ -44,7 +44,7 @@ export default function createChart(canvasNode, dataArray, dateArray, color, mag
       tooltips: {
         callbacks: {
           title: function title(tooltipItem) {
-            return dateArray[tooltipItem[0].index].split('T')[0];
+            return dateArray[tooltipItem[0].index];
           },
           label: function label(tooltipItem) {
             if (magnitude === 'per 100K') {

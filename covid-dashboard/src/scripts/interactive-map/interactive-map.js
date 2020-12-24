@@ -19,22 +19,22 @@ export default class InteractiveMap {
 
   static setting;
 
-  static async initialize(dataCovidCountry) {
-    const data = this.dataPreparation(dataCovidCountry, DataGeoCountry);
+  static controller;
+  
+  static model;
 
-    // eslint-disable-next-line no-console
-    console.log(data);
+  static async initialize(dataCovidCountry) {
+    const data = this.dataPreparation(dataCovidCountry, DataGeoCountry);   
 
     InteractiveMap.createContainer();
     InteractiveMap.createMap();
 
-    const model = new InteractiveMapModel(data);
-    const view = new InteractiveMapView(model, {
+    InteractiveMap.model = new InteractiveMapModel(data);
+    const view = new InteractiveMapView(InteractiveMap.model, {
       map: InteractiveMap.map,
       setting: InteractiveMap.setting
     });
-    // eslint-disable-next-line no-unused-vars
-    const controller = new InteractiveMapController(model, view);
+    InteractiveMap.controller = new InteractiveMapController(InteractiveMap.model, view);
   }
 
   static dataPreparation(dataCovidCountry, dataGeoCountry) {

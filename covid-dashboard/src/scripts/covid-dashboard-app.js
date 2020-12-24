@@ -8,6 +8,7 @@ import { idComponentContainers } from './covid-dashboard-app-constants';
 import CovidDashboardAppModel from './covid-dashboard-app-model';
 import CovidDashboardAppView from './covid-dashboard-app-view';
 import CovidDashboardAppController from './covid-dashboard-app-controller';
+import keyboardInitialize from './virtual-keyboard/virtual-keyboard';
 import '../assets/rs-school-js.svg';
 
 export default class CovidDashboardApp {
@@ -28,26 +29,36 @@ export default class CovidDashboardApp {
   static buildCovidDashboardApp(data) {
     InteractiveMap.initialize(data);
     const graph = new GraphController();
-    graph.initialize();
-    const graphNavigation = graph.navigation;
     const statisticsTable = new StatisticsTable(data);
     const casesComponent = new InitCasesComponent(data);
 
+    graph.initialize();
     statisticsTable.init();
     casesComponent.startWork(
-      indicators.type.cases,
-      indicators.period.total,
-      indicators.magnitude.absolute
+      indicators.type.cases, indicators.period.total, indicators.magnitude.absolute
     );
 
+    keyboardInitialize();
     CovidDashboardApp.createFooter();
+
+    const listNavigation = document.querySelector('.arrows-wrapper');
+    const interactiveMapSetting = InteractiveMap.setting;
+    const tableNavigation = document.querySelector('.ST__info-buttons');
+    const graphNavigation = graph.navigation;
 
     const elements = CovidDashboardApp.createButtonFullscreen();
     const model = new CovidDashboardAppModel();
     const view = new CovidDashboardAppView(model, {
-      map: InteractiveMap.map,
       buttonsFullscreen: elements.buttons,
-      componentContainers: elements.componentContainers
+      componentContainers: elements.componentContainers,
+      listNavigation: listNavigation,
+      interactiveMapSetting: interactiveMapSetting,
+      tableNavigation: tableNavigation,
+      graphNavigation: graphNavigation,
+      list: casesComponent.list,
+      map: InteractiveMap.controller,
+      table: statisticsTable,
+      graph: graph
     });
     // eslint-disable-next-line no-unused-vars
     const controller = new CovidDashboardAppController(model, view);
@@ -90,7 +101,7 @@ export default class CovidDashboardApp {
       <a href="https://github.com/Srr233">Srr233</a>
       <a href="https://github.com/SlavaJSFE">SlavaJSFE</a>
       <a href="https://github.com/TaniaTat">TaniaTat</a>
-    </div>      
+    </div>
     <div class="year">
       <span>2020</span>
     </div>

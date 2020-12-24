@@ -65,6 +65,16 @@ module.exports = {
         }]
       },
       {
+        test: /\.(ogg|mp3|wav|mpe?g)$/i,
+        loader: 'file-loader',
+        options: {
+          name: file => {
+            let dirNameInsideAssets = path.relative(path.join(__dirname, 'covid-dashboard/src'), path.dirname(file));
+            return `${dirNameInsideAssets}/[name].[ext]`;
+          }
+        }
+      },
+      {
         test: /\.(jpg|png|svg|ico)$/,
         use: {
           loader: 'file-loader',

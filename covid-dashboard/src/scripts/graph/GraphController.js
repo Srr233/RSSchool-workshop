@@ -5,30 +5,21 @@ export default class GraphController {
   constructor() {
     this.apiUrlWorld = 'https://corona-api.com/timeline';
     this.apiUrlCountries = 'https://api.covid19api.com/total/country/';
-    this.apiUrl = 'https://api.covid19api.com/countries';
+    this.apiUrl = 'https://corona-api.com/countries?include=timeline';
     this.apiPopulation = 'https://disease.sh/v3/covid-19/countries';
   }
 
   initialize() {
     this.graphComponent = new GraphComponent();
     this.graphComponent.initialize();
+    this.addGraphServices();
+    this.buildGlobalCharts();
+  }
 
+  addGraphServices() {
     this.navigation = this.graphComponent.navigation;
     this.navigation.addEventListener('click', (event) => {
       this.handleEvent(event.target);
-    });
-
-    this.modalMenu = this.graphComponent.modalMenu;
-    this.modalMenu.addEventListener('click', (event) => {
-      this.handleModalMenuEvent(event.target);
-    });
-
-    document.body.addEventListener('click', (event) => {
-      if (!event.target.className.includes('modal-title')
-        && !event.target.className.includes('modal')
-        && !event.target.className.includes('nav-item')) {
-        this.modalMenu.classList.remove('active');
-      }
     });
 
     this.navItemsArray = Object.values(this.navigation.children).filter((element) => {
@@ -40,34 +31,36 @@ export default class GraphController {
       return element.className.includes('chart');
     });
 
-    this.buildCharts();
+    services.setNavAttribute(this.navigation);
+  }
+
+  prepareForNewChats() {
+    const type = this.navigation.getAttribute('data-type');
+    const period = this.navigation.getAttribute('data-period');
+    const magnitude = this.navigation.getAttribute('data-magnitude');
+
+    this.graphComponent.graphDiv.remove();
+    this.graphComponent.initialize();
+    this.addGraphServices();
+    this.switchChart(type, period, magnitude);
   }
 
   buildCharts(countryCode) {
+    this.prepareForNewChats();
     if (countryCode) {
       fetch(this.apiUrl)
         .then((response) => {
           return response.json();
         })
         .then((data) => {
-          this.cnt = data.find((elem) => elem.ISO2 === countryCode);
-          this.buildChartsFor(this.apiUrlCountries + this.cnt.Slug, countryCode);
+          const currentCountry = data.data.find((elem) => elem.code === countryCode);
+          const isGlobal = false;
+          this.graphComponent.showData(currentCountry.timeline, isGlobal);
+          this.graphComponent.showDataPer100K(currentCountry.timeline, currentCountry.population);
         });
     } else {
       this.buildGlobalCharts();
     }
-  }
-
-  buildChartsFor(url, countryCode) {
-    fetch(url)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const isGlobal = false;
-        this.graphComponent.showData(data, isGlobal);
-        this.buildChartsPer100K(data, countryCode);
-      });
   }
 
   buildGlobalCharts() {
@@ -82,22 +75,8 @@ export default class GraphController {
       });
   }
 
-  buildChartsPer100K(covidData, countryCode) {
-    fetch(this.apiPopulation)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const currentCountry = data.find((elem) => elem.countryInfo.iso2 === countryCode);
-        this.graphComponent.showDataPer100K(covidData, currentCountry.population);
-      });
-  }
-
   handleEvent(target) {
     const activeNavItemIndex = this.navItemsArray.findIndex((elem) => elem.className.includes('active'));
-    if (target.className.includes('nav-item')) {
-      this.showModalMenu();
-    }
 
     if (target.className.includes('left')) {
       services.handleNavArrows('left', activeNavItemIndex, this.navItemsArray, this.chartsArray);
@@ -109,66 +88,58 @@ export default class GraphController {
     services.setNavAttribute(this.navigation);
   }
 
-  showModalMenu() {
-    this.modalMenu.classList.toggle('active');
-  }
-
-  handleModalMenuEvent(target) {
-    if (target.className.includes('cases-modal')) {
-      this.switchChart('cases', 'absolute');
-      this.showModalMenu();
-    }
-    if (target.className.includes('deaths-modal')) {
-      this.switchChart('deaths', 'absolute');
-      this.showModalMenu();
-    }
-    if (target.className.includes('recovered-modal')) {
-      this.switchChart('recovered', 'absolute');
-      this.showModalMenu();
-    }
-    if (target.className.includes('cases-per100K-modal')) {
-      this.switchChart('cases', 'per 100 thousand');
-      this.showModalMenu();
-    }
-    if (target.className.includes('deaths-per100K-modal')) {
-      this.switchChart('deaths', 'per 100 thousand');
-      this.showModalMenu();
-    }
-    if (target.className.includes('recovered-per100K-modal')) {
-      this.switchChart('recovered', 'per 100 thousand');
-      this.showModalMenu();
-    }
-  }
-
-  switchChart(caseType, magnitude) {
+  switchChart(caseType, period, magnitude) {
     const activeNavItemIndex = this.navItemsArray.findIndex((elem) => elem.className.includes('active'));
     this.navItemsArray[activeNavItemIndex].classList.remove('active');
     this.chartsArray[activeNavItemIndex].classList.remove('active');
 
-    if (caseType === 'cases' && magnitude === 'absolute') {
+    if (caseType === 'cases' && period === 'today' && magnitude === 'absolute') {
       this.navItemsArray[0].classList.add('active');
       this.chartsArray[0].classList.add('active');
     }
-    if (caseType === 'deaths' && magnitude === 'absolute') {
+    if (caseType === 'deaths' && period === 'today' && magnitude === 'absolute') {
       this.navItemsArray[1].classList.add('active');
       this.chartsArray[1].classList.add('active');
     }
-    if (caseType === 'recovered' && magnitude === 'absolute') {
+    if (caseType === 'recovered' && period === 'today' && magnitude === 'absolute') {
       this.navItemsArray[2].classList.add('active');
       this.chartsArray[2].classList.add('active');
     }
-
-    if (caseType === 'cases' && magnitude === 'per 100 thousand') {
+    if (caseType === 'cases' && period === 'today' && magnitude === 'per 100 thousand') {
       this.navItemsArray[3].classList.add('active');
       this.chartsArray[3].classList.add('active');
     }
-    if (caseType === 'deaths' && magnitude === 'per 100 thousand') {
+    if (caseType === 'deaths' && period === 'today' && magnitude === 'per 100 thousand') {
       this.navItemsArray[4].classList.add('active');
       this.chartsArray[4].classList.add('active');
     }
-    if (caseType === 'recovered' && magnitude === 'per 100 thousand') {
+    if (caseType === 'recovered' && period === 'today' && magnitude === 'per 100 thousand') {
       this.navItemsArray[5].classList.add('active');
       this.chartsArray[5].classList.add('active');
+    }
+    if (caseType === 'cases' && period === 'total' && magnitude === 'absolute') {
+      this.navItemsArray[6].classList.add('active');
+      this.chartsArray[6].classList.add('active');
+    }
+    if (caseType === 'deaths' && period === 'total' && magnitude === 'absolute') {
+      this.navItemsArray[7].classList.add('active');
+      this.chartsArray[7].classList.add('active');
+    }
+    if (caseType === 'recovered' && period === 'total' && magnitude === 'absolute') {
+      this.navItemsArray[8].classList.add('active');
+      this.chartsArray[8].classList.add('active');
+    }
+    if (caseType === 'cases' && period === 'total' && magnitude === 'per 100 thousand') {
+      this.navItemsArray[9].classList.add('active');
+      this.chartsArray[9].classList.add('active');
+    }
+    if (caseType === 'deaths' && period === 'total' && magnitude === 'per 100 thousand') {
+      this.navItemsArray[10].classList.add('active');
+      this.chartsArray[10].classList.add('active');
+    }
+    if (caseType === 'recovered' && period === 'total' && magnitude === 'per 100 thousand') {
+      this.navItemsArray[11].classList.add('active');
+      this.chartsArray[11].classList.add('active');
     }
     services.setNavAttribute(this.navigation);
   }

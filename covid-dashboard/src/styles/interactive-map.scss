@@ -6,9 +6,13 @@ $transition: all 0.5s ease;
 $color-dark: #343a40;
 
 #interactive-map {
-  position: relative;  
-  height: 100%;    
+  position: relative;
+  height: 100%;
   font-size: 0.875rem;
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+  }
 }
 
 .info {
@@ -38,7 +42,7 @@ $color-dark: #343a40;
   position: absolute;
   bottom: 1.385rem;
   left: 0.635rem;
-  z-index: 1000;  
+  z-index: 1000;
 
   input {
     margin-right: 0.5rem;
