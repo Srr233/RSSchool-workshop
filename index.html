@@ -1,0 +1,256 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/league.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<span>What is</span>
+					<h1 class="first__express">Express ?</h1>
+				</section>
+				<section>
+					<pre><code data-trim data-noescape data-line-numbers="1-6|2|3-5|6">
+					const express = require("express");
+					const app = express();
+					app.get("/", function(request, response){
+					response.send("&lth2&gtHello Express!&lt/h2&gt");
+					});
+					app.listen(3000);
+					  </code></pre>
+				</section>
+				<section>
+					<section><h1>Request processing pipeline and middleware</h1></section>
+					<section data-transition="convex">
+						<pre><code data-trim data-noescape data-line-numbers="3-10">
+							const express = require("express");
+							const app = express();
+							app.use(function(request, response, next){
+							console.log("Middleware 1");
+							next();
+							});
+							app.use(function(request, response, next){
+							console.log("Middleware 2");
+							next();
+							});
+							app.get("/", function(request, response){
+							console.log("Route /");
+							response.send("Hello");
+							});
+							app.listen(3000);
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section><h1>Send response</h1></section>
+					<section data-transition="convex">
+						<pre><code data-trim data-noescape data-line-numbers="4">
+							const express = require("express");
+							const app = express();
+							app.use(function (request, response) {
+							response.send("&lth2&gtHello&lt/h2&gt");
+							});
+							app.listen(3000);
+						</code></pre>
+					</section>
+					<section data-transition="convex" data-background-position="center">
+						<pre><code data-trim data-noescape>
+							//index.html
+							&lt!DOCTYPE html&gt
+							&lthtml&gt
+							&lthead&gt
+								&lttitle&gtMain&lt/title&gt
+								&ltmeta charset="utf-8"/&gt
+							&lt/head&gt
+							&ltbody&gt
+								&lth1&gtMain page&lt/h1&gt
+								&lth3&gtHi, Express&lt/h3&gt
+							&lt/body&gt
+							&lthtml&gt
+						</code></pre>
+					</section>
+					<section  data-transition="convex" data-background-position="center">
+						<pre><code data-trim data-noescape data-line-numbers="4">
+						const express = require("express");
+						const app = express();
+						app.use(function (request, response) {
+						response.sendFile(__dirname + "/index.html");
+						});
+						app.listen(3000);
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section><h1>Send status</h1></section>
+					<section data-transition="convex">
+						<pre><code data-trim data-noescape data-line-numbers="4">
+						const express = require("express");
+						const app = express();
+						app.use("/home/foo/bar",function (request, response) {
+						response.sendStatus(404)
+						});
+						app.listen(3000);</code></pre>
+					</section>
+					<section  data-transition="convex" data-background-image="/assets/404.png" data-background-size="750px"></section>
+					<section data-transition="convex">
+						<pre><code data-trim data-noescape>
+							app.use("/home/foo/bar",function (request, response) {
+							response.status(404).send(`Resource is not found`);
+							});
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section><h1>Static files</h1></section>
+					<section data-transition="convex">
+						<pre><code data-trim data-noescape>
+							| app.js
+							| node_modules
+							| package.json
+							| public
+							 &#8212;&#8594; about.html
+						</code></pre>
+					</section>
+					<section data-transition="convex">
+						<pre><code data-trim data-noescape data-line-numbers="3">
+								const express = require("express");
+								const app = express();
+								app.use(express.static(__dirname + "/public"));
+								app.use("/", function(request, response){
+								response.send("&lth2&gtHello&lt/h2&gt");
+								});
+								app.listen(3000);
+							</code></pre>
+					</section>
+				</section>
+				<section>
+					<section><h1>Routes</h1></section>
+					<section data-transition="convex">
+						<pre><code data-trim data-noescape data-line-numbers="1|2">
+							app.get("/about", 
+							function(request, response){
+							response.send("&lth1&gtAbout&lt/h1&gt");
+							});
+						</code></pre>
+					</section>
+					<section data-transition="convex">
+						<h2>?, +, *, ( ).</h2>
+					</section>
+					<section data-transition="convex">
+						<pre><code data-trim data-noescape>
+							app.get("/bo?k", function (request, response) {
+							response.send(request.url)
+							});
+						</code></pre>
+						<p>/bk <em>or</em> /bok</p>
+					</section>
+					<section data-transition="convex">
+						<pre><code data-trim data-noescape>
+							app.get("/bo+k", function (request, response) {
+							response.send(request.url)
+							});
+						</code></pre>
+						<p>/bok, /book, /boook ...</p>
+					</section>
+					<section data-transition="convex">
+						<pre><code data-trim data-noescape>
+							app.get("/bo*k", function (request, response) {
+							response.send(request.url)
+							});
+						</code></pre>
+						<p>/bork, /bonk, /bor.dak, /bor/ok</p>
+					</section>
+					<section data-transition="convex">
+						<pre><code data-trim data-noescape>
+							app.get("/book(.html)?", function (request, response) {
+							response.send(request.url)
+							});
+						</code></pre>
+						<p>/book <em>and</em> /book.html</p>
+					</section>
+				</section>
+				<section>
+					<section><h1>Forwarding</h1></section>
+					<section data-transition="convex">redirect([status,] path)</section>
+					<section data-transition="convex">
+					<pre><code data-trim data-noescape data-line-numbers="2">
+						app.use("/index",function (request, response) {
+						response.redirect("https://wikipedia.org/");
+						});
+					</code></pre>
+				</section>
+				<section data-transition="convex">
+					<pre><code data-trim data-noescape data-line-numbers="2">
+						app.use("/home",function (request, response) {
+						response.redirect("about");
+						});
+					</code></pre>
+					<p>/home to /about</p>
+				</section>
+				<section data-transition="convex">
+					<pre><code data-trim data-noescape data-line-numbers="2">
+						app.use("/home/bar",function (request, response) {
+						response.redirect("about");
+						});
+					</code></pre>
+					<p> about or ./about</p>
+					<p>/home/bar <em>to</em> /home/about</p>
+				</section>
+				<section data-transition="convex">
+					<pre><code data-trim data-noescape data-line-numbers="2">
+						app.use("/home/bar",function (request, response) {
+						response.redirect("/about");
+						});
+					</code></pre>
+					<p>/home/bar <em>to</em> /about</p>
+				</section>
+				<section data-transition="convex">
+					<pre><code data-trim data-noescape data-line-numbers="2">
+						app.use("/home/foo/bar",function (request, response) {
+						response.redirect("./about");
+						});
+					</code></pre>
+					<p>/home/bar <em>to</em> /about</p>
+				</section>
+				<section data-transition="convex">
+					<pre><code data-trim data-noescape data-line-numbers="2">
+						app.use("/home/foo/bar",function (request, response) {
+						response.redirect("..");
+						});
+					</code></pre>
+					<p>/home/foo/bar <em>to</em> /home</p>
+				</section>
+				</section>
+				<section><h1>To be continued</h1></section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: 'c/t',
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
