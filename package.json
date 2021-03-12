@@ -4,7 +4,7 @@
   "description": "Private repository for @srr233",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --history-api-fallback --inline --open",
+    "start": "webpack-dev-server --history-api-fallback --inline --open",
     "build": "npm run clear -s && webpack --progress",
     "lint": "eslint ./**/*.js",
     "clear": "del-cli dist"
